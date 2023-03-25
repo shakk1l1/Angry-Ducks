@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">unJeuCanon</string>
+    <string name="win">\"win\"</string>
+    <string name="lose">\"lose\"</string>
+    <string name="results_format">Nombre de tirs : %1$d\nTemps écoulé : %2$.1f</string>
+    <string name="reset_game">reset game</string>
+</resources>
