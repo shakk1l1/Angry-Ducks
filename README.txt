@@ -1,1 +1,1 @@
-ceci est le git qui sera uttilisé pour le projet d'ifo de BA2
+ceci est le git qui sera uttilisé pour le projet d'info de BA2
