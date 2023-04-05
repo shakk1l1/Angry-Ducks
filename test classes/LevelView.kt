@@ -22,19 +22,21 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
 
 
-class CanonView @JvmOverloads constructor (context: Context, attributes: AttributeSet? = null, defStyleAttr: Int = 0): SurfaceView(context, attributes,defStyleAttr), SurfaceHolder.Callback, Runnable {
+class LevelView @JvmOverloads constructor (context: Context, attributes: AttributeSet? = null, defStyleAttr: Int = 0): SurfaceView(context, attributes,defStyleAttr), SurfaceHolder.Callback, Runnable {
     lateinit var canvas: Canvas
-    val backgroundPaint = Paint()
+    val SkyColor = Paint()
+    val GroundColor = Paint()
     val textPaint = Paint()
     var screenWidth = 0f
     var screenHeight = 0f
     var drawing = false
     lateinit var thread: Thread
-    val canon = Canon(0f, 0f, 0f, 0f, this)
-    val obstacle = Obstacle(0f, 0f, 0f, 0f, 0f, this)
-    val cible = Cible(0f, 0f, 0f, 0f, 0f, this)
-    val balle = BalleCanon(this, obstacle, cible)
-    var shotsFired = 0
+    val slingsjot = slingshot()
+    val bloc = Obstacle(position)
+    val pig = Cible(position)
+    val bird1 = bird(this, pig, bloc)
+    val bird2 = bird(this, pig, bloc)
+    val bird3 = bird(this, pig, bloc)
     var timeLeft = 0.0
     val MISS_PENALTY = 2
     val HIT_REWARD = 3

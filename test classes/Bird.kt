@@ -11,8 +11,9 @@ class Bird (var view: CanonView, val obstacle: Obstacle, val cible: Cible) {
     var birdspeedX = 1000f
     var birdspeedY = 1000f
     var birdonscreen = true
-    var birdradius = 20f
-    var birdtexture = Paint()
+    val birdradius = 20f
+    val birdtexture = Paint()
+    var status_launched = false
 
     init {
         birdtexture.color = Color.RED
