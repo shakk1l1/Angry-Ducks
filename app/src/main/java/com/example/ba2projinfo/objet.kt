@@ -1,6 +1,7 @@
-package com.example.angryybeards
+package com.example.ba2projinfo
 
-abstract class objet (val mass : Double, var positionx : Double, var positiony : Double, var vitessex : Double, var vitessey : Double, var orientation : Double, var vangul : Double) {
+abstract class objet (val mass : Double, var positionx : Double, var positiony : Double, var vitessex : Double, var vitessey : Double, var orientation : Double, var vangul : Double):
+    force {
     fun move(tick: Double) {
         positionx+=tick*vitessex
         positiony+=tick*vitessey
@@ -11,9 +12,6 @@ abstract class objet (val mass : Double, var positionx : Double, var positiony :
 
     }
 
-    fun collide(object1 : objet, object2 : objet){
-
-    }
 
     fun applyforce(object1 : objet, object2 : objet) {
 

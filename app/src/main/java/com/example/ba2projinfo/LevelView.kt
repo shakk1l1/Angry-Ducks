@@ -3,7 +3,6 @@ package com.example.ba2projinfo
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
-import android.app.DialogFragment
 import android.content.Context
 import android.content.DialogInterface
 import android.graphics.Canvas
@@ -18,39 +17,51 @@ import android.view.MotionEvent
 import android.view.SurfaceHolder
 import android.view.SurfaceView
 import android.util.SparseIntArray
+import android.view.GestureDetector
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
 
 
 class LevelView @JvmOverloads constructor (context: Context, attributes: AttributeSet? = null, defStyleAttr: Int = 0): SurfaceView(context, attributes,defStyleAttr), SurfaceHolder.Callback, Runnable {
     lateinit var canvas: Canvas
+    // visual
     val SkyColor = Paint()
     val GroundColor = Paint()
     val textPaint = Paint()
     var screenWidth = 0f
     var screenHeight = 0f
     var drawing = false
+
+    // JSP
     lateinit var thread: Thread
-    val slingsjot = slingshot()
+    val slingshot = slingshot()
+
+    // object ans classes
     val bloc = Obstacle(position)
     val pig = Cible(position)
-    val bird1 = bird(this, pig, bloc)
-    val bird2 = bird(this, pig, bloc)
-    val bird3 = bird(this, pig, bloc)
-    var timeLeft = 0.0
-    val MISS_PENALTY = 2
-    val HIT_REWARD = 3
+    val bird1 = Bird(this, pig, bloc)
+    val bird2 = Bird(this, pig, bloc)
+    val bird3 = Bird(this, pig, bloc)
+    var bird = Bird(this, pig, bloc)
+
+    //var
+    var birdavailable = 0
+    var pigleft = 0
+    val birds = arrayOf(bird1, bird2, bird3)
     var gameOver = false
+
+
     val activity = context as FragmentActivity
-    var totalElapsedTime = 0.0
     val soundPool: SoundPool
     val soundMap: SparseIntArray
+    val gestureDetector = GestureDetector(this)
 
     init {
-        backgroundPaint.color = Color.WHITE
+        SkyColor.color = Color.BLUE
         textPaint.textSize= screenWidth/20
         textPaint.color = Color.BLACK
-        timeLeft = 10.0
+        birdavailable = 3
+        pigleft = 3
 
         val audioAttributes = AudioAttributes.Builder()
             .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)
@@ -137,24 +148,53 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
     }
 
 
-    override fun onTouchEvent(e: MotionEvent): Boolean {// touche a l'écran
-
+    // Override this method to recognize touch event
+    override fun onTouchEvent(event: MotionEvent): Boolean {
+        return if (gestureDetector.onTouchEvent(event)) {
+            true
+        }
+        else {
+            super.onTouchEvent(event)
+        }
     }
 
-    fun firebird(event: MotionEvent) {
-
+    // All the below methods are GestureDetector.OnGestureListener members
+    // Except onFling, all must "return false" if Boolean return type
+    // and "return" if no return type
+    override fun onDown(e: MotionEvent?): Boolean {
+        return false
     }
 
-    fun alignCanon(event: MotionEvent): Double {
-        val touchPoint = Point(event.x.toInt(), event.y.toInt())
-        val centerMinusY = screenHeight / 2 - touchPoint.y
-        var angle = 0.0
-        if (centerMinusY != 0.0f)
-            angle = Math.atan((touchPoint.x).toDouble()/ centerMinusY)
-        if (touchPoint.y > screenHeight / 2)
-            angle += Math.PI
-        canon.align(angle)
-        return angle
+    override fun onShowPress(e: MotionEvent?) {
+        return
+    }
+
+    override fun onSingleTapUp(e: MotionEvent?): Boolean {
+        return false
+    }
+
+    override fun onScroll(e1: MotionEvent?, e2: MotionEvent?, distanceX: Float, distanceY: Float): Boolean {
+        return false
+    }
+
+    override fun onLongPress(e: MotionEvent?) {
+        return
+    }
+
+    override fun onFling(e1: MotionEvent, e2: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
+        try {
+            val diffY = e2.y - e1.y
+            val diffX = e2.x - e1.x
+            if (birdavailable !=0) {
+                bird = birds[birdavailable-1]
+                slingshot.shot(bird, diffX, diffY)
+                birdavailable -=1
+            }
+        }
+        catch (exception: Exception) {
+            exception.printStackTrace()
+        }
+        return true
     }
 
     fun gameOver() {

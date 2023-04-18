@@ -3,16 +3,7 @@ package com.example.ba2projinfo
 import android.graphics.*
 
 class Cible (var cibleDistance: Float, var cibleDebut: Float, var cibleFin: Float, var cibleVitesseInitiale: Float, var width: Float, var view: CanonView) {
-
-    val CIBLE_PIECES = 7
-    val cible = RectF(cibleDistance, cibleDebut,
-        cibleDistance + width, cibleFin)
-    var cibleTouchee = BooleanArray(CIBLE_PIECES)
-    val ciblePaint = Paint()
-    var longueurPiece = 0f
-    var cibleVitesse = cibleVitesseInitiale
-    var nbreCiblesTouchees = 0
-
+    
     fun draw(canvas: Canvas) {
         val currentPoint = PointF()
         currentPoint.x = cible.left

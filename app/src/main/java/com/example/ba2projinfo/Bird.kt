@@ -5,7 +5,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.PointF
 
-class Bird (var view: CanonView, val obstacle: Obstacle, val cible: Cible) {
+class Bird (var view: LevelView, val obstacle: Obstacle, val cible: Cible) {
     var birds = PointF()
     var birdspeed = 1000f
     var birdspeedX = 1000f
@@ -28,7 +28,7 @@ class Bird (var view: CanonView, val obstacle: Obstacle, val cible: Cible) {
     }
 
     fun update(interval: Double) { //la physique a mettre ici
-        if (canonballOnScreen) {
+        if (bird) {
             canonball.x += (interval * canonballVitesseX).toFloat()
             canonball.y += (interval * canonballVitesseY).toFloat()
 
