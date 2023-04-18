@@ -4,35 +4,34 @@ package com.example.ba2projinfo
 import android.os.Bundle
 import android.view.GestureDetector
 import android.view.MotionEvent
-import android.widget.Toast
 //import android.support.v7.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatActivity
-import java.lang.Math.abs
+import com.example.ba2projinfo.`test classes`.slingshot
 
 class MainActivity: AppCompatActivity() {
 
-    lateinit var canonView: CanonView
+    lateinit var levelView: LevelView
+    private lateinit var gestureDetector: GestureDetector
+    private val swipeThreshold = 100
+    private val swipeVelocityThreshold = 100
+    val g = 10
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        canonView = findViewById<CanonView>(R.id.vMain)
+        levelView = findViewById<LevelView>(R.id.vMain)
         gestureDetector = GestureDetector(this)
     }
 
     override fun onPause() {
         super.onPause()
-        canonView.pause()
+        levelView.pause()
     }
 
     override fun onResume() {
         super.onResume()
-        canonView.resume()
+        levelView.resume()
     }
-
-    private lateinit var gestureDetector: GestureDetector
-    private val swipeThreshold = 100
-    private val swipeVelocityThreshold = 100
 
     // Override this method to recognize touch event
     override fun onTouchEvent(event: MotionEvent): Boolean {
@@ -71,16 +70,7 @@ class MainActivity: AppCompatActivity() {
         try {
             val diffY = e2.y - e1.y
             val diffX = e2.x - e1.x
-            if (abs(diffX) > abs(diffY)) {
-                if (abs(diffX) > swipeThreshold && abs(velocityX) > swipeVelocityThreshold) {  // C'est ici qu'on va pouvoir voir quelle distance il a bougé son doigt
-                    if (diffX > 0) {
-                        Toast.makeText(applicationContext, "Left to Right swipe gesture", Toast.LENGTH_SHORT).show()
-                    }
-                    else {
-                        Toast.makeText(applicationContext, "Right to Left swipe gesture", Toast.LENGTH_SHORT).show()
-                    }
-                }
-            }
+            slingshot.shot(diffX, diffY)
         }
         catch (exception: Exception) {
             exception.printStackTrace()
