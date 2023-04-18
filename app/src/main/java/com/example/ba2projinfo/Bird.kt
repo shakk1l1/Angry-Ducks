@@ -5,7 +5,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.PointF
 
-class Bird (var view: LevelView, val obstacle: Obstacle, val cible: Cible) {
+class Bird (var view: LevelView, val obstacle: Obstacle, val cible: Cible) : objet(20.0, 0.0, 0.0, 0.0 ,0.0, 0.0, 0.0){
     var birds = PointF()
     var birdspeed = 1000f
     var birdspeedX = 1000f
@@ -19,26 +19,16 @@ class Bird (var view: LevelView, val obstacle: Obstacle, val cible: Cible) {
         birdtexture.color = Color.RED
     }
 
-    fun launch(angle: Double) {
-        birds.x = birdradius
-        birds.y = view.screenHeight / 2f
-        birdspeedX=(birdspeed*Math.sin(angle)).toFloat()
-        birdspeedY=(-birdspeed*Math.cos(angle)).toFloat()
-        birdonscreen = true
-    }
-
-    fun update(interval: Double) { //la physique a mettre ici
-        if (bird) {
-            canonball.x += (interval * canonballVitesseX).toFloat()
-            canonball.y += (interval * canonballVitesseY).toFloat()
+    fun update(interval: Double) {                               //la physique a mettre ici
+        if (birdonscreen) {
+            positionx += (interval * birdspeedX).toFloat()
+            positiony += (interval * birdspeedY).toFloat()
 
             /* Vérifions si la balle touche l'obstacle ou pas */
-            if (canonball.x + canonballRadius > obstacle.obstacle.left &&
-                canonball.y + canonballRadius > obstacle.obstacle.top &&
-                canonball.y - canonballRadius < obstacle.obstacle.bottom) {
-                canonballVitesseX *= -1
-                canonball.offset((5*canonballVitesseX*interval).toFloat(), 0f)
-                view.reduceTimeLeft()
+            if (positionx + birdradius > obstacle.obstacle.left &&
+                positiony + birdradius > obstacle.obstacle.top &&
+                positiony - birdradius < obstacle.obstacle.bottom) {
+                collide(this, Obstacle)
                 view.playObstacleSound()
             }
             // Si elle sorte de l'écran

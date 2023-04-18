@@ -9,6 +9,6 @@ class slingshot {
         vitx = k * x
         vity = k * y
 
-        force.changespeed(bird, vitx, vity)
+        bird.changespeed(bird, vitx, vity)
     }
 }
