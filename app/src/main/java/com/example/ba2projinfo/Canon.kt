@@ -4,7 +4,7 @@ import android.graphics.Paint
 import android.graphics.Canvas
 import android.graphics.PointF
 
-class Canon (var canonBaseRadius: Float, var canonLongueur: Float, hauteur: Float, var largeur: Float, val view: CanonView) {
+class Canon (var canonBaseRadius: Float, var canonLongueur: Float, hauteur: Float, var largeur: Float, val view: LevelView) {
     val canonPaint = Paint()
     var finCanon = PointF(canonLongueur, hauteur)
 

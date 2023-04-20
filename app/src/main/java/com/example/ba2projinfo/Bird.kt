@@ -5,7 +5,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.PointF
 
-class Bird (var view: LevelView, val obstacle: Obstacle, val cible: Cible) : objet(20.0, 0.0, 0.0, 0.0 ,0.0, 0.0, 0.0){
+class Bird (var view: LevelView, val pig: Pig, val obstacle: Obstacle) : objet(20.0, 0.0, 0.0, 0.0 ,0.0, 0.0, 0.0){
     var birds = PointF()
     var birdspeed = 1000f
     var birdspeedX = 1000f
@@ -19,10 +19,7 @@ class Bird (var view: LevelView, val obstacle: Obstacle, val cible: Cible) : obj
         birdtexture.color = Color.RED
     }
 
-    fun update(interval: Double) {                               //la physique a mettre ici
-        if (birdonscreen) {
-            positionx += (interval * birdspeedX).toFloat()
-            positiony += (interval * birdspeedY).toFloat()
+    fun update(interval:Double){ //je te laisse changer ça mec
 
             /* Vérifions si la balle touche l'obstacle ou pas */
             if (positionx + birdradius > obstacle.obstacle.left &&
@@ -47,14 +44,13 @@ class Bird (var view: LevelView, val obstacle: Obstacle, val cible: Cible) : obj
                 view.reduceTimeLeft()
             }
         }
-    }
+
 
     fun resetCanonBall() {
         canonballOnScreen = false
     }
-
     fun draw(canvas: Canvas) { //texture ou hitbox
-        canvas.drawCircle(canonball.x, canonball.y, canonballRadius,
-            canonballPaint)
+        canvas.drawCircle(birds.x, birds.y, birdradius,
+            birdtexture)
     }
 }

@@ -24,6 +24,7 @@ import androidx.fragment.app.FragmentActivity
 
 class LevelView @JvmOverloads constructor (context: Context, attributes: AttributeSet? = null, defStyleAttr: Int = 0): SurfaceView(context, attributes,defStyleAttr), SurfaceHolder.Callback, Runnable {
     lateinit var canvas: Canvas
+
     // visual
     val SkyColor = Paint()
     val GroundColor = Paint()
@@ -37,8 +38,8 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
     val slingshot = slingshot()
 
     // object ans classes
-    val bloc = Obstacle(position)
-    val pig = Cible(position)
+    val bloc = Obstacle(5f, 100f, 200f, 0f, 10f, this)
+    val pig = Pig(1.0, 25f, 500f, 500f, 0.0, 0.0, 0.0, 0.0)
     val bird1 = Bird(this, pig, bloc)
     val bird2 = Bird(this, pig, bloc)
     val bird3 = Bird(this, pig, bloc)
@@ -49,16 +50,19 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
     var pigleft = 0
     val birds = arrayOf(bird1, bird2, bird3)
     var gameOver = false
+    var totalElapsedTime = 0.0
+    var timeLeft = 0.0
+
 
 
     val activity = context as FragmentActivity
     val soundPool: SoundPool
     val soundMap: SparseIntArray
-    val gestureDetector = GestureDetector(this)
+    //val gestureDetector = GestureDetector(this)
 
     init {
         SkyColor.color = Color.BLUE
-        textPaint.textSize= screenWidth/20
+        textPaint.textSize = screenWidth / 20
         textPaint.color = Color.BLACK
         birdavailable = 3
         pigleft = 3
@@ -74,9 +78,9 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
             .build()
 
         soundMap = SparseIntArray(3)
-        soundMap.put(0, soundPool.load(context, R.raw.target_hit, 1))
-        soundMap.put(1, soundPool.load(context, R.raw.canon_fire, 1))
-        soundMap.put(2, soundPool.load(context, R.raw.blocker_hit, 1))
+        //soundMap.put(0, soundPool.load(context, R.raw.target_hit, 1))
+        //soundMap.put(1, soundPool.load(context, R.raw.canon_fire, 1))
+        //soundMap.put(2, soundPool.load(context, R.raw.blocker_hit, 1))
     }
 
     fun playObstacleSound() {
@@ -98,40 +102,46 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
         thread.start()
     }
 
-    override fun onSizeChanged(w:Int, h:Int, oldw:Int, oldh:Int) { //en fonction de l'écran
+    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) { //en fonction de l'écran
         super.onSizeChanged(w, h, oldw, oldh)
+        screenWidth = w.toFloat()
+        screenHeight = h.toFloat()
 
     }
 
     fun draw() {
         if (holder.surface.isValid) {
             canvas = holder.lockCanvas()
-            canvas.drawRect(0f, 0f, canvas.width.toFloat(),
-                canvas.height.toFloat(), backgroundPaint)
+            canvas.drawRect(
+                0f, 0f, canvas.width.toFloat(),
+                canvas.height.toFloat(), SkyColor
+            )
             val formatted = String.format("%.2f", timeLeft)
-            canvas.drawText("Il reste $formatted secondes. ",
-                30f, 50f, textPaint)
-            canon.draw(canvas)
-            if (balle.canonballOnScreen)
-                balle.draw(canvas)
-            obstacle.draw(canvas)
-            cible.draw(canvas)
+            canvas.drawText(
+                "Il reste $formatted secondes. ",
+                30f, 50f, textPaint
+            )
+            //canon.draw(canvas)
+            if (!bird.status_launched)//à changer
+                bird.draw(canvas)
+            bloc.draw(canvas)
+            pig.draw(canvas)
             holder.unlockCanvasAndPost(canvas)
         }
     }
 
     fun updatePositions(elapsedTimeMS: Double) {
         val interval = elapsedTimeMS / 1000.0
-        obstacle.update(interval)
-        cible.update(interval)
-        balle.update(interval)
+        bloc.update(interval)
+        pig.update()//(interval)
+        bird.update(interval)
         timeLeft -= interval
 
         if (timeLeft <= 0.0) {
             timeLeft = 0.0
             gameOver = true
             drawing = false
-            showGameOverDialog(R.string.lose)
+            //showGameOverDialog(R.string.lose)
         }
     }
 
@@ -139,15 +149,14 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
         var previousFrameTime = System.currentTimeMillis()
         while (drawing) {
             val currentTime = System.currentTimeMillis()
-            var elapsedTimeMS:Double=(currentTime-previousFrameTime).toDouble()
+            var elapsedTimeMS: Double = (currentTime - previousFrameTime).toDouble()
             totalElapsedTime += elapsedTimeMS / 1000.0
-            updatePositions(elapsedTimeMS)
+            //updatePositions(elapsedTimeMS) ça buguait chez mwa à cause de ça
             draw()
             previousFrameTime = currentTime
         }
     }
-
-
+    //tout ce qui est en dessous j'ai pas touché
     // Override this method to recognize touch event
     override fun onTouchEvent(event: MotionEvent): Boolean {
         return if (gestureDetector.onTouchEvent(event)) {
@@ -267,3 +276,4 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
         }
     }
 }
+
