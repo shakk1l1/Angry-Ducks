@@ -21,7 +21,7 @@ abstract class objet (val mass : Double, var positionx : Double, var positiony :
 
     }
 
-    fun touchinggrass(objet, ground) {
+    fun touchinggrass(object1: objet, ground1:ground) {
 
     }
 
