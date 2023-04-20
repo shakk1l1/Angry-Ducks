@@ -1,7 +1,15 @@
 package com.example.ba2projinfo
 
 
-class pig(Double: m, Double: x, Double: y, Double: vx, Double: m): objet(m, x, y, vx, vy, or, vangul) {
+class Pig(val massep : Double, var xp : Double, var yp : Double, var vxp : Double, var vyp : Double, var orp : Double, var vangulp : Double): objet(massep,xp,yp,vxp,vyp,orp,vangulp) {
+    fun draw(){
+
+
+    }
+    fun kill(){
+
+
+    }
 
 
 
