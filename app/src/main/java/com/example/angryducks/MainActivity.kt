@@ -5,6 +5,7 @@ package com.example.angryducks
 import android.os.Bundle
 import android.view.GestureDetector
 import android.view.MotionEvent
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity: AppCompatActivity(), GestureDetector.OnGestureListener {

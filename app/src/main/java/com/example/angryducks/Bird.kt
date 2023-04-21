@@ -49,8 +49,8 @@ class Bird (var view: LevelView, val pig: Pig, val obstacle: Obstacle) : Objet(2
     }
 
     fun launch(diffx: Double, diffy: Double){
-        bird.y = (birdradius)
-        bird.x = (view.screenHeight / 2f)
+        bird.x = (birdradius)
+        bird.y = (view.screenHeight/2f)
         vitessex= (-(2*diffx).toFloat()).toDouble()
         vitessey= (-(2*diffy).toFloat()).toDouble()
         birdonscreen = true

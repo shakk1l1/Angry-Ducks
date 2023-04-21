@@ -6,11 +6,16 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.media.AudioAttributes
 import android.media.SoundPool
+import android.os.Handler
+import android.os.Looper
 import android.util.AttributeSet
 import android.view.SurfaceHolder
 import android.view.SurfaceView
 import android.util.SparseIntArray
+import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
+import androidx.appcompat.app.AppCompatActivity
+import java.nio.file.Files.size
 
 
 class LevelView @JvmOverloads constructor (context: Context, attributes: AttributeSet? = null, defStyleAttr: Int = 0): SurfaceView(context, attributes,defStyleAttr), SurfaceHolder.Callback, Runnable {
@@ -41,6 +46,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
     val birds = arrayOf(bird1, bird2, bird3)
     var gameOver = false
     var totalElapsedTime = 0.0
+    var waittime = 1.0
 
 
     val activity = context as FragmentActivity
@@ -54,6 +60,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
         textPaint.color = Color.BLACK
         birdavailable = 3
         pigleft = 1
+        waittime = 0.0
 
         val audioAttributes = AudioAttributes.Builder()
             .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)
@@ -104,16 +111,16 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
                 0f, 0f, canvas.width.toFloat(),
                 canvas.height.toFloat(), SkyColor
             )
-            /*
-            val formatted = String.format("%.2f", timeLeft)
+
+            val formatted = String.format("Int", birdavailable)
             canvas.drawText(
-                "Il reste $formatted secondes. ",
+                "Il reste $formatted oiseau. ",
                 30f, 50f, textPaint
             )
-            */
-            //canon.draw(canvas)
+
+
             for (bird in birds) {
-                if (bird.status_launched)//à changer
+                if (bird.status_launched)
                     bird.draw(canvas)
             }
 
@@ -139,7 +146,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
             val currentTime = System.currentTimeMillis()
             var elapsedTimeMS: Double = (currentTime - previousFrameTime).toDouble()
             totalElapsedTime += elapsedTimeMS / 1000.0
-            updatePositions(elapsedTimeMS) //ça buguait chez mwa à cause de ça
+            updatePositions(elapsedTimeMS)
             draw()
             previousFrameTime = currentTime
         }
@@ -152,6 +159,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
                 bird.update(interval)
             }
         }
+        waittime -= interval
 
     }
 
@@ -234,12 +242,25 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
     }
 
     fun shootbird(diffx: Double, diffy: Double){
-        var bird = birds[3-birdavailable]
-        /*
-        slingshot.align(diffx, diffy)
+        if (birdavailable > 0){
+            var bird = birds[birdavailable-1]
+            /*
+            slingshot.align(diffx, diffy)
 
-         */
-        bird.launch(diffx, diffy)
+             */
+            if (waittime <= 0.0) {
+                bird.launch(diffx, diffy)
+                birdavailable --
+                waittime = 2.0
+            }
+            else{
+                val formatted = String.format("%.2f", waittime)
+
+                Handler(Looper.getMainLooper()).post {
+                    Toast.makeText(context, "wait $formatted second", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
     }
 }
 
