@@ -35,7 +35,6 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
     val bird2 = Bird(this, pig, bloc)
     val bird3 = Bird(this, pig, bloc)
 
-
     //var
     var birdavailable = 0
     var pigleft = 0
@@ -140,10 +139,20 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
             val currentTime = System.currentTimeMillis()
             var elapsedTimeMS: Double = (currentTime - previousFrameTime).toDouble()
             totalElapsedTime += elapsedTimeMS / 1000.0
-            //updatePositions(elapsedTimeMS) ça buguait chez mwa à cause de ça
+            updatePositions(elapsedTimeMS) //ça buguait chez mwa à cause de ça
             draw()
             previousFrameTime = currentTime
         }
+    }
+
+    private fun updatePositions(elapsedTimeMS: Double) {
+        val interval = elapsedTimeMS / 1000.0
+        for (bird in birds){
+            if (bird.status_launched){
+                bird.update(interval)
+            }
+        }
+
     }
 
     fun gameOver() {
@@ -222,6 +231,15 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
             thread = Thread(this)
             thread.start()
         }
+    }
+
+    fun shootbird(diffx: Double, diffy: Double){
+        var bird = birds[3-birdavailable]
+        /*
+        slingshot.align(diffx, diffy)
+
+         */
+        bird.launch(diffx, diffy)
     }
 }
 

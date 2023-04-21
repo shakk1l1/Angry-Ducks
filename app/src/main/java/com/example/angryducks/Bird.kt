@@ -6,7 +6,7 @@ import android.graphics.Paint
 import android.graphics.PointF
 
 class Bird (var view: LevelView, val pig: Pig, val obstacle: Obstacle) : Objet(20.0, 0.0, 0.0, 0.0 ,0.0, 0.0, 0.0){
-    var birds = PointF()
+    var bird = PointF()
     var birdspeed = 1000f
     var birdspeedX = 1000f
     var birdspeedY = 1000f
@@ -21,22 +21,39 @@ class Bird (var view: LevelView, val pig: Pig, val obstacle: Obstacle) : Objet(2
 
     fun update(interval:Double){
             // Si elle sorte de l'écran
-             if (positionx + birdradius > view.screenWidth
-                || positionx - birdradius < 0) {
+        if(birdonscreen) {
+            vitessey += (interval * 1000.0f).toFloat()
+            bird.x += (interval * vitessex).toFloat()
+            bird.y += (interval * vitessey).toFloat()
+
+            if (bird.x + birdradius > view.screenWidth
+                || bird.x - birdradius < 0
+            ) {
+                birdonscreen = false
+            } else if (bird.y + birdradius > view.screenHeight
+                || bird.y - birdradius < 0
+            ) {
                 birdonscreen = false
             }
-            else if (positiony + birdradius > view.screenHeight
-                || positiony - birdradius < 0) {
-                birdonscreen = false
-            }
+
         }
+    }
 
 
     fun resetCanonBall() {
         birdonscreen = false
     }
     fun draw(canvas: Canvas) { //texture ou hitbox
-        canvas.drawCircle(birds.x, birds.y, birdradius,
+        canvas.drawCircle(bird.x, bird.y, birdradius,
             birdtexture)
+    }
+
+    fun launch(diffx: Double, diffy: Double){
+        bird.y = (birdradius)
+        bird.x = (view.screenHeight / 2f)
+        vitessex= (-(2*diffx).toFloat()).toDouble()
+        vitessey= (-(2*diffy).toFloat()).toDouble()
+        birdonscreen = true
+        status_launched = true
     }
 }
