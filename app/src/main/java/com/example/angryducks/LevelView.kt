@@ -28,6 +28,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
     var screenHeight = 0f
     var drawing = false
     var SkyColor = Paint()
+    val angleground = 0f
 
     // JSP
     lateinit var thread: Thread
@@ -39,6 +40,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
     val bird1 = Bird(this, pig, bloc) // peut-etre pas
     val bird2 = Bird(this, pig, bloc)
     val bird3 = Bird(this, pig, bloc)
+    val ground = Ground(100f, 0f, screenWidth, screenHeight)
 
     //var
     var birdavailable = 0
@@ -56,7 +58,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
 
     init {
         SkyColor.color = Color.BLUE
-        textPaint.textSize = screenWidth / 20
+        textPaint.textSize = screenWidth / 10
         textPaint.color = Color.BLACK
         birdavailable = 3
         pigleft = 1
@@ -112,20 +114,20 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
                 canvas.height.toFloat(), SkyColor
             )
 
-            val formatted = String.format("Int", birdavailable)
             canvas.drawText(
-                "Il reste $formatted oiseau. ",
-                30f, 50f, textPaint
+                "Il reste $birdavailable oiseau. ",
+                50f, 30f, textPaint
             )
 
 
             for (bird in birds) {
-                if (bird.status_launched)
+                if (bird.status_launched && bird.birdonscreen)
                     bird.draw(canvas)
             }
 
-            bloc.draw(canvas)
+            ground.draw(canvas)
             pig.draw(canvas)
+            bloc.draw(canvas)
             holder.unlockCanvasAndPost(canvas)
         }
     }
@@ -259,6 +261,11 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
                 Handler(Looper.getMainLooper()).post {
                     Toast.makeText(context, "wait $formatted second", Toast.LENGTH_SHORT).show()
                 }
+            }
+        }
+        else{
+            Handler(Looper.getMainLooper()).post {
+                Toast.makeText(context, "no birds left", Toast.LENGTH_SHORT).show()
             }
         }
     }

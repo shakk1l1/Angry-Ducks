@@ -1,7 +1,6 @@
 package com.example.angryducks
 
-abstract class Objet (val mass : Double, var positionx : Double, var positiony : Double, var vitessex : Double, var vitessey : Double, var orientation : Double, var vangul : Double):
-    Force {
+abstract class Objet (val mass : Double, var positionx : Double, var positiony : Double, var vitessex : Double, var vitessey : Double, var orientation : Double, var vangul : Double){
     fun move(tick: Double) {
         positionx+=tick*vitessex
         positiony+=tick*vitessey
@@ -17,7 +16,7 @@ abstract class Objet (val mass : Double, var positionx : Double, var positiony :
 
     }
 
-    fun accelerate(object1 : Objet, force1 : Force) {
+    fun accelerate(object1 : Objet, force1 : Killable) {
 
     }
 

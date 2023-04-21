@@ -1,6 +1,6 @@
 package com.example.angryducks
 
-interface Force{
+interface Killable{
 
     fun changespeed(objet: Objet, vx: Double, vy: Double){
         objet.vitessex += vx
