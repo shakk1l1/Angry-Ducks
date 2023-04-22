@@ -2,7 +2,6 @@ package com.example.angryducks
 
 import android.graphics.Canvas
 import android.graphics.Color
-import android.graphics.Color.GREEN
 import android.graphics.Paint
 import android.graphics.RectF
 
@@ -12,7 +11,7 @@ class Ground (var height : Float, val angle: Float, var screenHeight: Float, var
     val ground = RectF(0f, view.screenHeight-height, view.screenWidth-0f, view.screenHeight-0f)
 
     init {
-        groundtexture.color = GREEN
+        groundtexture.color = Color.parseColor("#4caf50")
     }
     fun draw(canvas: Canvas) {
         canvas.drawRect(ground, groundtexture)

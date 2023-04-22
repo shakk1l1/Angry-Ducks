@@ -5,7 +5,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.PointF
 
-class Bird (var view: LevelView, val pig: Pig, val obstacle: Obstacle) : Objet(20.0, 0.0, 0.0, 0.0 ,0.0, 0.0, 0.0){
+class Bird (var view: LevelView, val pig: Pig, val obstacle: Obstacle, var groundheight: Float) : Objet(20.0, 0.0, 0.0, 0.0 ,0.0, 0.0, 0.0){
     var bird = PointF()
     var birdspeed = 1000f
     var birdspeedX = 1000f
@@ -50,7 +50,7 @@ class Bird (var view: LevelView, val pig: Pig, val obstacle: Obstacle) : Objet(2
 
     fun launch(diffx: Double, diffy: Double){
         bird.x = (birdradius)
-        bird.y = (view.screenHeight/2f)
+        bird.y = (view.screenHeight - groundheight - 120f)
         vitessex= (-(2*diffx).toFloat()).toDouble()
         vitessey= (-(2*diffy).toFloat()).toDouble()
         birdonscreen = true

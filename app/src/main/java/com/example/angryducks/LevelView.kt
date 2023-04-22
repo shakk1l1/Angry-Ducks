@@ -1,11 +1,16 @@
 package com.example.angryducks
 
+import android.annotation.SuppressLint
+import android.app.AlertDialog
+import android.app.Dialog
 import android.content.Context
+import android.content.DialogInterface
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.media.AudioAttributes
 import android.media.SoundPool
+import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.AttributeSet
@@ -15,6 +20,7 @@ import android.util.SparseIntArray
 import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.DialogFragment
 import java.nio.file.Files.size
 
 
@@ -29,6 +35,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
     var drawing = false
     var SkyColor = Paint()
     val angleground = 0f
+    val groundheight = 100f
 
     // JSP
     lateinit var thread: Thread
@@ -37,18 +44,21 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
     // object ans classes
     val bloc = Obstacle(5f, 100f, 300f, 0f, 10f, this)
     val pig = Pig(1.0, 25f, 500f, 500f, 0.0, 0.0, 0.0, 0.0)
-    val bird1 = Bird(this, pig, bloc) // peut-etre pas
-    val bird2 = Bird(this, pig, bloc)
-    val bird3 = Bird(this, pig, bloc)
-    val ground = Ground(100f, 0f, 0f, 0f, this)
+    val bird1 = Bird(this, pig, bloc, groundheight) // peut-etre pas
+    val bird2 = Bird(this, pig, bloc, groundheight)
+    val bird3 = Bird(this, pig, bloc, groundheight)
+    val ground = Ground(groundheight, 0f, 0f, 0f, this)
 
     //var
     var birdavailable = 0
+    var birdsshot = 0
     var pigleft = 0
     val birds = arrayOf(bird1, bird2, bird3)
     var gameOver = false
     var totalElapsedTime = 0.0
-    var waittime = 1.0
+    var waittime = 0.0
+    var fixwaitime = 2.0
+    var maxwaittime = 10.0
 
 
     val activity = context as FragmentActivity
@@ -57,7 +67,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
     //val gestureDetector = GestureDetector(this)
 
     init {
-        SkyColor.color = Color.BLUE
+        SkyColor.color = Color.parseColor("#add8e6")
         textPaint.textSize = screenWidth / 10
         textPaint.color = Color.BLACK
         birdavailable = 3
@@ -168,14 +178,18 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
         }
         waittime -= interval
 
+        if(birdavailable == 0 && waittime <= -maxwaittime){
+            gameOver = true
+            drawing = false
+            showGameOverDialog(R.string.lost)
+        }
+
     }
 
     fun gameOver() {
         drawing = false
-        /*
-        showGameOverDialog(R.string.win)
 
-         */
+        showGameOverDialog(R.string.win)
         gameOver = true
     }
 
@@ -185,7 +199,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
     override fun surfaceCreated(holder: SurfaceHolder) {}
 
     override fun surfaceDestroyed(holder: SurfaceHolder) {}
-/*
+
     fun showGameOverDialog(messageId: Int) {
         class GameResult: DialogFragment() {
             @SuppressLint("StringFormatInvalid")
@@ -194,21 +208,13 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
                 builder.setTitle(resources.getString(messageId))
                 builder.setMessage(
                     resources.getString(
-                        R.string.results_format, shotsFired, totalElapsedTime
+                        R.string.results_format, birdsshot, totalElapsedTime
                     )
                 )
                 builder.setPositiveButton(R.string.reset_game,
                     DialogInterface.OnClickListener { _, _->newGame()}
                 )
                 return builder.create()
-            }
-
-            fun show(ft: Any, s: String) {
-
-            }
-
-            fun setCancelable(b: Boolean) {
-
             }
         }
 
@@ -229,7 +235,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
     }
 
 
- */
+
     fun newGame() {
         /*
         cible.resetCible()
@@ -239,13 +245,15 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
         shotsFired = 0
 
          */
-        totalElapsedTime = 0.0
-        drawing = true
-        if (gameOver) {
-            gameOver = false
-            thread = Thread(this)
-            thread.start()
-        }
+    birdavailable = 3
+    birdsshot = 0
+    totalElapsedTime = 0.0
+    drawing = true
+    if (gameOver) {
+        gameOver = false
+        thread = Thread(this)
+        thread.start()
+    }
     }
 
     fun shootbird(diffx: Double, diffy: Double){
@@ -258,7 +266,8 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
             if (waittime <= 0.0) {
                 bird.launch(diffx, diffy)
                 birdavailable --
-                waittime = 2.0
+                birdsshot ++
+                waittime = fixwaitime
             }
             else{
                 val formatted = String.format("%.2f", waittime)
