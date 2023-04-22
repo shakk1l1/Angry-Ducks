@@ -6,10 +6,10 @@ import android.graphics.Color.GREEN
 import android.graphics.Paint
 import android.graphics.RectF
 
-class Ground (height : Float, val angle: Float, screenwidht: Float, screenheight: Float){
+class Ground (var height : Float, val angle: Float, var screenHeight: Float, var screenWidth: Float, val view: LevelView){
 
     val groundtexture = Paint()
-    val ground = RectF(0f, screenheight-height, height, screenwidht)
+    val ground = RectF(0f, view.screenHeight-height, view.screenWidth-0f, view.screenHeight-0f)
 
     init {
         groundtexture.color = GREEN
@@ -17,7 +17,10 @@ class Ground (height : Float, val angle: Float, screenwidht: Float, screenheight
     fun draw(canvas: Canvas) {
         canvas.drawRect(ground, groundtexture)
     }
-    fun setRect(){
+
+    fun setRect() {
+        ground.set(0f, screenHeight - height,
+            screenWidth, screenHeight)
     }
     fun Draw(){
 

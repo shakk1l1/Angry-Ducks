@@ -35,12 +35,12 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
     val slingshot = Slingshot()
 
     // object ans classes
-    val bloc = Obstacle(5f, 100f, 200f, 0f, 10f, this)
+    val bloc = Obstacle(5f, 100f, 300f, 0f, 10f, this)
     val pig = Pig(1.0, 25f, 500f, 500f, 0.0, 0.0, 0.0, 0.0)
     val bird1 = Bird(this, pig, bloc) // peut-etre pas
     val bird2 = Bird(this, pig, bloc)
     val bird3 = Bird(this, pig, bloc)
-    val ground = Ground(100f, 0f, screenWidth, screenHeight)
+    val ground = Ground(100f, 0f, 0f, 0f, this)
 
     //var
     var birdavailable = 0
@@ -103,6 +103,11 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
         super.onSizeChanged(w, h, oldw, oldh)
         screenWidth = w.toFloat()
         screenHeight = h.toFloat()
+        ground.screenHeight = screenHeight
+        ground.screenWidth = screenWidth
+        ground.setRect()
+        textPaint.setTextSize(w / 25f)
+        textPaint.isAntiAlias = true
 
     }
 
@@ -116,7 +121,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
 
             canvas.drawText(
                 "Il reste $birdavailable oiseau. ",
-                50f, 30f, textPaint
+                50f, 70f, textPaint
             )
 
 
