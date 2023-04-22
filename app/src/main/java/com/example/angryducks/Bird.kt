@@ -5,13 +5,11 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.PointF
 
-class Bird (var view: LevelView, val pig: Pig, val obstacle: Obstacle, var groundheight: Float) : Objet(20.0, 0.0, 0.0, 0.0 ,0.0, 0.0, 0.0){
-    var bird = PointF()
-    var birdspeed = 1000f
-    var birdspeedX = 1000f
-    var birdspeedY = 1000f
-    var birdonscreen = true
-    val birdradius = 20f
+class Bird (view: LevelView, val pig: Pig, val obstacle: Obstacle, var groundheight: Float)
+    : Objet(20f, 0.0, 0.0, 0.0 ,0.0, 20f, 20f, view){
+
+
+    val birdradius = height
     val birdtexture = Paint()
     var status_launched = false
 
@@ -19,6 +17,7 @@ class Bird (var view: LevelView, val pig: Pig, val obstacle: Obstacle, var groun
         birdtexture.color = Color.RED
     }
 
+    /*
     fun update(interval:Double){
             // Si elle sorte de l'écran
         if(birdonscreen) {
@@ -30,30 +29,28 @@ class Bird (var view: LevelView, val pig: Pig, val obstacle: Obstacle, var groun
                 || bird.x - birdradius < 0
             ) {
                 birdonscreen = false
-            } else if (bird.y + birdradius > view.screenHeight
-                || bird.y - birdradius < 0
-            ) {
+            } else if ( bird.y - birdradius < 0) {
                 birdonscreen = false
+            }
+            else if (bird.y + birdradius > view.screenHeight - groundheight){
             }
 
         }
     }
 
+     */
 
-    fun resetCanonBall() {
-        birdonscreen = false
-    }
     fun draw(canvas: Canvas) { //texture ou hitbox
-        canvas.drawCircle(bird.x, bird.y, birdradius,
+        canvas.drawCircle(coo.x, coo.y, birdradius,
             birdtexture)
     }
 
     fun launch(diffx: Double, diffy: Double){
-        bird.x = (birdradius)
-        bird.y = (view.screenHeight - groundheight - 120f)
+        coo.x = (birdradius)
+        coo.y = (view.screenHeight - groundheight - 120f)
         vitessex= (-(2*diffx).toFloat()).toDouble()
         vitessey= (-(2*diffy).toFloat()).toDouble()
-        birdonscreen = true
+        onscreen = true
         status_launched = true
     }
 }

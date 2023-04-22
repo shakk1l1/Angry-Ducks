@@ -21,6 +21,8 @@ import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
+import com.example.angryducks.collision.Companion
+import com.example.angryducks.collision.Companion.groundheight
 import java.nio.file.Files.size
 
 
@@ -35,15 +37,13 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
     var drawing = false
     var SkyColor = Paint()
     val angleground = 0f
-    val groundheight = 100f
-
     // JSP
     lateinit var thread: Thread
     val slingshot = Slingshot()
 
     // object ans classes
     val bloc = Obstacle(5f, 100f, 300f, 0f, 10f, this)
-    val pig = Pig(1.0, 25f, 500f, 500f, 0.0, 0.0, 0.0, 0.0)
+    val pig = Pig(this, 1.0f, 25f, 500f, 500f, 0.0, 0.0, 0.0f, 0f)
     val bird1 = Bird(this, pig, bloc, groundheight) // peut-etre pas
     val bird2 = Bird(this, pig, bloc, groundheight)
     val bird3 = Bird(this, pig, bloc, groundheight)
@@ -57,8 +57,8 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
     var gameOver = false
     var totalElapsedTime = 0.0
     var waittime = 0.0
-    var fixwaitime = 2.0
-    var maxwaittime = 10.0
+    var fixwaitime = 0.0
+    var maxwaittime = 0.0
 
 
     val activity = context as FragmentActivity
@@ -118,7 +118,6 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
         ground.setRect()
         textPaint.setTextSize(w / 25f)
         textPaint.isAntiAlias = true
-
     }
 
     fun draw() {
@@ -136,12 +135,15 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
 
 
             for (bird in birds) {
-                if (bird.status_launched && bird.birdonscreen)
+                if (bird.status_launched && bird.onscreen)
                     bird.draw(canvas)
             }
 
             ground.draw(canvas)
-            pig.draw(canvas)
+
+            if (pig.onscreen) {
+                pig.draw(canvas)
+            }
             bloc.draw(canvas)
             holder.unlockCanvasAndPost(canvas)
         }
@@ -176,6 +178,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
                 bird.update(interval)
             }
         }
+
         waittime -= interval
 
         if(birdavailable == 0 && waittime <= -maxwaittime){
