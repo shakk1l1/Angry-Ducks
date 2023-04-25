@@ -22,6 +22,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import com.example.angryducks.collision.Companion
+import com.example.angryducks.collision.Companion.absorbtion
 import com.example.angryducks.collision.Companion.groundheight
 import java.nio.file.Files.size
 
@@ -42,8 +43,8 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
     val slingshot = Slingshot()
 
     // object ans classes
-    val bloc = Obstacle(5f, 100f, 300f, 0f, 10f, this)
-    val pig = Pig(this, 1.0f, 25f, 500f, 500f, 0.0, 0.0, 0.0f, 0f)
+    val bloc = Obstacle(700f, 900f, 600f, 0f, 100f, this)
+    val pig = Pig(this, 1.0f, 25f, 450f, 550f, 0.0, 0.0, 0.0f, 0f)
     val bird1 = Bird(this, pig, bloc, groundheight) // peut-etre pas
     val bird2 = Bird(this, pig, bloc, groundheight)
     val bird3 = Bird(this, pig, bloc, groundheight)
@@ -173,11 +174,21 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
 
     private fun updatePositions(elapsedTimeMS: Double) {
         val interval = elapsedTimeMS / 1000.0
+        pig.update(interval)
         for (bird in birds){
+            if (bird.coo.x!=0f){bird.CollisionSphereSphere(bird.coo.x.toDouble(), bird.coo.y.toDouble(), bird.birdradius.toDouble(),pig.coo.x.toDouble(), pig.coo.y.toDouble(), pig.radius.toDouble(),
+                )}
+
+            if(bird.colliding){
+                bird.BirdCollideBird(bird.vitessex, bird.vitessey, bird.mass.toDouble(),pig.vitessex, pig.vitessey, pig.mass.toDouble(),
+                    1.0)
+            }
             if (bird.status_launched){
                 bird.update(interval)
             }
+
         }
+
 
         waittime -= interval
 

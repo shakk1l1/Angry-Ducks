@@ -12,3 +12,4 @@ interface Observable {
         observers.forEach { it.update(); }
     }
 }
+//observer avec birds et pigs

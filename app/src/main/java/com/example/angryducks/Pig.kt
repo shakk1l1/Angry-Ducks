@@ -11,12 +11,18 @@ class Pig(view: LevelView, val massep : Float, val radius: Float, var xp : Float
     var paintpig = Paint()
     init {
         paintpig.color = Color.parseColor("#2e6930")
+        coo.x=xp
+        coo.y = yp
     }
 
     fun draw(canvas: Canvas) {
         canvas.drawCircle(
             xp, yp, radius, paintpig
         )
+
+    }
+
+    override fun update(interval: Double) {
 
     }
 
