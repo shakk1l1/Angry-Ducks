@@ -37,7 +37,7 @@ class Bird (view: LevelView, val pig: Pig, val obstacle: Obstacle, var groundhei
                 onscreen = false
             }
             else if (coo.y + height* sin(orientation) + width * cos(orientation) >= (view.screenHeight - collision.groundheight).toDouble()) {
-                if (vitessey > 0.0001) {
+                if (vitessey > 0.00001) {
                     vitessey = -(collision.absorbtion * vitessey)
                     vitessex = (vitessex * collision.absorbtion)
                     birdtexture.color = Color.RED
@@ -60,15 +60,19 @@ class Bird (view: LevelView, val pig: Pig, val obstacle: Obstacle, var groundhei
     fun BirdCollideBird(v1x:Double,v1y:Double,m1:Double,v2x:Double,v2y:Double,m2:Double,coef:Double) {
         var vmoyx:Double = (m1*v1x+m2*v2x)/(m1+m2)
         var vmoyy:Double = (m1*v1y+m2*v2y)/(m1+m2)
-        var dv1x=(1+coef)*(v1x-vmoyx)
-        var dv1y=(1+coef)*(v1y-vmoyy)
+        var dv1x=(1.0+coef)*(v1x-vmoyx)
+        var dv1y=(1.0+coef)*(v1y-vmoyy)
         //println("DOOOOOOOOOOOOOING IT")
         var dv2x=(1+coef)*(v2x-vmoyx)
         var dv2y=(1+coef)*(v2y-vmoyy)
+        println(vitessex)
+        println(dv1x)
+        println(vmoyx)
         vitessex-=dv1x
         //v2x-=dv2x
         vitessey-=dv1y
         //v2y-=dv2y
+        println(vitessex)
         colliding = false
         birdtexture.color = Color.GREEN
     }
@@ -98,7 +102,7 @@ class Bird (view: LevelView, val pig: Pig, val obstacle: Obstacle, var groundhei
     fun draw(canvas: Canvas) { //texture ou hitbox
         canvas.drawCircle(coo.x, coo.y, birdradius,
             birdtexture)
-        canvas.drawText("${coo.x} + ${coo.y}",800f,500f, birdtexture)
+
     }
 
     fun launch(diffx: Double, diffy: Double){

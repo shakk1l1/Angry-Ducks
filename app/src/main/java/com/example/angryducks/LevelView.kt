@@ -44,7 +44,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
 
     // object ans classes
     val bloc = Obstacle(700f, 900f, 600f, 0f, 100f, this)
-    val pig = Pig(this, 1.0f, 25f, 450f, 550f, 0.0, 0.0, 0.0f, 0f)
+    val pig = Pig(this, 20.0f, 25f, 450f, 550f, 0.0, 0.0, 0.0f, 0f)
     val bird1 = Bird(this, pig, bloc, groundheight) // peut-etre pas
     val bird2 = Bird(this, pig, bloc, groundheight)
     val bird3 = Bird(this, pig, bloc, groundheight)
@@ -141,9 +141,9 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
             }
 
             ground.draw(canvas)
-
+            pig.draw(canvas)
             if (pig.onscreen) {
-                pig.draw(canvas)
+
             }
             bloc.draw(canvas)
             holder.unlockCanvasAndPost(canvas)
