@@ -33,8 +33,8 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
     // visual
 
     val textPaint = Paint()
-    var screenWidth = 0f
-    var screenHeight = 0f
+    var screenWidth = 2000f
+    var screenHeight = 1000f
     var drawing = false
     var SkyColor = Paint()
     val angleground = 0f
@@ -44,7 +44,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
 
     // object ans classes
     val bloc = Obstacle(700f, 900f, 600f, 0f, 100f, this)
-    val pig = Pig(this, 20.0f, 25f, 450f, 550f, 0.0, 0.0, 0.0f, 0f)
+    val pig = Pig(this, 20.0f, 25f, 450f, 550f, 0.0, 100.0, 0.0f, 0f)
     val bird1 = Bird(this, pig, bloc, groundheight) // peut-etre pas
     val bird2 = Bird(this, pig, bloc, groundheight)
     val bird3 = Bird(this, pig, bloc, groundheight)
@@ -141,9 +141,9 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
             }
 
             ground.draw(canvas)
-            pig.draw(canvas)
-            if (pig.onscreen) {
 
+            if (pig.onscreen) {
+                pig.draw(canvas)
             }
             bloc.draw(canvas)
             holder.unlockCanvasAndPost(canvas)
@@ -174,7 +174,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
 
     private fun updatePositions(elapsedTimeMS: Double) {
         val interval = elapsedTimeMS / 1000.0
-        pig.update(interval)
+
         for (bird in birds){
             if (bird.coo.x!=0f){bird.CollisionSphereSphere(bird.coo.x.toDouble(), bird.coo.y.toDouble(), bird.birdradius.toDouble(),pig.coo.x.toDouble(), pig.coo.y.toDouble(), pig.radius.toDouble(),
                 )}
@@ -189,7 +189,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
 
         }
 
-
+        pig.update(interval)
         waittime -= interval
 
         if(birdavailable == 0 && waittime <= -maxwaittime){

@@ -20,36 +20,7 @@ class Bird (view: LevelView, val pig: Pig, val obstacle: Obstacle, var groundhei
         birdtexture.color = Color.RED
     }
 
-    override fun update(interval:Double){
-        if(onscreen) {// la "gravité"
-            if (coo.y + height* sin(orientation) + width * cos(orientation) <= (view.screenHeight - collision.groundheight).toDouble()) {
-                vitessey += (interval * 1000.0f).toFloat()
-            }
-            coo.x += (interval * vitessex).toFloat()
-            coo.y += (interval * vitessey).toFloat()
 
-            if (coo.x > view.screenWidth + 50f
-                || coo.x < -50f
-            ) {
-                onscreen = false
-            }
-            else if ( coo.y < - 2000f) {
-                onscreen = false
-            }
-            else if (coo.y + height* sin(orientation) + width * cos(orientation) >= (view.screenHeight - collision.groundheight).toDouble()) {
-                if (vitessey > 0.00001) {
-                    vitessey = -(collision.absorbtion * vitessey)
-                    vitessex = (vitessex * collision.absorbtion)
-                    birdtexture.color = Color.RED
-
-                }
-                else{
-                    vitessey = 0.0
-                }
-            }
-
-        }
-    }
     fun CollisionSphereSphere(x1:Double,y1:Double,r1:Double,x2:Double,y2:Double,r2:Double) {
         var one = ((x1-x2).pow(2)+(y1-y2).pow(2)).pow(0.5)
         var two = r1+r2

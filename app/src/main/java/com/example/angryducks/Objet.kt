@@ -1,6 +1,7 @@
 package com.example.angryducks
 
 import android.content.Context
+import android.graphics.Color
 import android.graphics.PointF
 import android.widget.Toast
 import com.example.angryducks.collision.Companion.absorbtion
@@ -15,10 +16,35 @@ abstract class Objet (val mass : Float, var vitessex : Double, var vitessey : Do
     var coo = PointF()
     var colliding = false
 
-    open fun update(interval:Double){
+    fun update(interval:Double){
+        if(onscreen) {// la "gravité"
+            if (coo.y + height* sin(orientation) + width * cos(orientation) <= (view.screenHeight - collision.groundheight).toDouble()) {
+                vitessey += (interval * 1000.0f).toFloat()
+            }
+            coo.x += (interval * vitessex).toFloat()
+            coo.y += (interval * vitessey).toFloat()
 
-        // Si elle sorte de l'écran
+            if (coo.x > view.screenWidth + 50f
+                || coo.x < -50f
+            ) {
+                onscreen = false
+            }
+            else if ( coo.y < - 2000f) {
+                onscreen = false
+            }
+            else if (coo.y + height* sin(orientation) + width * cos(orientation) >= (view.screenHeight - collision.groundheight).toDouble()) {
+                if (vitessey > 0.00001) {
+                    vitessey = -(collision.absorbtion * vitessey)
+                    vitessex = (vitessex * collision.absorbtion)
 
+
+                }
+                else{
+                    vitessey = 0.0
+                }
+            }
+
+        }
     }
 
     fun istouching(object1 : Objet, object2 : Objet) {
