@@ -28,7 +28,7 @@ class Bird (view: LevelView, val pig: Pig, val obstacle: Obstacle, var groundhei
 
 
     }
-    fun BirdCollideBird(v1x:Double,v1y:Double,m1:Double,v2x:Double,v2y:Double,m2:Double,coef:Double) {
+    fun BirdCollideBird(v1x:Double,v1y:Double,m1:Double,v2x:Double,v2y:Double,m2:Double,coef:Double, pig: Pig) {
         var vmoyx:Double = (m1*v1x+m2*v2x)/(m1+m2)
         var vmoyy:Double = (m1*v1y+m2*v2y)/(m1+m2)
         var dv1x=(1.0+coef)*(v1x-vmoyx)
@@ -46,6 +46,7 @@ class Bird (view: LevelView, val pig: Pig, val obstacle: Obstacle, var groundhei
         println(vitessex)
         colliding = false
         birdtexture.color = Color.GREEN
+        pig.changeaftercoll(dv2x, dv2y)
     }
     /*
     fun update(interval:Double){

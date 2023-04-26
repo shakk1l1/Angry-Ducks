@@ -181,7 +181,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
 
             if(bird.colliding){
                 bird.BirdCollideBird(bird.vitessex, bird.vitessey, bird.mass.toDouble(),pig.vitessex, pig.vitessey, pig.mass.toDouble(),
-                    1.0)
+                    1.0, pig)
             }
             if (bird.status_launched){
                 bird.update(interval)

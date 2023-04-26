@@ -36,8 +36,9 @@ class Pig(view: LevelView, val massep : Float, val radius: Float, var xp : Float
 
     }
 
-    fun update() {
-
+    fun changeaftercoll(v2x:Double, v2y:Double) {
+        vitessex-=v2x
+        vitessey-=v2y
     }
 
 
