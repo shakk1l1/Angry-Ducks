@@ -27,7 +27,7 @@ class Pig(view: LevelView, val massep : Float, val radius: Float, var xp : Float
         canvas.drawCircle(
             coo.x, coo.y, radius, paintpig
         )
-        canvas.drawText("${coo.x} + ${coo.y}",800f,500f,paintpig)
+        canvas.drawText("${coo.x} + ${vitessey}+${coo.y} ",800f,500f,paintpig)
         //onscreen=true
     }
 
@@ -44,7 +44,7 @@ class Pig(view: LevelView, val massep : Float, val radius: Float, var xp : Float
 
     override fun touchinggrass(): Boolean {
         var distancecarre:Double=0.0
-        distancecarre= ((collision.m*coo.x+collision.p-coo.y).pow(2)/(1+collision.m.pow(2))).toDouble()
+        distancecarre= ((collision.m*coo.x+(view.screenHeight-collision.groundheight)-coo.y).pow(2)/(1+collision.m.pow(2))).toDouble()
         return (distancecarre<pigradius.pow(2))
     }
 

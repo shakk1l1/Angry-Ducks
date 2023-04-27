@@ -95,7 +95,7 @@ Bird (view: LevelView, val pig: Pig, val obstacle: Obstacle, var groundheight: F
 
     override fun touchinggrass(): Boolean {
         var distancecarre:Double=0.0
-        distancecarre= ((collision.m*coo.x+collision.p-coo.y).pow(2)/(1+collision.m.pow(2))).toDouble()
+        distancecarre= ((collision.m*coo.x+(view.screenHeight-collision.groundheight)-coo.y).pow(2)/(1+collision.m.pow(2))).toDouble()
          return (distancecarre<birdradius.pow(2))
     }
 
