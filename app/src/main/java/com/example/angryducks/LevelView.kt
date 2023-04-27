@@ -183,12 +183,22 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
                 bird.BirdCollideBird(bird.vitessex, bird.vitessey, bird.mass.toDouble(),pig.vitessex, pig.vitessey, pig.mass.toDouble(),
                     1.0, pig)
             }
+            if (bird.collidingCountDown==0){
+                if (bird.touchinggrass()) {
+                    bird.Collideground()
+                }
+            }
+
             if (bird.status_launched){
                 bird.update(interval)
             }
 
         }
-
+        if (pig.collidingCountDown==0){
+            if (pig.touchinggrass()) {
+                pig.Collideground()
+            }
+        }
         pig.update(interval)
         waittime -= interval
 

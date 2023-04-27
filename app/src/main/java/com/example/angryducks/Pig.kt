@@ -49,10 +49,20 @@ class Pig(view: LevelView, val massep : Float, val radius: Float, var xp : Float
     }
 
     override fun Collideground() {
-        var dvx : Double = vitessex * collision.nx * (1+collision.absorbtion)
-        var dvy : Double = vitessey * collision.ny * (1+collision.absorbtion)
-        vitessex = vitessex - dvx
-        vitessey = vitessey - dvy
+        if (vitessex * collision.nx+vitessey*collision.ny<50) {
+            var dvx : Double = vitessex * collision.nx
+            var dvy : Double = vitessey * collision.ny
+            vitessex = vitessex - dvx
+            vitessey = vitessey - dvy
+        }
+        else {
+            var dvx : Double = vitessex * collision.nx * (1+collision.absorbtion)
+            var dvy : Double = vitessey * collision.ny * (1+collision.absorbtion)
+            vitessex = vitessex - dvx
+            vitessey = vitessey - dvy
+            collidingCountDown=3
+
+        }
     }
 
 

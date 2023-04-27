@@ -101,13 +101,11 @@ Bird (view: LevelView, val pig: Pig, val obstacle: Obstacle, var groundheight: F
 
 
     override fun Collideground() {
-        if (vitessex * collision.nx+vitessey*collision.ny<1.2) {
+        if (vitessex * collision.nx+vitessey*collision.ny<50) {
             var dvx : Double = vitessex * collision.nx
             var dvy : Double = vitessey * collision.ny
             vitessex = vitessex - dvx
             vitessey = vitessey - dvy
-            vitessex*=collision.absorbtion
-            vitessey*=collision.absorbtion
             birdtexture.color = Color.BLUE
         }
         else {
@@ -116,7 +114,7 @@ Bird (view: LevelView, val pig: Pig, val obstacle: Obstacle, var groundheight: F
             vitessex = vitessex - dvx
             vitessey = vitessey - dvy
             birdtexture.color = Color.GRAY
-
+            collidingCountDown=3
 
         }
     }

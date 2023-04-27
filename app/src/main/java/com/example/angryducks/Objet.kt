@@ -15,6 +15,7 @@ abstract class Objet (val mass : Float, var vitessex : Double, var vitessey : Do
     var onscreen = true
     var coo = PointF()
     var colliding = false
+    var collidingCountDown = 0
 
     fun update(interval:Double){
         if(onscreen) {// la "gravité"
@@ -33,9 +34,10 @@ abstract class Objet (val mass : Float, var vitessex : Double, var vitessey : Do
                 onscreen = false
             }
 
-            if (touchinggrass()) {
-                Collideground()
+            if (collidingCountDown>0) {
+                collidingCountDown-=1
             }
+
             vitessey += (interval * 1000.0f).toFloat()
 
             //else if (coo.y + height* sin(orientation) + width * cos(orientation) >= (view.screenHeight - collision.groundheight).toDouble()) {
