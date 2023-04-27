@@ -8,11 +8,20 @@ import kotlin.math.cos
 import kotlin.math.pow
 import kotlin.math.sin
 
-class Bird (view: LevelView, val pig: Pig, val obstacle: Obstacle, var groundheight: Float)
-    : Objet(20f, 0.0, 0.0, 0.0 ,0.0, 20f, 20f, view){
+class
 
 
-    val birdradius = height
+
+
+
+
+
+
+
+Bird (view: LevelView, val pig: Pig, val obstacle: Obstacle, var groundheight: Float, val birdradius:Float)
+    : Objet(20f, 0.0, 0.0, 0.0 ,0.0, view){
+
+
     val birdtexture = Paint()
     var status_launched = false
 
@@ -36,9 +45,6 @@ class Bird (view: LevelView, val pig: Pig, val obstacle: Obstacle, var groundhei
         //println("DOOOOOOOOOOOOOING IT")
         var dv2x=(1+coef)*(v2x-vmoyx)
         var dv2y=(1+coef)*(v2y-vmoyy)
-        println(vitessex)
-        println(dv1x)
-        println(vmoyx)
         vitessex-=dv1x
         //v2x-=dv2x
         vitessey-=dv1y
@@ -84,5 +90,35 @@ class Bird (view: LevelView, val pig: Pig, val obstacle: Obstacle, var groundhei
         vitessey= (-(2*diffy).toFloat()).toDouble()
         onscreen = true
         status_launched = true
+    }
+
+
+    override fun touchinggrass(): Boolean {
+        var distancecarre:Double=0.0
+        distancecarre= ((collision.m*coo.x+collision.p-coo.y).pow(2)/(1+collision.m.pow(2))).toDouble()
+         return (distancecarre<birdradius.pow(2))
+    }
+
+
+    override fun Collideground() {
+        if (vitessex * collision.nx+vitessey*collision.ny<1.2) {
+            var dvx : Double = vitessex * collision.nx
+            var dvy : Double = vitessey * collision.ny
+            vitessex = vitessex - dvx
+            vitessey = vitessey - dvy
+            vitessex*=collision.absorbtion
+            vitessey*=collision.absorbtion
+            birdtexture.color = Color.BLUE
+            println(vitessey)
+        }
+        else {
+            var dvx : Double = vitessex * collision.nx * (1+collision.absorbtion)
+            var dvy : Double = vitessey * collision.ny * (1+collision.absorbtion)
+            vitessex = vitessex - dvx
+            vitessey = vitessey - dvy
+            birdtexture.color = Color.GRAY
+
+
+        }
     }
 }

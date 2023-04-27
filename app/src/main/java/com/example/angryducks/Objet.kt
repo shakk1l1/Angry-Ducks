@@ -10,7 +10,7 @@ import kotlin.math.cos
 import kotlin.math.pow
 import kotlin.math.sin
 
-abstract class Objet (val mass : Float, var vitessex : Double, var vitessey : Double, var orientation : Double, var vangul : Double, var height: Float, var width: Float, val view: LevelView){
+abstract class Objet (val mass : Float, var vitessex : Double, var vitessey : Double, var orientation : Double, var vangul : Double, val view: LevelView){
 
     var onscreen = true
     var coo = PointF()
@@ -18,9 +18,9 @@ abstract class Objet (val mass : Float, var vitessex : Double, var vitessey : Do
 
     fun update(interval:Double){
         if(onscreen) {// la "gravité"
-            if (coo.y + height* sin(orientation) + width * cos(orientation) <= (view.screenHeight - collision.groundheight).toDouble()) {
-                vitessey += (interval * 1000.0f).toFloat()
-            }
+            //if (coo.iy + height* sin(orientation) + width * cos(orientation) <= (view.screenHeight - collision.groundheight).toDouble()) {
+            //vitessey += (interval * 1000.0f).toFloat()
+            //}
             coo.x += (interval * vitessex).toFloat()
             coo.y += (interval * vitessey).toFloat()
 
@@ -32,17 +32,23 @@ abstract class Objet (val mass : Float, var vitessex : Double, var vitessey : Do
             else if ( coo.y < - 2000f) {
                 onscreen = false
             }
-            else if (coo.y + height* sin(orientation) + width * cos(orientation) >= (view.screenHeight - collision.groundheight).toDouble()) {
-                if (vitessey > 0.00001) {
-                    vitessey = -(collision.absorbtion * vitessey)
-                    vitessex = (vitessex * collision.absorbtion)
 
-
-                }
-                else{
-                    vitessey = 0.0
-                }
+            if (touchinggrass()) {
+                Collideground()
             }
+            vitessey += (interval * 1000.0f).toFloat()
+
+            //else if (coo.y + height* sin(orientation) + width * cos(orientation) >= (view.screenHeight - collision.groundheight).toDouble()) {
+                //if (vitessey > 0.00001) {
+                    //vitessey = -(collision.absorbtion * vitessey)
+                    //vitessex = (vitessex * collision.absorbtion)
+
+
+                //}
+                //else{
+                    //vitessey = 0.0
+                //}
+            //}
 
         }
     }
@@ -60,9 +66,10 @@ abstract class Objet (val mass : Float, var vitessex : Double, var vitessey : Do
 
     }
 
-    fun touchinggrass(object1: Objet, ground1: Ground) {
+    abstract fun touchinggrass(): Boolean
 
-    }
+
+    abstract fun Collideground()
 
 
 }
