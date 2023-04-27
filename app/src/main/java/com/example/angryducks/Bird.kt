@@ -24,6 +24,7 @@ Bird (view: LevelView, val pig: Pig, val obstacle: Obstacle, var groundheight: F
 
     val birdtexture = Paint()
     var status_launched = false
+    var collidingbird = false
 
     init {
         birdtexture.color = Color.RED
@@ -35,8 +36,8 @@ Bird (view: LevelView, val pig: Pig, val obstacle: Obstacle, var groundheight: F
         var two = r1+r2
         colliding =(one<two)
 
-
     }
+
     fun BirdCollideBird(v1x:Double,v1y:Double,m1:Double,v2x:Double,v2y:Double,m2:Double,coef:Double, pig: Pig) {
         var vmoyx:Double = (m1*v1x+m2*v2x)/(m1+m2)
         var vmoyy:Double = (m1*v1y+m2*v2y)/(m1+m2)
@@ -53,6 +54,33 @@ Bird (view: LevelView, val pig: Pig, val obstacle: Obstacle, var groundheight: F
         colliding = false
         birdtexture.color = Color.GREEN
         pig.changeaftercoll(dv2x, dv2y)
+    }
+    fun CollisionSpherebird(x1:Double,y1:Double,r1:Double,x2:Double,y2:Double,r2:Double) {
+        var one = ((x1-x2).pow(2)+(y1-y2).pow(2)).pow(0.5)
+        var two = r1+r2
+        collidingbird =(one<two)
+
+    }
+    fun BirdCollideBird2(v1x:Double,v1y:Double,m1:Double,v2x:Double,v2y:Double,m2:Double,coef:Double, bird2: Bird) {
+        var vmoyx: Double = (m1 * v1x + m2 * v2x) / (m1 + m2)
+        var vmoyy: Double = (m1 * v1y + m2 * v2y) / (m1 + m2)
+        var dv1x = (1.0 + coef) * (v1x - vmoyx)
+        var dv1y = (1.0 + coef) * (v1y - vmoyy)
+        //println("DOOOOOOOOOOOOOING IT")
+        var dv2x = (1 + coef) * (v2x - vmoyx)
+        var dv2y = (1 + coef) * (v2y - vmoyy)
+        vitessex -= dv1x
+        //v2x-=dv2x
+        vitessey -= dv1y
+        //v2y-=dv2y
+        println(vitessex)
+        collidingbird = false
+        birdtexture.color = Color.GREEN
+        bird2.changeaftercoll(dv2x, dv2y)
+    }
+    fun changeaftercoll(v2x:Double, v2y:Double) {
+        vitessex-=v2x
+        vitessey-=v2y
     }
     /*
     fun update(interval:Double){
