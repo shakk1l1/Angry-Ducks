@@ -109,7 +109,6 @@ Bird (view: LevelView, val pig: Pig, val obstacle: Obstacle, var groundheight: F
             vitessex*=collision.absorbtion
             vitessey*=collision.absorbtion
             birdtexture.color = Color.BLUE
-            println(vitessey)
         }
         else {
             var dvx : Double = vitessex * collision.nx * (1+collision.absorbtion)
