@@ -329,6 +329,12 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
         thread = Thread(this)
         thread.start()
     }
+
+    for(bird in birds){
+        bird.reset()
+    }
+
+        pig.reset()
     }
 
     fun shootbird(diffx: Double, diffy: Double){

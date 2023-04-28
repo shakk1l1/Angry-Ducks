@@ -37,9 +37,6 @@ class Ground (var height : Float, val angle: Float, var screenHeight: Float, var
         objet.vitessex = vx - dvx
         objet.vitessey = vy - dvy
     }
-    fun Draw(){
-
-    }
     fun Reset(){
 
     }

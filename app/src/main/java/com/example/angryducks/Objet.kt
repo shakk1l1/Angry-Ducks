@@ -59,6 +59,12 @@ abstract class Objet (val mass : Float, var vitessex : Double, var vitessey : Do
         }
     }
 
+    open fun reset(){
+        coo.x = 0f
+        coo.y = 0f
+
+    }
+
     fun istouching(object1 : Objet, object2 : Objet) {
 
     }

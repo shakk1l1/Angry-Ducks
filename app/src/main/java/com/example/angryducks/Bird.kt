@@ -8,17 +8,7 @@ import kotlin.math.cos
 import kotlin.math.pow
 import kotlin.math.sin
 
-class
-
-
-
-
-
-
-
-
-
-Bird (view: LevelView, val pig: Pig, val obstacle: Obstacle, var groundheight: Float, val birdradius:Float)
+class Bird (view: LevelView, val pig: Pig, val obstacle: Obstacle, var groundheight: Float, val birdradius:Float)
     : Objet(20f, 0.0, 0.0, 0.0 ,0.0, view){
 
 
@@ -126,9 +116,13 @@ Bird (view: LevelView, val pig: Pig, val obstacle: Obstacle, var groundheight: F
     override fun touchinggrass(): Boolean {
         var distancecarre:Double=0.0
         distancecarre= ((collision.m*coo.x+(view.screenHeight-collision.groundheight)-coo.y).pow(2)/(1+collision.m.pow(2))).toDouble()
-         return (distancecarre<birdradius.pow(2))
+        return (distancecarre<birdradius.pow(2))
     }
 
+    override fun reset(){
+        onscreen = false
+        birdtexture.color = Color.RED
+    }
 
     override fun Collideground() {
         if (vitessex * collision.nx+vitessey*collision.ny<50) {
@@ -148,4 +142,5 @@ Bird (view: LevelView, val pig: Pig, val obstacle: Obstacle, var groundheight: F
 
         }
     }
+
 }

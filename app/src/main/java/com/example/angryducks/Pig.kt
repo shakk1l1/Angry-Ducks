@@ -31,6 +31,14 @@ class Pig(view: LevelView, val massep : Float, val radius: Float, var xp : Float
         //onscreen=true
     }
 
+    override fun reset() {
+        coo.x = xp
+        coo.y = yp
+        onscreen = true
+        vitessex = 0.0
+        vitessey = 0.0
+    }
+
 
     fun kill() {
 
