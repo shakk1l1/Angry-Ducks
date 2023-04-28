@@ -40,6 +40,7 @@ class Pig(view: LevelView, val massep : Float, val radius: Float, var xp : Float
     fun changeaftercoll(v2x:Double, v2y:Double) {
         vitessex-=v2x
         vitessey-=v2y
+        collidingObjectCountDown=10
     }
 
     override fun touchinggrass(): Boolean {
@@ -52,15 +53,15 @@ class Pig(view: LevelView, val massep : Float, val radius: Float, var xp : Float
         if (vitessex * collision.nx+vitessey*collision.ny<50) {
             var dvx : Double = vitessex * collision.nx
             var dvy : Double = vitessey * collision.ny
-            vitessex = vitessex - dvx
-            vitessey = vitessey - dvy
+            vitessex = (vitessex - dvx)*(1.0-collision.coefRoulement)
+            vitessey = (vitessey - dvy)*(1.0-collision.coefRoulement)
         }
         else {
             var dvx : Double = vitessex * collision.nx * (1+collision.absorbtion)
             var dvy : Double = vitessey * collision.ny * (1+collision.absorbtion)
             vitessex = vitessex - dvx
             vitessey = vitessey - dvy
-            collidingCountDown=3
+            collidingGroundCountDown=2
 
         }
     }

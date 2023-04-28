@@ -76,11 +76,13 @@ Bird (view: LevelView, val pig: Pig, val obstacle: Obstacle, var groundheight: F
         println(vitessex)
         collidingbird = false
         birdtexture.color = Color.GREEN
+        collidingObjectCountDown=10
         bird2.changeaftercoll(dv2x, dv2y)
     }
     fun changeaftercoll(v2x:Double, v2y:Double) {
         vitessex-=v2x
         vitessey-=v2y
+        collidingObjectCountDown=10
     }
     /*
     fun update(interval:Double){
@@ -132,17 +134,17 @@ Bird (view: LevelView, val pig: Pig, val obstacle: Obstacle, var groundheight: F
         if (vitessex * collision.nx+vitessey*collision.ny<50) {
             var dvx : Double = vitessex * collision.nx
             var dvy : Double = vitessey * collision.ny
-            vitessex = vitessex - dvx
-            vitessey = vitessey - dvy
+            vitessex = (vitessex - dvx)*(1.0-collision.coefRoulement)
+            vitessey = (vitessey - dvy)*(1.0-collision.coefRoulement)
             birdtexture.color = Color.BLUE
         }
         else {
             var dvx : Double = vitessex * collision.nx * (1+collision.absorbtion)
             var dvy : Double = vitessey * collision.ny * (1+collision.absorbtion)
-            vitessex = vitessex - dvx
-            vitessey = vitessey - dvy
+            vitessex = (vitessex - dvx)
+            vitessey = (vitessey - dvy)
             birdtexture.color = Color.GRAY
-            collidingCountDown=3
+            collidingGroundCountDown=2
 
         }
     }

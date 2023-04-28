@@ -177,25 +177,64 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
 
 
         for (bird in birds){
-            for(bird2 in birds){//en gros je fais les collisions entre oaso
-                if(bird != bird2){
-                    if (bird.coo.x!=0f){bird.CollisionSpherebird(bird.coo.x.toDouble(), bird.coo.y.toDouble(), bird.birdradius.toDouble(),bird2.coo.x.toDouble(), bird2.coo.y.toDouble(), bird2.birdradius.toDouble(),
-                    )}
-                    if(bird.collidingbird){//bird collide bird
-                        bird.BirdCollideBird2(bird.vitessex, bird.vitessey, bird.mass.toDouble(),bird2.vitessex, bird2.vitessey, bird2.mass.toDouble(),
-                            1.0, bird2)
+            if (bird.collidingObjectCountDown==0) {
+                for (bird2 in birds) {
+                    if (bird2.collidingObjectCountDown==0) {
+                    //en gros je fais les collisions entre oaso
+                        if (bird != bird2) {
+                            if (bird.coo.x != 0f) {
+                                bird.CollisionSpherebird(
+                                    bird.coo.x.toDouble(),
+                                    bird.coo.y.toDouble(),
+                                    bird.birdradius.toDouble(),
+                                    bird2.coo.x.toDouble(),
+                                    bird2.coo.y.toDouble(),
+                                    bird2.birdradius.toDouble(),
+                                )
+                            }
+                            if (bird.collidingbird) {//bird collide bird
+                                bird.BirdCollideBird2(
+                                    bird.vitessex,
+                                    bird.vitessey,
+                                    bird.mass.toDouble(),
+                                    bird2.vitessex,
+                                    bird2.vitessey,
+                                    bird2.mass.toDouble(),
+                                    1.0,
+                                    bird2
+                                )
+                            }
+                        }
+                    }
+                }
+                if (bird.coo.x != 0f) {
+                    if (pig.collidingObjectCountDown==0) {
+                        bird.CollisionSphereSphere(
+                            bird.coo.x.toDouble(),
+                            bird.coo.y.toDouble(),
+                            bird.birdradius.toDouble(),
+                            pig.coo.x.toDouble(),
+                            pig.coo.y.toDouble(),
+                            pig.radius.toDouble(),
+                        )
+
                     }
                 }
 
+                if (bird.colliding) {//bird collide pig
+                    bird.BirdCollideBird(
+                        bird.vitessex,
+                        bird.vitessey,
+                        bird.mass.toDouble(),
+                        pig.vitessex,
+                        pig.vitessey,
+                        pig.mass.toDouble(),
+                        1.0,
+                        pig
+                    )
+                }
             }
-            if (bird.coo.x!=0f){bird.CollisionSphereSphere(bird.coo.x.toDouble(), bird.coo.y.toDouble(), bird.birdradius.toDouble(),pig.coo.x.toDouble(), pig.coo.y.toDouble(), pig.radius.toDouble(),
-                )}
-
-            if(bird.colliding){//bird collide pig
-                bird.BirdCollideBird(bird.vitessex, bird.vitessey, bird.mass.toDouble(),pig.vitessex, pig.vitessey, pig.mass.toDouble(),
-                    1.0, pig)
-            }
-            if (bird.collidingCountDown==0){
+            if (bird.collidingGroundCountDown==0){
                 if (bird.touchinggrass()) {
                     bird.Collideground()
                 }
@@ -206,7 +245,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
             }
 
         }
-        if (pig.collidingCountDown==0){
+        if (pig.collidingGroundCountDown==0){
             if (pig.touchinggrass()) {
                 pig.Collideground()
             }
