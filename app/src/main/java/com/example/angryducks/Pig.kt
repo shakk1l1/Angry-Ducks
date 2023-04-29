@@ -3,22 +3,30 @@ package com.example.angryducks
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import android.os.Handler
+import android.os.Looper
+import android.widget.Toast
 import com.example.angryducks.Objet
+import kotlin.coroutines.coroutineContext
 import kotlin.math.cos
 import kotlin.math.pow
 import kotlin.math.sin
 
 
-class Pig(view: LevelView, val massep : Float, val radius: Float, var xp : Float, var yp : Float, var vxp : Double, var vyp : Double, var orp : Float, var vangulp : Float, val pigradius:Float)
-    : Objet(massep,vxp,vyp,orp.toDouble(),vangulp.toDouble(), view) {
-    var paintpig = Paint()
+class Pig(view: LevelView, val massep : Float, val radius: Float, var xp : Float, var yp : Float,
+          var vxp : Double, var vyp : Double, var orp : Float, var vangulp : Float, val pigradius:Float,
+          override var hp: Int, override var killed: Boolean)
 
+    : Objet(massep,vxp,vyp,orp.toDouble(),vangulp.toDouble(), view), Killable{
+    var paintpig = Paint()
     init {
-        paintpig.color = Color.parseColor("#2e6930")
+        paintpig.color = Color.parseColor("#056517")
         coo.x=xp
         coo.y = yp
         vitessex=vxp
         vitessey=vyp
+        killed = false
+        hp = 100
         onscreen=true
         println(onscreen)
     }
@@ -39,11 +47,6 @@ class Pig(view: LevelView, val massep : Float, val radius: Float, var xp : Float
         vitessey = 0.0
     }
 
-
-    fun kill() {
-
-
-    }
 
     fun changeaftercoll(v2x:Double, v2y:Double) {
         vitessex-=v2x
@@ -74,5 +77,17 @@ class Pig(view: LevelView, val massep : Float, val radius: Float, var xp : Float
         }
     }
 
+    override fun low() {
+        paintpig.color = Color.parseColor("#759116")
+    }
+
+    override fun mid() {
+        paintpig.color = Color.parseColor("#de1a24")
+    }
+
+    override fun kill() {
+        super.kill()
+        TODO("show kill dialog")
+    }
 
 }

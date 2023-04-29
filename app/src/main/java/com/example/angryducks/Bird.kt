@@ -33,7 +33,6 @@ class Bird (view: LevelView, val pig: Pig, val obstacle: Obstacle, var groundhei
         var vmoyy:Double = (m1*v1y+m2*v2y)/(m1+m2)
         var dv1x=(1.0+coef)*(v1x-vmoyx)
         var dv1y=(1.0+coef)*(v1y-vmoyy)
-        //println("DOOOOOOOOOOOOOING IT")
         var dv2x=(1+coef)*(v2x-vmoyx)
         var dv2y=(1+coef)*(v2y-vmoyy)
         vitessex-=dv1x
@@ -56,7 +55,6 @@ class Bird (view: LevelView, val pig: Pig, val obstacle: Obstacle, var groundhei
         var vmoyy: Double = (m1 * v1y + m2 * v2y) / (m1 + m2)
         var dv1x = (1.0 + coef) * (v1x - vmoyx)
         var dv1y = (1.0 + coef) * (v1y - vmoyy)
-        //println("DOOOOOOOOOOOOOING IT")
         var dv2x = (1 + coef) * (v2x - vmoyx)
         var dv2y = (1 + coef) * (v2y - vmoyy)
         vitessex -= dv1x
@@ -122,6 +120,8 @@ class Bird (view: LevelView, val pig: Pig, val obstacle: Obstacle, var groundhei
     override fun reset(){
         onscreen = false
         birdtexture.color = Color.RED
+        coo.x = 0f
+        coo.y = 0f
     }
 
     override fun Collideground() {

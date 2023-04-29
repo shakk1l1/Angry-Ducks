@@ -2,7 +2,10 @@ package com.example.angryducks
 
 import kotlin.math.pow
 
-class collision (val objet1: Objet, var objet2: Objet, view: LevelView){
+class collision (var bird: Bird, var pig: Pig, view: LevelView): Objectobservable{
+
+    override val observers: ArrayList<Objectobserver> = ArrayList()
+
     companion object {
         val groundheight = 100f
         val absorbtion = 0.5f

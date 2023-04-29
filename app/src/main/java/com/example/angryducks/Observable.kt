@@ -1,11 +1,11 @@
 package com.example.angryducks
 
-interface Observable {
-    val observers: ArrayList<Observer>;
-    fun add(observer: Observer) {
+interface Objectobservable {
+    val observers: ArrayList<Objectobserver>;
+    fun add(observer: Objectobserver) {
         observers.add(observer);
     }
-    fun remove(observer: Observer) {
+    fun remove(observer: Objectobserver) {
         observers.remove(observer);
     }
     fun hasUpdated() {

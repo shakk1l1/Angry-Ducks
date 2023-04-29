@@ -1,15 +1,30 @@
 package com.example.angryducks
 
-interface Killable{
+interface Killable {
 
-    fun changespeed(objet: Objet, vx: Double, vy: Double){
-        objet.vitessex += vx
-        objet.vitessey += vy
+    var hp: Int
+
+    var killed: Boolean
+    fun kill(){
+        killed = true
     }
 
-    fun collide(object1 : Objet, object2 : Objet){
-        object1.vitessey
-
+    fun ldeterioration(){
+        hp -= 25
+        if(hp <= 0){kill()}
+        else if(hp>=25){low()}
+        else if(hp>=50){mid()}
     }
+
+    fun hdeterioration(){
+        hp -= 50
+        if(hp <= 0){kill()}
+        else if(hp>=25){low()}
+        else if(hp>=50){mid()}
+    }
+
+    fun low()
+
+    fun mid()
 
 }

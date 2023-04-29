@@ -29,7 +29,11 @@ import java.nio.file.Files.size
 
 class LevelView @JvmOverloads constructor (context: Context, attributes: AttributeSet? = null, defStyleAttr: Int = 0): SurfaceView(context, attributes,defStyleAttr), SurfaceHolder.Callback, Runnable {
     lateinit var canvas: Canvas
+    //----------------------------------------------------------------------------------------------
+    // Variables init
+    //----------------------------------------------------------------------------------------------
 
+    //----------------------------------------------------------------------------------------------
     // visual
 
     val textPaint = Paint()
@@ -38,19 +42,26 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
     var drawing = false
     var SkyColor = Paint()
     val angleground = 0f
-    // JSP
-    lateinit var thread: Thread
-    val slingshot = Slingshot()
 
+    //----------------------------------------------------------------------------------------------
+    // Threads
+
+    lateinit var thread: Thread
+
+    //----------------------------------------------------------------------------------------------
     // object ans classes
+
     val bloc = Obstacle(700f, 900f, 600f, 0f, 100f, this)
-    val pig = Pig(this, 20.0f, 25f, 450f, 550f, 0.0, 100.0, 0.0f, 0f, 20f)
+    val pig = Pig(this, 20.0f, 25f, 450f, 550f, 0.0, 100.0, 0.0f, 0f, 20f, 100, false)
     val bird1 = Bird(this, pig, bloc, groundheight,20f) // peut-etre pas
     val bird2 = Bird(this, pig, bloc, groundheight,20f)
     val bird3 = Bird(this, pig, bloc, groundheight,20f)
     val ground = Ground(groundheight, 0f, 0f, 0f, this)
+    val slingshot = Slingshot()
 
+    //----------------------------------------------------------------------------------------------
     //var
+
     var birdavailable = 0
     var birdsshot = 0
     var pigleft = 0
@@ -61,11 +72,17 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
     var fixwaitime = 0.0
     var maxwaittime = 0.0
 
+    //----------------------------------------------------------------------------------------------
+    //sound
 
     val activity = context as FragmentActivity
     val soundPool: SoundPool
     val soundMap: SparseIntArray
-    //val gestureDetector = GestureDetector(this)
+
+
+    //----------------------------------------------------------------------------------------------
+    //Fonctions
+    //----------------------------------------------------------------------------------------------
 
     init {
         SkyColor.color = Color.parseColor("#add8e6")
@@ -86,17 +103,6 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
             .build()
 
         soundMap = SparseIntArray(3)
-        //soundMap.put(0, soundPool.load(context, R.raw.target_hit, 1))
-        //soundMap.put(1, soundPool.load(context, R.raw.canon_fire, 1))
-        //soundMap.put(2, soundPool.load(context, R.raw.blocker_hit, 1))
-    }
-
-    fun playObstacleSound() {
-        soundPool.play(soundMap.get(2), 1f, 1f, 1, 0, 1f)
-    }
-
-    fun playCibleSound() {
-        soundPool.play(soundMap.get(0), 1f, 1f, 1, 0, 1f)
     }
 
     fun pause() {
@@ -150,16 +156,6 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
         }
     }
 
-    /*
-    fun updatePositions(elapsedTimeMS: Double) {
-        val interval = elapsedTimeMS / 1000.0
-        bloc.update(interval)
-        pig.update()//(interval)
-        bird.update(interval)
-    }
-
-     */
-
     override fun run() {
         var previousFrameTime = System.currentTimeMillis()
         while (drawing) {
@@ -179,8 +175,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
         for (bird in birds){
             if (bird.collidingObjectCountDown==0) {
                 for (bird2 in birds) {
-                    if (bird2.collidingObjectCountDown==0) {
-                    //en gros je fais les collisions entre oaso
+                    if (bird2.collidingObjectCountDown==0) {        // collision entre oiseaux
                         if (bird != bird2) {
                             if (bird.coo.x != 0f) {
                                 bird.CollisionSpherebird(
@@ -192,7 +187,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
                                     bird2.birdradius.toDouble(),
                                 )
                             }
-                            if (bird.collidingbird) {//bird collide bird
+                            if (bird.collidingbird) {              //bird collide bird
                                 bird.BirdCollideBird2(
                                     bird.vitessex,
                                     bird.vitessey,
@@ -221,7 +216,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
                     }
                 }
 
-                if (bird.colliding) {//bird collide pig
+                if (bird.colliding) {                 //bird collide pig
                     bird.BirdCollideBird(
                         bird.vitessex,
                         bird.vitessey,
@@ -234,7 +229,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
                     )
                 }
             }
-            if (bird.collidingGroundCountDown==0){
+            if (bird.collidingGroundCountDown==0){     // bird colliding ground
                 if (bird.touchinggrass()) {
                     bird.Collideground()
                 }
@@ -245,11 +240,12 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
             }
 
         }
-        if (pig.collidingGroundCountDown==0){
+        if (pig.collidingGroundCountDown==0){       // pig colliding ground
             if (pig.touchinggrass()) {
                 pig.Collideground()
             }
         }
+
         pig.update(interval)
         waittime -= interval
 
@@ -261,7 +257,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
 
     }
 
-    fun gameOver() {
+    fun win() {        // win fnct
         drawing = false
 
         showGameOverDialog(R.string.win)
@@ -275,7 +271,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
 
     override fun surfaceDestroyed(holder: SurfaceHolder) {}
 
-    fun showGameOverDialog(messageId: Int) {
+    fun showGameOverDialog(messageId: Int) {        //message de fin de jeu
         class GameResult: DialogFragment() {
             @SuppressLint("StringFormatInvalid")
             override fun onCreateDialog(bundle: Bundle?): Dialog {
@@ -311,33 +307,25 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
 
 
 
-    fun newGame() {
-        /*
-        cible.resetCible()
-        obstacle.resetObstacle()
-        timeLeft = 60.0
-        balle.resetCanonBall()
-        shotsFired = 0
+    fun newGame() {         //new game reset
+        birdavailable = 3
+        birdsshot = 0
+        totalElapsedTime = 0.0
+        drawing = true
+        if (gameOver) {
+            gameOver = false
+            thread = Thread(this)
+            thread.start()
+        }
 
-         */
-    birdavailable = 3
-    birdsshot = 0
-    totalElapsedTime = 0.0
-    drawing = true
-    if (gameOver) {
-        gameOver = false
-        thread = Thread(this)
-        thread.start()
-    }
-
-    for(bird in birds){
-        bird.reset()
-    }
+        for(bird in birds){
+            bird.reset()
+        }
 
         pig.reset()
     }
 
-    fun shootbird(diffx: Double, diffy: Double){
+    fun shootbird(diffx: Double, diffy: Double){       // shoot bird
         if (birdavailable > 0){
             var bird = birds[birdavailable-1]
             /*
@@ -365,4 +353,3 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
         }
     }
 }
-

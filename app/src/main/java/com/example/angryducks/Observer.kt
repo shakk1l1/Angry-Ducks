@@ -1,5 +1,5 @@
 package com.example.angryducks
 
-interface Observer {
+interface Objectobserver {
     fun update();
 }
