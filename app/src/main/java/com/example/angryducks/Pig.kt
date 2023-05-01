@@ -45,6 +45,8 @@ class Pig(view: LevelView, val massep : Float, val radius: Float, var xp : Float
         onscreen = true
         vitessex = 0.0
         vitessey = 0.0
+        hp = 100
+        paintpig.color = Color.parseColor("#056517")
     }
 
 
@@ -52,6 +54,7 @@ class Pig(view: LevelView, val massep : Float, val radius: Float, var xp : Float
         vitessex-=v2x
         vitessey-=v2y
         collidingObjectCountDown=10
+        super.hdeterioration()
     }
 
     override fun touchinggrass(): Boolean {
@@ -87,7 +90,8 @@ class Pig(view: LevelView, val massep : Float, val radius: Float, var xp : Float
 
     override fun kill() {
         super.kill()
-        TODO("show kill dialog")
+        view.win()
+        """TODO("show kill dialog")"""
     }
 
 }
