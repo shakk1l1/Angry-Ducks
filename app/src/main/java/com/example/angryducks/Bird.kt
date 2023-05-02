@@ -4,6 +4,7 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.PointF
+import kotlin.math.absoluteValue
 import kotlin.math.cos
 import kotlin.math.pow
 import kotlin.math.sin
@@ -113,7 +114,7 @@ class Bird (view: LevelView, val pig: Pig, val obstacle: Obstacle, var groundhei
 
     override fun touchinggrass(): Boolean {
         var distancecarre:Double=0.0
-        distancecarre= ((collision.m*coo.x+(view.screenHeight-collision.groundheight)-coo.y).pow(2)/(1+collision.m.pow(2))).toDouble()
+        distancecarre= ((collision.m*coo.x-(view.screenHeight-collision.groundheight)+coo.y).pow(2)/(1+collision.m.pow(2))).toDouble()
         return (distancecarre<birdradius.pow(2))
     }
 
@@ -125,16 +126,17 @@ class Bird (view: LevelView, val pig: Pig, val obstacle: Obstacle, var groundhei
     }
 
     override fun Collideground() {
-        if (vitessex * collision.nx+vitessey*collision.ny<50) {
-            var dvx : Double = vitessex * collision.nx
-            var dvy : Double = vitessey * collision.ny
+        val prodvect=vitessex * collision.nx+vitessey*collision.ny
+        if ((prodvect).absoluteValue<50) {
+            var dvx : Double = prodvect * collision.nx
+            var dvy : Double = prodvect * collision.ny
             vitessex = (vitessex - dvx)*(1.0-collision.coefRoulement)
             vitessey = (vitessey - dvy)*(1.0-collision.coefRoulement)
             birdtexture.color = Color.BLUE
         }
         else {
-            var dvx : Double = vitessex * collision.nx * (1+collision.absorbtion)
-            var dvy : Double = vitessey * collision.ny * (1+collision.absorbtion)
+            var dvx : Double = prodvect * collision.nx * (1+collision.absorbtion)
+            var dvy : Double = prodvect * collision.ny * (1+collision.absorbtion)
             vitessex = (vitessex - dvx)
             vitessey = (vitessey - dvy)
             birdtexture.color = Color.GRAY

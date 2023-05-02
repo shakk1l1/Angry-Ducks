@@ -8,6 +8,7 @@ import android.os.Looper
 import android.widget.Toast
 import com.example.angryducks.Objet
 import kotlin.coroutines.coroutineContext
+import kotlin.math.absoluteValue
 import kotlin.math.cos
 import kotlin.math.pow
 import kotlin.math.sin
@@ -56,22 +57,25 @@ class Pig(view: LevelView, val massep : Float, val radius: Float, var xp : Float
 
     override fun touchinggrass(): Boolean {
         var distancecarre:Double=0.0
-        distancecarre= ((collision.m*coo.x+(view.screenHeight-collision.groundheight)-coo.y).pow(2)/(1+collision.m.pow(2))).toDouble()
+        distancecarre= ((collision.m*coo.x-(view.screenHeight-collision.groundheight)+coo.y).pow(2)/(1+collision.m.pow(2))).toDouble()
         return (distancecarre<pigradius.pow(2))
     }
 
     override fun Collideground() {
-        if (vitessex * collision.nx+vitessey*collision.ny<50) {
-            var dvx : Double = vitessex * collision.nx
-            var dvy : Double = vitessey * collision.ny
+        val prodvect=vitessex * collision.nx+vitessey*collision.ny
+        if ((prodvect).absoluteValue<50) {
+            var dvx : Double = prodvect * collision.nx
+            var dvy : Double = prodvect * collision.ny
             vitessex = (vitessex - dvx)*(1.0-collision.coefRoulement)
             vitessey = (vitessey - dvy)*(1.0-collision.coefRoulement)
+
         }
         else {
-            var dvx : Double = vitessex * collision.nx * (1+collision.absorbtion)
-            var dvy : Double = vitessey * collision.ny * (1+collision.absorbtion)
-            vitessex = vitessex - dvx
-            vitessey = vitessey - dvy
+            var dvx : Double = prodvect * collision.nx * (1+collision.absorbtion)
+            var dvy : Double = prodvect * collision.ny * (1+collision.absorbtion)
+            vitessex = (vitessex - dvx)
+            vitessey = (vitessey - dvy)
+
             collidingGroundCountDown=2
 
         }
