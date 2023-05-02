@@ -37,7 +37,7 @@ class Pig(view: LevelView, val massep : Float, val radius: Float, var xp : Float
         killed = false
         hp = 100
         onscreen=true
-        println(onscreen)
+        //println(onscreen)
     }
 
     fun draw(canvas: Canvas) {
@@ -79,7 +79,7 @@ class Pig(view: LevelView, val massep : Float, val radius: Float, var xp : Float
         //v2x-=dv2x
         vitessey-=dv1y
         //v2y-=dv2y
-        println(vitessex)
+        //println(vitessex)
         colliding = false
         //birdtexture.color = Color.GREEN
         pig.changeaftercoll(dv2x, dv2y)

@@ -84,6 +84,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
     var waittime = 0.0
     var fixwaitime = 0.0
     var maxwaittime = 0.0
+    var TempsFinDernieroiseau = 0L
 
     //----------------------------------------------------------------------------------------------
     //sound
@@ -191,14 +192,15 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
         birdcollisioner(birds, pigs, interval)
 
         waittime -= interval
-
+        var temps = System.currentTimeMillis() - TempsFinDernieroiseau
+        println(temps)
         if (pigleft == 0){
             gameOver = true
             drawing = false
             showGameOverDialog(R.string.win)
         }
 
-        else if(birdavailable == 0 && waittime <= -maxwaittime){
+        else if(birdavailable == 0 && waittime <= -maxwaittime && temps>10000L){
             gameOver = true
             drawing = false
             showGameOverDialog(R.string.lost)
@@ -277,6 +279,8 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
                 birdavailable --
                 birdsshot ++
                 waittime = fixwaitime
+                TempsFinDernieroiseau = System.currentTimeMillis()
+
             }
             else{
                 val formatted = String.format("%.2f", waittime)

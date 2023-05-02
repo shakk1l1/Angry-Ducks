@@ -42,7 +42,7 @@ class Bird (view: LevelView, val obstacle: Obstacle, var groundheight: Float, va
         //v2x-=dv2x
         vitessey-=dv1y
         //v2y-=dv2y
-        println(vitessex)
+        //println(vitessex)
         colliding = false
         birdtexture.color = Color.GREEN
         pig.changeaftercoll(dv2x, dv2y)
@@ -64,7 +64,7 @@ class Bird (view: LevelView, val obstacle: Obstacle, var groundheight: Float, va
         //v2x-=dv2x
         vitessey -= dv1y
         //v2y-=dv2y
-        println(vitessex)
+        //println(vitessex)
         collidingbird = false
         birdtexture.color = Color.GREEN
         collidingObjectCountDown=10
