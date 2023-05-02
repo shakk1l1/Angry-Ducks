@@ -51,6 +51,7 @@ class collision (){
                                 }
                             }
 
+
                             if (bird.colliding) {                 //bird collide pig
                                 bird.BirdCollideBird(
                                     bird.vitessex,
@@ -77,11 +78,36 @@ class collision (){
 
                 }
             for(pig in pigs) {
+                for (pig2 in pigs){
+                    if (pig2 != pig){
+                        pig.CollisionSphereSphere(
+                            pig.coo.x.toDouble(),
+                            pig.coo.y.toDouble(),
+                            pig.pigradius.toDouble(),
+                            pig2.coo.x.toDouble(),
+                            pig2.coo.y.toDouble(),
+                            pig2.radius.toDouble(),
+                        )
+                    }
+                    if (pig.collidingpig) {              //bird collide bird
+                        pig.BirdCollideBird(
+                            pig.vitessex,
+                            pig.vitessey,
+                            pig.mass.toDouble(),
+                            pig2.vitessex,
+                            pig2.vitessey,
+                            pig2.mass.toDouble(),
+                            1.0,
+                            pig2
+                        )
+                    }
+                }
                 if (pig.collidingGroundCountDown == 0) {       // pig colliding ground
                     if (pig.touchinggrass()) {
                         pig.Collideground()
                     }
                 }
+
                 pig.update2(interval)
             }
         }
