@@ -22,15 +22,15 @@ interface Killable {
     fun ldeterioration(){
         hp -= 25
         if(hp <= 0){kill()}
-        else if(hp>=25){low()}
-        else if(hp>=50){mid()}
+        else if(hp<=25){low()}
+        else if(hp<=50){mid()}
     }
 
     fun hdeterioration(){
         hp -= 50
         if(hp <= 0){kill()}
-        else if(hp>=25){low()}
-        else if(hp>=50){mid()}
+        else if(hp<=25){low()}
+        else if(hp<=50){mid()}
     }
 
     fun low()

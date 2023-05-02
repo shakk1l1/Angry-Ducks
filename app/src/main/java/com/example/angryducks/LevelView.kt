@@ -25,7 +25,9 @@ import com.example.angryducks.collision.Companion
 import com.example.angryducks.collision.Companion.absorbtion
 import com.example.angryducks.collision.Companion.birdcollisioner
 import com.example.angryducks.collision.Companion.groundheight
-import java.nio.file.Files.size
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+
 
 
 class LevelView @JvmOverloads constructor (context: Context, attributes: AttributeSet? = null, defStyleAttr: Int = 0): SurfaceView(context, attributes,defStyleAttr), SurfaceHolder.Callback, Runnable, Pigdobservable {
@@ -48,13 +50,14 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
     // Threads
 
     lateinit var thread: Thread
+    lateinit var thread2: Thread
 
     //----------------------------------------------------------------------------------------------
     // object ans classes
 
     val bloc = Obstacle(700f, 900f, 600f, 0f, 100f, this)
-    val pig = Pig(this, 20.0f, 25f, 450f, 550f, 0.0, 100.0, 0.0f, 0f, 20f, 100, false)
-    //val pig2 = Pig(this, 20.0f, 25f, 850f, 550f, 0.0, 100.0, 0.0f, 0f, 20f, 100, false)
+    val pig1 = Pig(this, 20.0f, 25f, 450f, 550f, 0.0, 100.0, 0.0f, 0f, 20f, 100, false)
+    val pig2 = Pig(this, 20.0f, 25f, 850f, 550f, 0.0, 100.0, 0.0f, 0f, 20f, 100, false)
     val bird1 = Bird(this, bloc, groundheight,20f) // peut-etre pas
     val bird2 = Bird(this, bloc, groundheight,20f)
     val bird3 = Bird(this, bloc, groundheight,20f)
@@ -67,12 +70,14 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
 
     var birdavailable = 0
     var birdsshot = 0
-    var pigleft = 0
+    var pigleft = 2
         set(value){
             field = value
-            suspend{hasUpdated()}
+            GlobalScope.launch {
+                hasUpdated()
+            }
         }
-    //val pigs = arrayOf(pig1, pig2)
+    val pigs = arrayOf(pig1, pig2)
     val birds = arrayOf(bird1, bird2, bird3)
     var gameOver = false
     var totalElapsedTime = 0.0
@@ -97,10 +102,10 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
         textPaint.textSize = screenWidth / 10
         textPaint.color = Color.BLACK
         birdavailable = 3
-        pigleft = 1
+        this.pigleft = 2
         waittime = 0.0
-        //this.add(pig1)
-        //this.add(pig2)
+        this.add(pig1)
+        this.add(pig2)
 
         val audioAttributes = AudioAttributes.Builder()
             .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)
@@ -146,7 +151,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
             )
 
             canvas.drawText(
-                "Il reste $birdavailable oiseau. ",
+                "Il reste $birdavailable oiseaux et $pigleft cochons",
                 50f, 70f, textPaint
             )
 
@@ -158,11 +163,11 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
 
             ground.draw(canvas)
 
-            //for(pig in pigs) {
+            for(pig in pigs) {
                 if (pig.onscreen) {
                     pig.draw(canvas)
                 }
-            //}
+            }
             bloc.draw(canvas)
             holder.unlockCanvasAndPost(canvas)
         }
@@ -181,9 +186,9 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
     }
 
     private fun updatePositions(elapsedTimeMS: Double) {
-        val interval = elapsedTimeMS / 1000.0
+        val interval = elapsedTimeMS / 1500.0
 
-        birdcollisioner(birds, pig, interval)
+        birdcollisioner(birds, pigs, interval)
 
         waittime -= interval
 
@@ -193,7 +198,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
             showGameOverDialog(R.string.win)
         }
 
-        else if((birdavailable == 0 && waittime <= -maxwaittime)|| pigleft ==0){
+        else if(birdavailable == 0 && waittime <= -maxwaittime){
             gameOver = true
             drawing = false
             showGameOverDialog(R.string.lost)
@@ -246,19 +251,18 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
 
     fun newGame() {         //new game reset
         birdavailable = 3
-        pigleft = 1
         birdsshot = 0
         totalElapsedTime = 0.0
         drawing = true
+        for(bird in birds){bird.reset()}
+        for(pig in pigs) {pig.reset()}
+        this.pigleft = 2
         if (gameOver) {
             gameOver = false
             thread = Thread(this)
             thread.start()
         }
-
-        for(bird in birds){bird.reset()}
-        //for(pig in pigs) {pig.reset()}
-        pig.reset()
+        //pig.reset()
     }
 
     fun shootbird(diffx: Double, diffy: Double){       // shoot bird
