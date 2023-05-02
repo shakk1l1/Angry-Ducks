@@ -1,5 +1,8 @@
 package com.example.angryducks
 
+import kotlin.math.pow
+import kotlin.math.sqrt
+
 interface Killable {
 
     var hp: Int
@@ -7,6 +10,13 @@ interface Killable {
     var killed: Boolean
     fun kill(){
         killed = true
+    }
+
+    fun deteriorationdetect(vx: Double, vy: Double){
+        val v = sqrt(vx.pow(2)+vy.pow(2))
+        if(v>500){kill()}
+        else if(v>250){hdeterioration()}
+        else if (v>100){ldeterioration()}
     }
 
     fun ldeterioration(){

@@ -18,7 +18,7 @@ abstract class Objet (val mass : Float, var vitessex : Double, var vitessey : Do
     var collidingGroundCountDown = 0
     var collidingObjectCountDown = 0
 
-    fun update(interval:Double){
+    open fun update2(interval:Double){
         if(onscreen) {// la "gravité"
             //if (coo.iy + height* sin(orientation) + width * cos(orientation) <= (view.screenHeight - collision.groundheight).toDouble()) {
             //vitessey += (interval * 1000.0f).toFloat()
