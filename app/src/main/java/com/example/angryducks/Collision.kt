@@ -82,7 +82,6 @@ class collision (){
                         pig.Collideground()
                     }
                 }
-
                 pig.update2(interval)
             }
         }
