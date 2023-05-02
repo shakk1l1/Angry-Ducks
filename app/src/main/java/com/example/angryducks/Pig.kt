@@ -3,10 +3,17 @@ package com.example.angryducks
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import android.icu.text.RelativeDateTimeFormatter
 import android.os.Handler
 import android.os.Looper
 import android.widget.Toast
 import com.example.angryducks.Objet
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.android.awaitFrame
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlin.concurrent.thread
 import kotlin.coroutines.coroutineContext
 import kotlin.math.absoluteValue
 import kotlin.math.cos
@@ -18,7 +25,7 @@ class Pig(view: LevelView, val massep : Float, val radius: Float, var xp : Float
           var vxp : Double, var vyp : Double, var orp : Float, var vangulp : Float, val pigradius:Float,
           override var hp: Int, override var killed: Boolean)
 
-    : Objet(massep,vxp,vyp,orp.toDouble(),vangulp.toDouble(), view), Killable{
+    : Objet(massep,vxp,vyp,orp.toDouble(),vangulp.toDouble(), view), Killable, Pigobserver{
     var paintpig = Paint()
     init {
         paintpig.color = Color.parseColor("#056517")
@@ -48,16 +55,24 @@ class Pig(view: LevelView, val massep : Float, val radius: Float, var xp : Float
         vitessey = 0.0
         hp = 100
         paintpig.color = Color.parseColor("#056517")
+        killed = false
     }
 
 
     fun changeaftercoll(v2x:Double, v2y:Double) {
         vitessex-=v2x
         vitessey-=v2y
+        deteriorationdetect(vitessex, vitessey)
         collidingObjectCountDown=10
-        super.hdeterioration()
     }
 
+    override fun update2(interval: Double) {
+        super.update2(interval)
+        if(killed && onscreen){
+            onscreen = false
+            view.pigleft -= 1
+        }
+    }
     override fun touchinggrass(): Boolean {
         var distancecarre:Double=0.0
         distancecarre= ((collision.m*coo.x-(view.screenHeight-collision.groundheight)+coo.y).pow(2)/(1+collision.m.pow(2))).toDouble()
@@ -94,8 +109,22 @@ class Pig(view: LevelView, val massep : Float, val radius: Float, var xp : Float
 
     override fun kill() {
         super.kill()
-        view.win()
-        """TODO("show kill dialog")"""
+        //  ODO("show kill dialog")
+    }
+
+    override fun update(){
+        GlobalScope.launch {
+            repeat(3) {
+                paintpig.color = Color.YELLOW
+                delay(150)
+                paintpig.color = Color.RED
+                delay(150)
+            }
+            if(hp<=25){low()}
+            else if(hp<=50){mid()}
+            else if(hp > 50){paintpig.color = Color.parseColor("#056517")}
+        }
+
     }
 
 }

@@ -9,7 +9,7 @@ import kotlin.math.cos
 import kotlin.math.pow
 import kotlin.math.sin
 
-class Bird (view: LevelView, val pig: Pig, val obstacle: Obstacle, var groundheight: Float, val birdradius:Float)
+class Bird (view: LevelView, val obstacle: Obstacle, var groundheight: Float, val birdradius:Float)
     : Objet(20f, 0.0, 0.0, 0.0 ,0.0, view){
 
 
@@ -28,6 +28,8 @@ class Bird (view: LevelView, val pig: Pig, val obstacle: Obstacle, var groundhei
         colliding =(one<two)
 
     }
+
+
 
     fun BirdCollideBird(v1x:Double,v1y:Double,m1:Double,v2x:Double,v2y:Double,m2:Double,coef:Double, pig: Pig) {
         var vmoyx:Double = (m1*v1x+m2*v2x)/(m1+m2)
