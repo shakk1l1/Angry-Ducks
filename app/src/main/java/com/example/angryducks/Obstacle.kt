@@ -41,6 +41,7 @@ class Obstacle (var obstacleDistance: Float, var obstacleDebut: Float, var obsta
             obstacleDistance + width, obstacleFin)
     }
     //à implémenter encore
+
     private fun collisionSpherePlan(objet: Objet,x: Double,y: Double,r: Double,m:Double,p:Double) {
         val distancecarre = (m*x+p-y).pow(2)/(1+m.pow(2))
         val colliding=(distancecarre<r.pow(2))

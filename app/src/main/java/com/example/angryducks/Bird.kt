@@ -64,10 +64,7 @@ class Bird (view: LevelView, var groundheight: Float, val birdradius:Float)
         val dv2x = (1 + coef) * (v2x - vmoyx)
         val dv2y = (1 + coef) * (v2y - vmoyy)
         vitessex -= dv1x
-        //v2x-=dv2x
         vitessey -= dv1y
-        //v2y-=dv2y
-        //println(vitessex)
         collidingbird = false
         birdtexture.color = Color.GREEN
         collidingObjectCountDown=10

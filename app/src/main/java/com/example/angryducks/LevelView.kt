@@ -37,7 +37,6 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
     var screenHeight = 1000f
     private var drawing = false
     private var skycolor = Paint()
-    //private val angleground = 0f
 
     //----------------------------------------------------------------------------------------------
     // Threads
@@ -53,7 +52,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
     private val pig3 = Pig(this, 20.0f, 25f, 1050f, 550f, 0.0, 100.0, 0.0f, 0f, 20f, 100, false)
     private val pig4 = Pig(this, 20.0f, 25f, 1250f, 550f, 0.0, 100.0, 0.0f, 0f, 20f, 100, false)
 
-    private val bird1 = Bird(this, groundheight,20f) // peut-etre pas
+    private val bird1 = Bird(this, groundheight,20f)
     private val bird2 = Bird(this, groundheight,20f)
     private val bird3 = Bird(this, groundheight,20f)
     private val bird4 = Bird(this, groundheight,20f)
@@ -261,7 +260,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
         //pig.reset()
     }
 
-    public fun shootbird(diffx: Double, diffy: Double){       // shoot bird
+    fun shootbird(diffx: Double, diffy: Double){       // shoot bird
         if (birdavailable > 0){
             val bird = birds[birdavailable-1]
             /*

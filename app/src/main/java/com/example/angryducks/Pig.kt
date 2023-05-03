@@ -3,25 +3,12 @@ package com.example.angryducks
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
-import android.icu.text.RelativeDateTimeFormatter
-import android.os.Handler
-import android.os.Looper
-import android.widget.Toast
-import com.example.angryducks.Objet
-import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.android.awaitFrame
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlin.concurrent.thread
-import kotlin.concurrent.timer
-import kotlin.concurrent.timerTask
-import kotlin.coroutines.coroutineContext
 import kotlin.math.absoluteValue
-import kotlin.math.cos
 import kotlin.math.pow
-import kotlin.math.sin
 
 
 class Pig(view: LevelView, val massep : Float, val radius: Float, var xp : Float, var yp : Float,
@@ -29,8 +16,8 @@ class Pig(view: LevelView, val massep : Float, val radius: Float, var xp : Float
           override var hp: Int, override var killed: Boolean)
 
     : Objet(massep,vxp,vyp,orp.toDouble(),vangulp.toDouble(), view), Killable, Pigobserver{
-    var paintpig = Paint()
-    var death:Boolean = false
+    private var paintpig = Paint()
+    private var death:Boolean = false
     private lateinit var canvas: Canvas
 
     val textpaint = Paint()
@@ -111,8 +98,7 @@ class Pig(view: LevelView, val massep : Float, val radius: Float, var xp : Float
 
 
     override fun touchinggrass(): Boolean {
-        var distancecarre:Double=0.0
-        distancecarre= ((Collision.m*coo.x-(view.screenHeight-Collision.groundheight)+coo.y).pow(2)/(1+Collision.m.pow(2))).toDouble()
+        val distancecarre = ((Collision.m*coo.x-(view.screenHeight-Collision.groundheight)+coo.y).pow(2)/(1+Collision.m.pow(2)))
         return (distancecarre<pigradius.pow(2))
     }
 
@@ -146,6 +132,7 @@ class Pig(view: LevelView, val massep : Float, val radius: Float, var xp : Float
 
     override fun kill() {
         super.kill()
+        //TODO: show "PAF"
     }
 
     @OptIn(DelicateCoroutinesApi::class)

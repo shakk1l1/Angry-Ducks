@@ -22,10 +22,9 @@ class Ground (var height : Float, val angle: Float, var screenHeight: Float, var
         ground.set(0f, screenHeight - height,
             screenWidth, screenHeight)
     }
-    //je les mets là mais à discuter
+    //je les mets là mais à discuter o
     private fun collisionSpherePlan(objet: Objet,x: Double,y: Double,r: Double,m:Double,p:Double) {
-        var distancecarre:Double=0.0
-        distancecarre=(m*x+p-y).pow(2)/(1+m.pow(2))
+        val distancecarre = (m*x+p-y).pow(2)/(1+m.pow(2))
         val colliding=(distancecarre<r.pow(2))
         if (colliding){
             collideGround(objet,objet.vitessex,objet.vitessey,1.0,1.0, Collision.absorbtion.toDouble())
