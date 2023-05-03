@@ -75,28 +75,7 @@ class Bird (view: LevelView, val obstacle: Obstacle, var groundheight: Float, va
         vitessey-=v2y
         collidingObjectCountDown=10
     }
-    /*
-    fun update(interval:Double){
-            // Si elle sorte de l'écran
-        if(birdonscreen) {
-            vitessey += (interval * 1000.0f).toFloat()
-            bird.x += (interval * vitessex).toFloat()
-            bird.y += (interval * vitessey).toFloat()
 
-            if (bird.x + birdradius > view.screenWidth
-                || bird.x - birdradius < 0
-            ) {
-                birdonscreen = false
-            } else if ( bird.y - birdradius < 0) {
-                birdonscreen = false
-            }
-            else if (bird.y + birdradius > view.screenHeight - groundheight){
-            }
-
-        }
-    }
-
-     */
 
     fun draw(canvas: Canvas) { //texture ou hitbox
         canvas.drawCircle(coo.x, coo.y, birdradius,

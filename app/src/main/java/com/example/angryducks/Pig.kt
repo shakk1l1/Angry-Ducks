@@ -28,6 +28,8 @@ class Pig(view: LevelView, val massep : Float, val radius: Float, var xp : Float
     : Objet(massep,vxp,vyp,orp.toDouble(),vangulp.toDouble(), view), Killable, Pigobserver{
     var paintpig = Paint()
     var collidingpig = false
+    var death:Boolean = false
+
     init {
         paintpig.color = Color.parseColor("#056517")
         coo.x=xp
@@ -96,6 +98,11 @@ class Pig(view: LevelView, val massep : Float, val radius: Float, var xp : Float
         if(killed && onscreen){
             onscreen = false
             view.pigleft -= 1
+            death = true
+        }
+        if(!onscreen && !death){
+            view.pigleft -=1
+            death = true
         }
     }
     override fun touchinggrass(): Boolean {
@@ -146,7 +153,7 @@ class Pig(view: LevelView, val massep : Float, val radius: Float, var xp : Float
                 delay(150)
             }
             if(hp<=25){low()}
-            else if(hp<=50){mid()}
+            else if(hp <= 50){mid()}
             else if(hp > 50){paintpig.color = Color.parseColor("#056517")}
         }
 
