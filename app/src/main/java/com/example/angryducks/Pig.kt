@@ -54,6 +54,7 @@ class Pig(view: LevelView, val massep : Float, val radius: Float, var xp : Float
         paintpig.color = Color.parseColor("#056517")
         killed = false
         death = false
+        //test
     }
     fun draw(canvas: Canvas) {
         canvas.drawCircle(
@@ -144,12 +145,7 @@ class Pig(view: LevelView, val massep : Float, val radius: Float, var xp : Float
 
     override fun kill() {
         super.kill()
-        GlobalScope.launch {
-            view.canvas.drawText("PAF",
-                coo.x, coo.y, textpaint
-            )
-            delay(500)
-        }
+        //TODO: show kill message
     }
 
     @OptIn(DelicateCoroutinesApi::class)
