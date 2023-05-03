@@ -31,8 +31,8 @@ abstract class Objet (val mass : Float, var vitessex : Double, var vitessey : Do
             coo.x += (interval * vitessex).toFloat()
             coo.y += (interval * vitessey).toFloat()
 
-            if (coo.x > view.screenWidth + 50f
-                || coo.x < -50f
+            if (coo.x > view.screenWidth + 0f
+                || coo.x < 0f
             ) {
                 onscreen = false
             }

@@ -73,9 +73,8 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
     var pigleft = 2
         set(value){
             field = value
-            GlobalScope.launch {
-                hasUpdated()
-            }
+            hasUpdated()
+
         }
     val pigs = arrayOf(pig1, pig2)
     val birds = arrayOf(bird1, bird2, bird3)
@@ -139,7 +138,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
         ground.screenHeight = screenHeight
         ground.screenWidth = screenWidth
         ground.setRect()
-        textPaint.setTextSize(w / 25f)
+        textPaint.textSize = w / 25f
         textPaint.isAntiAlias = true
     }
 

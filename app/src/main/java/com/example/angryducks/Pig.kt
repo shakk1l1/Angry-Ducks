@@ -9,6 +9,7 @@ import android.os.Looper
 import android.widget.Toast
 import com.example.angryducks.Objet
 import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.android.awaitFrame
 import kotlinx.coroutines.delay
@@ -29,6 +30,8 @@ class Pig(view: LevelView, val massep : Float, val radius: Float, var xp : Float
     var paintpig = Paint()
     var death:Boolean = false
 
+    val textpaint = Paint()
+
     init {
         paintpig.color = Color.parseColor("#056517")
         coo.x=xp
@@ -38,7 +41,8 @@ class Pig(view: LevelView, val massep : Float, val radius: Float, var xp : Float
         killed = false
         hp = 100
         onscreen=true
-        //println(onscreen)
+        textpaint.textSize = 200f
+        textpaint.color = Color.BLACK
     }
     override fun reset() {
         coo.x = xp
@@ -49,6 +53,7 @@ class Pig(view: LevelView, val massep : Float, val radius: Float, var xp : Float
         hp = 100
         paintpig.color = Color.parseColor("#056517")
         killed = false
+        death = false
     }
     fun draw(canvas: Canvas) {
         canvas.drawCircle(
@@ -64,8 +69,9 @@ class Pig(view: LevelView, val massep : Float, val radius: Float, var xp : Float
             view.pigleft -= 1
             death = true
         }
-        if(!onscreen && !death){
-            view.pigleft -=1
+        if(!onscreen && !death && !killed){
+            killed = true
+            view.pigleft -= 1
             death = true
         }
     }
@@ -138,9 +144,15 @@ class Pig(view: LevelView, val massep : Float, val radius: Float, var xp : Float
 
     override fun kill() {
         super.kill()
-        //  ODO("show kill dialog")
+        GlobalScope.launch {
+            view.canvas.drawText("PAF",
+                coo.x, coo.y, textpaint
+            )
+            delay(500)
+        }
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     override fun update(){
         GlobalScope.launch {
             repeat(3) {
