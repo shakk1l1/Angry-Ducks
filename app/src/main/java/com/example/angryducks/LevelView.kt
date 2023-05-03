@@ -177,7 +177,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
         var previousFrameTime = System.currentTimeMillis()
         while (drawing) {
             val currentTime = System.currentTimeMillis()
-            var elapsedTimeMS: Double = (currentTime - previousFrameTime).toDouble()
+            val elapsedTimeMS: Double = (currentTime - previousFrameTime).toDouble()
             totalElapsedTime += elapsedTimeMS / 1000.0
             updatePositions(elapsedTimeMS)
             draw()
@@ -186,7 +186,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
     }
 
     private fun updatePositions(elapsedTimeMS: Double) {
-        val interval = elapsedTimeMS / 1500.0
+        val interval = elapsedTimeMS / 1000.0
 
         birdcollisioner(birds, pigs, interval)
 

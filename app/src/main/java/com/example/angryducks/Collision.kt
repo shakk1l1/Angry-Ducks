@@ -70,12 +70,10 @@ class collision (){
                                 bird.Collideground()
                             }
                         }
-
-                        if (bird.status_launched) {
-                            bird.update2(interval)
-                        }
                     }
-
+                    if (bird.status_launched) {
+                        bird.update2(interval)
+                    }
                 }
             for(pig in pigs) {
                 for (pig2 in pigs){

@@ -140,7 +140,7 @@ class Pig(view: LevelView, val massep : Float, val radius: Float, var xp : Float
     }
 
     override fun mid() {
-        paintpig.color = Color.parseColor("#de1a24")
+        paintpig.color = Color.parseColor("#3f8f29")
     }
 
     override fun kill() {
