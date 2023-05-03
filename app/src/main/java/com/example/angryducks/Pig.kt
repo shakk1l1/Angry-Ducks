@@ -27,7 +27,6 @@ class Pig(view: LevelView, val massep : Float, val radius: Float, var xp : Float
 
     : Objet(massep,vxp,vyp,orp.toDouble(),vangulp.toDouble(), view), Killable, Pigobserver{
     var paintpig = Paint()
-    var collidingpig = false
     var death:Boolean = false
 
     init {
@@ -41,15 +40,6 @@ class Pig(view: LevelView, val massep : Float, val radius: Float, var xp : Float
         onscreen=true
         //println(onscreen)
     }
-
-    fun draw(canvas: Canvas) {
-        canvas.drawCircle(
-            coo.x, coo.y, radius, paintpig
-        )
-        canvas.drawText("${coo.x} + ${vitessey}+${coo.y} ",800f,500f,paintpig)
-        //onscreen=true
-    }
-
     override fun reset() {
         coo.x = xp
         coo.y = yp
@@ -60,39 +50,13 @@ class Pig(view: LevelView, val massep : Float, val radius: Float, var xp : Float
         paintpig.color = Color.parseColor("#056517")
         killed = false
     }
-
-    fun CollisionSphereSphere(x1:Double,y1:Double,r1:Double,x2:Double,y2:Double,r2:Double) {
-        var one = ((x1-x2).pow(2)+(y1-y2).pow(2)).pow(0.5)
-        var two = r1+r2
-        collidingpig =(one<two)
-
+    fun draw(canvas: Canvas) {
+        canvas.drawCircle(
+            coo.x, coo.y, radius, paintpig
+        )
+        canvas.drawText("${coo.x} + ${vitessey}+${coo.y} ",800f,500f,paintpig)
+        //onscreen=true
     }
-
-
-
-    fun BirdCollideBird(v1x:Double,v1y:Double,m1:Double,v2x:Double,v2y:Double,m2:Double,coef:Double, pig: Pig) {
-        var vmoyx:Double = (m1*v1x+m2*v2x)/(m1+m2)
-        var vmoyy:Double = (m1*v1y+m2*v2y)/(m1+m2)
-        var dv1x=(1.0+coef)*(v1x-vmoyx)
-        var dv1y=(1.0+coef)*(v1y-vmoyy)
-        var dv2x=(1+coef)*(v2x-vmoyx)
-        var dv2y=(1+coef)*(v2y-vmoyy)
-        vitessex-=dv1x
-        //v2x-=dv2x
-        vitessey-=dv1y
-        //v2y-=dv2y
-        //println(vitessex)
-        colliding = false
-        //birdtexture.color = Color.GREEN
-        pig.changeaftercoll(dv2x, dv2y)
-    }
-    fun changeaftercoll(v2x:Double, v2y:Double) {
-        vitessex-=v2x
-        vitessey-=v2y
-        deteriorationdetect(vitessex, vitessey)
-        collidingObjectCountDown=10
-    }
-
     override fun update2(interval: Double) {
         super.update2(interval)
         if(killed && onscreen){
@@ -105,6 +69,39 @@ class Pig(view: LevelView, val massep : Float, val radius: Float, var xp : Float
             death = true
         }
     }
+    override fun changeaftercoll(v2x:Double, v2y:Double) {
+        vitessex-=v2x
+        vitessey-=v2y
+        deteriorationdetect(vitessex, vitessey)
+        collidingObjectCountDown=10
+    }
+
+    /*fun CollisionSphereSphere(x1:Double,y1:Double,r1:Double,x2:Double,y2:Double,r2:Double) {
+        var one = ((x1-x2).pow(2)+(y1-y2).pow(2)).pow(0.5)
+        var two = r1+r2
+        collidingpig =(one<two)
+
+    }*/
+
+    /*fun SphereCollidePig(v1x:Double,v1y:Double,m1:Double,v2x:Double,v2y:Double,m2:Double,coef:Double, pig: Pig) {
+        var vmoyx:Double = (m1*v1x+m2*v2x)/(m1+m2)
+        var vmoyy:Double = (m1*v1y+m2*v2y)/(m1+m2)
+        var dv1x=(1.0+coef)*(v1x-vmoyx)
+        var dv1y=(1.0+coef)*(v1y-vmoyy)
+        var dv2x=(1+coef)*(v2x-vmoyx)
+        var dv2y=(1+coef)*(v2y-vmoyy)
+        vitessex-=dv1x
+        //v2x-=dv2x
+        vitessey-=dv1y
+        //v2y-=dv2y
+        //println(vitessex)
+        collidingpig = false
+        //birdtexture.color = Color.GREEN
+        pig.changeaftercoll(dv2x, dv2y)
+    }*/
+
+
+
     override fun touchinggrass(): Boolean {
         var distancecarre:Double=0.0
         distancecarre= ((collision.m*coo.x-(view.screenHeight-collision.groundheight)+coo.y).pow(2)/(1+collision.m.pow(2))).toDouble()

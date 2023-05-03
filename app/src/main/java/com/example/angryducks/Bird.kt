@@ -17,21 +17,27 @@ class Bird (view: LevelView, val obstacle: Obstacle, var groundheight: Float, va
     var status_launched = false
     var collidingbird = false
 
+
     init {
         birdtexture.color = Color.RED
     }
-
-
-    fun CollisionSphereSphere(x1:Double,y1:Double,r1:Double,x2:Double,y2:Double,r2:Double) {
-        var one = ((x1-x2).pow(2)+(y1-y2).pow(2)).pow(0.5)
-        var two = r1+r2
-        colliding =(one<two)
+    override fun reset(){
+        onscreen = false
+        birdtexture.color = Color.RED
+        coo.x = 0f
+        coo.y = 0f
+    }
+    fun draw(canvas: Canvas) { //texture ou hitbox
+        canvas.drawCircle(coo.x, coo.y, birdradius,
+            birdtexture)
 
     }
 
+    override fun attributecollision() {
+        birdtexture.color = Color.GREEN
+    }
 
-
-    fun BirdCollideBird(v1x:Double,v1y:Double,m1:Double,v2x:Double,v2y:Double,m2:Double,coef:Double, pig: Pig) {
+    /*fun SphereCollidePig(v1x:Double,v1y:Double,m1:Double,v2x:Double,v2y:Double,m2:Double,coef:Double, pig: Pig) {
         var vmoyx:Double = (m1*v1x+m2*v2x)/(m1+m2)
         var vmoyy:Double = (m1*v1y+m2*v2y)/(m1+m2)
         var dv1x=(1.0+coef)*(v1x-vmoyx)
@@ -43,10 +49,10 @@ class Bird (view: LevelView, val obstacle: Obstacle, var groundheight: Float, va
         vitessey-=dv1y
         //v2y-=dv2y
         //println(vitessex)
-        colliding = false
+        collidingpig = false
         birdtexture.color = Color.GREEN
         pig.changeaftercoll(dv2x, dv2y)
-    }
+    }*/
     fun CollisionSpherebird(x1:Double,y1:Double,r1:Double,x2:Double,y2:Double,r2:Double) {
         var one = ((x1-x2).pow(2)+(y1-y2).pow(2)).pow(0.5)
         var two = r1+r2
@@ -70,27 +76,11 @@ class Bird (view: LevelView, val obstacle: Obstacle, var groundheight: Float, va
         collidingObjectCountDown=10
         bird2.changeaftercoll(dv2x, dv2y)
     }
-    fun changeaftercoll(v2x:Double, v2y:Double) {
+    /*fun changeaftercoll(v2x:Double, v2y:Double) {
         vitessex-=v2x
         vitessey-=v2y
         collidingObjectCountDown=10
-    }
-
-
-    fun draw(canvas: Canvas) { //texture ou hitbox
-        canvas.drawCircle(coo.x, coo.y, birdradius,
-            birdtexture)
-
-    }
-
-    fun launch(diffx: Double, diffy: Double){
-        coo.x = (birdradius)
-        coo.y = (view.screenHeight - groundheight - 120f)
-        vitessex= (-(2*diffx).toFloat()).toDouble()
-        vitessey= (-(2*diffy).toFloat()).toDouble()
-        onscreen = true
-        status_launched = true
-    }
+    }*/
 
 
     override fun touchinggrass(): Boolean {
@@ -99,12 +89,7 @@ class Bird (view: LevelView, val obstacle: Obstacle, var groundheight: Float, va
         return (distancecarre<birdradius.pow(2))
     }
 
-    override fun reset(){
-        onscreen = false
-        birdtexture.color = Color.RED
-        coo.x = 0f
-        coo.y = 0f
-    }
+
 
     override fun Collideground() {
         val prodvect=vitessex * collision.nx+vitessey*collision.ny
@@ -125,5 +110,12 @@ class Bird (view: LevelView, val obstacle: Obstacle, var groundheight: Float, va
 
         }
     }
-
+    fun launch(diffx: Double, diffy: Double){
+        coo.x = (birdradius)
+        coo.y = (view.screenHeight - groundheight - 120f)
+        vitessex= (-(2*diffx).toFloat()).toDouble()
+        vitessey= (-(2*diffy).toFloat()).toDouble()
+        onscreen = true
+        status_launched = true
+    }
 }

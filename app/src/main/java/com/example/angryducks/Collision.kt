@@ -39,7 +39,7 @@ class collision (){
                             }
                             if (bird.coo.x != 0f) {
                                 if (pig.collidingObjectCountDown == 0) {
-                                    bird.CollisionSphereSphere(
+                                    bird.CollisionSpherePig(
                                         bird.coo.x.toDouble(),
                                         bird.coo.y.toDouble(),
                                         bird.birdradius.toDouble(),
@@ -52,8 +52,8 @@ class collision (){
                             }
 
 
-                            if (bird.colliding) {                 //bird collide pig
-                                bird.BirdCollideBird(
+                            if (bird.collidingpig) {                 //bird collide pig
+                                bird.SphereCollidePig(
                                     bird.vitessex,
                                     bird.vitessey,
                                     bird.mass.toDouble(),
@@ -80,7 +80,7 @@ class collision (){
             for(pig in pigs) {
                 for (pig2 in pigs){
                     if (pig2 != pig){
-                        pig.CollisionSphereSphere(
+                        pig.CollisionSpherePig(
                             pig.coo.x.toDouble(),
                             pig.coo.y.toDouble(),
                             pig.pigradius.toDouble(),
@@ -90,7 +90,7 @@ class collision (){
                         )
                     }
                     if (pig.collidingpig) {              //bird collide bird
-                        pig.BirdCollideBird(
+                        pig.SphereCollidePig(
                             pig.vitessex,
                             pig.vitessey,
                             pig.mass.toDouble(),
