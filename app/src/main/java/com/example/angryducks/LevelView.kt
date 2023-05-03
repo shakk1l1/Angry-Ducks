@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
-import android.content.DialogInterface
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
@@ -14,24 +13,18 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.AttributeSet
+import android.util.SparseIntArray
 import android.view.SurfaceHolder
 import android.view.SurfaceView
-import android.util.SparseIntArray
 import android.widget.Toast
-import androidx.fragment.app.FragmentActivity
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
-import com.example.angryducks.collision.Companion
-import com.example.angryducks.collision.Companion.absorbtion
-import com.example.angryducks.collision.Companion.birdcollisioner
-import com.example.angryducks.collision.Companion.groundheight
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-
+import androidx.fragment.app.FragmentActivity
+import com.example.angryducks.Collision.Companion.birdcollisioner
+import com.example.angryducks.Collision.Companion.groundheight
 
 
 class LevelView @JvmOverloads constructor (context: Context, attributes: AttributeSet? = null, defStyleAttr: Int = 0): SurfaceView(context, attributes,defStyleAttr), SurfaceHolder.Callback, Runnable, Pigdobservable {
-    lateinit var canvas: Canvas
+    private lateinit var canvas: Canvas
     //----------------------------------------------------------------------------------------------
     // Variables init
     //----------------------------------------------------------------------------------------------
@@ -39,58 +32,56 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
     //----------------------------------------------------------------------------------------------
     // visual
 
-    val textPaint = Paint()
+    private val textPaint = Paint()
     var screenWidth = 2000f
     var screenHeight = 1000f
-    var drawing = false
-    var SkyColor = Paint()
-    val angleground = 0f
+    private var drawing = false
+    private var skycolor = Paint()
+    //private val angleground = 0f
 
     //----------------------------------------------------------------------------------------------
     // Threads
 
-    lateinit var thread: Thread
-    lateinit var thread2: Thread
+    private lateinit var thread: Thread
 
     //----------------------------------------------------------------------------------------------
     // object ans classes
 
-    val bloc = Obstacle(700f, 900f, 600f, 0f, 100f, this)
-    val pig1 = Pig(this, 20.0f, 25f, 450f, 550f, 0.0, 100.0, 0.0f, 0f, 20f, 100, false)
-    val pig2 = Pig(this, 20.0f, 25f, 850f, 550f, 0.0, 100.0, 0.0f, 0f, 20f, 100, false)
-    val bird1 = Bird(this, bloc, groundheight,20f) // peut-etre pas
-    val bird2 = Bird(this, bloc, groundheight,20f)
-    val bird3 = Bird(this, bloc, groundheight,20f)
-    val ground = Ground(groundheight, 0f, 0f, 0f, this)
-    val slingshot = Slingshot()
+    private val bloc = Obstacle(700f, 900f, 600f, 0f, 100f, this)
+    private val pig1 = Pig(this, 20.0f, 25f, 450f, 550f, 0.0, 100.0, 0.0f, 0f, 20f, 100, false)
+    private val pig2 = Pig(this, 20.0f, 25f, 850f, 550f, 0.0, 100.0, 0.0f, 0f, 20f, 100, false)
+    private val bird1 = Bird(this, groundheight,20f) // peut-etre pas
+    private val bird2 = Bird(this, groundheight,20f)
+    private val bird3 = Bird(this, groundheight,20f)
+    private val ground = Ground(groundheight, 0f, 0f, 0f, this)
     override val observers: ArrayList<Pigobserver> = ArrayList()
 
     //----------------------------------------------------------------------------------------------
     //var
 
-    var birdavailable = 0
-    var birdsshot = 0
+    private var birdavailable = 0
+    private var birdsshot = 0
     var pigleft = 2
         set(value){
             field = value
             hasUpdated()
 
         }
-    val pigs = arrayOf(pig1, pig2)
-    val birds = arrayOf(bird1, bird2, bird3)
-    var gameOver = false
-    var totalElapsedTime = 0.0
-    var waittime = 0.0
-    var fixwaitime = 0.0   //cmb de temp avant prochain oiseau
-    var maxwaittime = 0.0   //cmb de temp avant fin du jeu
+    private val pigs = arrayOf(pig1, pig2)
+    private val birds = arrayOf(bird1, bird2, bird3)
+    private var gameOver = false
+    private var totalElapsedTime = 0.0
+    private var waittime = 0.0
+    private var fixwaitime = 0.0   //cmb de temp avant prochain oiseau
+    private var maxwaittime = 0.0   //cmb de temp avant fin du jeu
     //var TempsFinDernieroiseau = 0L
 
     //----------------------------------------------------------------------------------------------
     //sound
 
-    val activity = context as FragmentActivity
-    val soundPool: SoundPool
-    val soundMap: SparseIntArray
+    private val activity = context as FragmentActivity
+    private val soundPool: SoundPool
+    private val soundMap: SparseIntArray
 
 
     //----------------------------------------------------------------------------------------------
@@ -98,7 +89,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
     //----------------------------------------------------------------------------------------------
 
     init {
-        SkyColor.color = Color.parseColor("#add8e6")
+        skycolor.color = Color.parseColor("#add8e6")
         textPaint.textSize = screenWidth / 10
         textPaint.color = Color.BLACK
         birdavailable = 3
@@ -147,7 +138,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
             canvas = holder.lockCanvas()
             canvas.drawRect(
                 0f, 0f, canvas.width.toFloat(),
-                canvas.height.toFloat(), SkyColor
+                canvas.height.toFloat(), skycolor
             )
 
             canvas.drawText(
@@ -157,7 +148,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
 
 
             for (bird in birds) {
-                if (bird.status_launched && bird.onscreen)
+                if (bird.statuslaunched && bird.onscreen)
                     bird.draw(canvas)
             }
 
@@ -214,43 +205,40 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
 
     override fun surfaceDestroyed(holder: SurfaceHolder) {}
 
-    fun showGameOverDialog(messageId: Int) {        //message de fin de jeu
+    private fun showGameOverDialog(messageId: Int) {        //message de fin de jeu
         class GameResult: DialogFragment() {
             @SuppressLint("StringFormatInvalid")
             override fun onCreateDialog(bundle: Bundle?): Dialog {
-                val builder = AlertDialog.Builder(getActivity())
+                val builder = AlertDialog.Builder(activity)
                 builder.setTitle(resources.getString(messageId))
                 builder.setMessage(
                     resources.getString(
                         R.string.results_format, birdsshot, totalElapsedTime
                     )
                 )
-                builder.setPositiveButton(R.string.reset_game,
-                    DialogInterface.OnClickListener { _, _->newGame()}
-                )
+                builder.setPositiveButton(R.string.reset_game
+                ) { _, _ -> newGame() }
                 return builder.create()
             }
         }
 
-        activity.runOnUiThread(
-            Runnable {
-                val ft = activity.supportFragmentManager.beginTransaction()
-                val prev =
-                    activity.supportFragmentManager.findFragmentByTag("dialog")
-                if (prev != null) {
-                    ft.remove(prev)
-                }
-                ft.addToBackStack(null)
-                val gameResult = GameResult()
-                gameResult.setCancelable(false)
-                gameResult.show(ft,"dialog")
+        activity.runOnUiThread {
+            val ft = activity.supportFragmentManager.beginTransaction()
+            val prev =
+                activity.supportFragmentManager.findFragmentByTag("dialog")
+            if (prev != null) {
+                ft.remove(prev)
             }
-        )
+            ft.addToBackStack(null)
+            val gameResult = GameResult()
+            gameResult.isCancelable = false
+            gameResult.show(ft, "dialog")
+        }
     }
 
 
 
-    fun newGame() {         //new game reset
+    private fun newGame() {         //new game reset
         birdavailable = 3
         birdsshot = 0
         totalElapsedTime = 0.0
@@ -266,9 +254,9 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
         //pig.reset()
     }
 
-    fun shootbird(diffx: Double, diffy: Double){       // shoot bird
+    public fun shootbird(diffx: Double, diffy: Double){       // shoot bird
         if (birdavailable > 0){
-            var bird = birds[birdavailable-1]
+            val bird = birds[birdavailable-1]
             /*
             slingshot.align(diffx, diffy)
 

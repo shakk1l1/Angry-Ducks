@@ -4,8 +4,8 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.PointF
 import android.widget.Toast
-import com.example.angryducks.collision.Companion.absorbtion
-import com.example.angryducks.collision.Companion.groundheight
+import com.example.angryducks.Collision.Companion.absorbtion
+import com.example.angryducks.Collision.Companion.groundheight
 import kotlin.math.cos
 import kotlin.math.pow
 import kotlin.math.sin
@@ -67,18 +67,18 @@ abstract class Objet (val mass : Float, var vitessex : Double, var vitessey : Do
 
     }
 
-    fun CollisionSpherePig(x1:Double,y1:Double,r1:Double,x2:Double,y2:Double,r2:Double) {
-        var one = ((x1-x2).pow(2)+(y1-y2).pow(2)).pow(0.5)
-        var two = r1+r2
+    fun collisionSpherePig(x1:Double,y1:Double,r1:Double,x2:Double,y2:Double,r2:Double) {
+        val one = ((x1-x2).pow(2)+(y1-y2).pow(2)).pow(0.5)
+        val two = r1+r2
         collidingpig =(one<two)
     }
-    fun SphereCollidePig(v1x:Double,v1y:Double,m1:Double,v2x:Double,v2y:Double,m2:Double,coef:Double, pig: Pig) {
-        var vmoyx:Double = (m1*v1x+m2*v2x)/(m1+m2)
-        var vmoyy:Double = (m1*v1y+m2*v2y)/(m1+m2)
-        var dv1x=(1.0+coef)*(v1x-vmoyx)
-        var dv1y=(1.0+coef)*(v1y-vmoyy)
-        var dv2x=(1+coef)*(v2x-vmoyx)
-        var dv2y=(1+coef)*(v2y-vmoyy)
+    fun sphereCollidePig(v1x:Double,v1y:Double,m1:Double,v2x:Double,v2y:Double,m2:Double,coef:Double, pig: Pig) {
+        val vmoyx:Double = (m1*v1x+m2*v2x)/(m1+m2)
+        val vmoyy:Double = (m1*v1y+m2*v2y)/(m1+m2)
+        val dv1x=(1.0+coef)*(v1x-vmoyx)
+        val dv1y=(1.0+coef)*(v1y-vmoyy)
+        val dv2x=(1+coef)*(v2x-vmoyx)
+        val dv2y=(1+coef)*(v2y-vmoyy)
         vitessex-=dv1x
         //v2x-=dv2x
         vitessey-=dv1y
@@ -95,23 +95,11 @@ abstract class Objet (val mass : Float, var vitessex : Double, var vitessey : Do
         vitessey-=v2y
         collidingObjectCountDown=10
     }
-    fun istouching(object1 : Objet, object2 : Objet) {
-
-    }
-
-
-    fun applyforce(object1 : Objet, object2 : Objet) {
-
-    }
-
-    fun accelerate(object1 : Objet, force1 : Killable) {
-
-    }
 
     abstract fun touchinggrass(): Boolean
 
 
-    abstract fun Collideground()
+    abstract fun collideground()
 
 
 

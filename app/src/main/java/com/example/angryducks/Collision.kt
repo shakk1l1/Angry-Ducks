@@ -1,8 +1,7 @@
 package com.example.angryducks
 
-import kotlin.math.pow
 
-class collision (){
+class Collision{
 
     companion object {
         fun birdcollisioner(birds: Array<Bird>, pigs: Array<Pig>, interval: Double){
@@ -13,7 +12,7 @@ class collision (){
                                 if (bird2.collidingObjectCountDown == 0) {        // collision entre oiseaux
                                     if (bird != bird2) {
                                         if (bird.coo.x != 0f) {
-                                            bird.CollisionSpherebird(
+                                            bird.collisionSpherebird(
                                                 bird.coo.x.toDouble(),
                                                 bird.coo.y.toDouble(),
                                                 bird.birdradius.toDouble(),
@@ -23,7 +22,7 @@ class collision (){
                                             )
                                         }
                                         if (bird.collidingbird) {              //bird collide bird
-                                            bird.BirdCollideBird2(
+                                            bird.birdCollideBird2(
                                                 bird.vitessex,
                                                 bird.vitessey,
                                                 bird.mass.toDouble(),
@@ -39,7 +38,7 @@ class collision (){
                             }
                             if (bird.coo.x != 0f) {
                                 if (pig.collidingObjectCountDown == 0) {
-                                    bird.CollisionSpherePig(
+                                    bird.collisionSpherePig(
                                         bird.coo.x.toDouble(),
                                         bird.coo.y.toDouble(),
                                         bird.birdradius.toDouble(),
@@ -53,7 +52,7 @@ class collision (){
 
 
                             if (bird.collidingpig) {                 //bird collide pig
-                                bird.SphereCollidePig(
+                                bird.sphereCollidePig(
                                     bird.vitessex,
                                     bird.vitessey,
                                     bird.mass.toDouble(),
@@ -67,18 +66,18 @@ class collision (){
                         }
                         if (bird.collidingGroundCountDown == 0) {     // bird colliding ground
                             if (bird.touchinggrass()) {
-                                bird.Collideground()
+                                bird.collideground()
                             }
                         }
                     }
-                    if (bird.status_launched) {
+                    if (bird.statuslaunched) {
                         bird.update2(interval)
                     }
                 }
             for(pig in pigs) {
                 for (pig2 in pigs){
                     if (pig2 != pig){
-                        pig.CollisionSpherePig(
+                        pig.collisionSpherePig(
                             pig.coo.x.toDouble(),
                             pig.coo.y.toDouble(),
                             pig.pigradius.toDouble(),
@@ -88,7 +87,7 @@ class collision (){
                         )
                     }
                     if (pig.collidingpig) {              //bird collide bird
-                        pig.SphereCollidePig(
+                        pig.sphereCollidePig(
                             pig.vitessex,
                             pig.vitessey,
                             pig.mass.toDouble(),
@@ -102,7 +101,7 @@ class collision (){
                 }
                 if (pig.collidingGroundCountDown == 0) {       // pig colliding ground
                     if (pig.touchinggrass()) {
-                        pig.Collideground()
+                        pig.collideground()
                     }
                 }
 
@@ -110,13 +109,13 @@ class collision (){
             }
         }
 
-        val groundheight = 100f
-        val absorbtion = 0.5f
-        val m = 0.05
-        val p = 1000f
-        val nx = 0.0499376169
-        val ny = 0.9987523389
-        val coefRoulement = 0.01
+        const val groundheight = 100f
+        const val absorbtion = 0.5f
+        const val m = 0.05
+        //const val p = 1000f
+        const val nx = 0.0499376169
+        const val ny = 0.9987523389
+        const val coefRoulement = 0.01
     }
 
 

@@ -15,6 +15,8 @@ import kotlinx.coroutines.android.awaitFrame
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.concurrent.thread
+import kotlin.concurrent.timer
+import kotlin.concurrent.timerTask
 import kotlin.coroutines.coroutineContext
 import kotlin.math.absoluteValue
 import kotlin.math.cos
@@ -29,6 +31,7 @@ class Pig(view: LevelView, val massep : Float, val radius: Float, var xp : Float
     : Objet(massep,vxp,vyp,orp.toDouble(),vangulp.toDouble(), view), Killable, Pigobserver{
     var paintpig = Paint()
     var death:Boolean = false
+    private lateinit var canvas: Canvas
 
     val textpaint = Paint()
 
@@ -60,7 +63,7 @@ class Pig(view: LevelView, val massep : Float, val radius: Float, var xp : Float
         canvas.drawCircle(
             coo.x, coo.y, radius, paintpig
         )
-        canvas.drawText("${coo.x} + ${vitessey}+${coo.y} ",800f,500f,paintpig)
+        canvas.drawText("${coo.x} + ${vitessey}+${coo.y} ", 800f, 500f, paintpig)
         //onscreen=true
     }
     override fun update2(interval: Double) {
@@ -68,12 +71,10 @@ class Pig(view: LevelView, val massep : Float, val radius: Float, var xp : Float
         if(killed && onscreen){
             onscreen = false
             view.pigleft -= 1
-            death = true
         }
         if(!onscreen && !death && !killed){
             killed = true
             view.pigleft -= 1
-            death = true
         }
     }
     override fun changeaftercoll(v2x:Double, v2y:Double) {
@@ -111,22 +112,22 @@ class Pig(view: LevelView, val massep : Float, val radius: Float, var xp : Float
 
     override fun touchinggrass(): Boolean {
         var distancecarre:Double=0.0
-        distancecarre= ((collision.m*coo.x-(view.screenHeight-collision.groundheight)+coo.y).pow(2)/(1+collision.m.pow(2))).toDouble()
+        distancecarre= ((Collision.m*coo.x-(view.screenHeight-Collision.groundheight)+coo.y).pow(2)/(1+Collision.m.pow(2))).toDouble()
         return (distancecarre<pigradius.pow(2))
     }
 
-    override fun Collideground() {
-        val prodvect=vitessex * collision.nx+vitessey*collision.ny
+    override fun collideground() {
+        val prodvect=vitessex * Collision.nx+vitessey*Collision.ny
         if ((prodvect).absoluteValue<50) {
-            var dvx : Double = prodvect * collision.nx
-            var dvy : Double = prodvect * collision.ny
-            vitessex = (vitessex - dvx)*(1.0-collision.coefRoulement)
-            vitessey = (vitessey - dvy)*(1.0-collision.coefRoulement)
+            val dvx : Double = prodvect * Collision.nx
+            val dvy : Double = prodvect * Collision.ny
+            vitessex = (vitessex - dvx)*(1.0-Collision.coefRoulement)
+            vitessey = (vitessey - dvy)*(1.0-Collision.coefRoulement)
 
         }
         else {
-            var dvx : Double = prodvect * collision.nx * (1+collision.absorbtion)
-            var dvy : Double = prodvect * collision.ny * (1+collision.absorbtion)
+            val dvx : Double = prodvect * Collision.nx * (1+Collision.absorbtion)
+            val dvy : Double = prodvect * Collision.ny * (1+Collision.absorbtion)
             vitessex = (vitessex - dvx)
             vitessey = (vitessey - dvy)
 
@@ -145,7 +146,6 @@ class Pig(view: LevelView, val massep : Float, val radius: Float, var xp : Float
 
     override fun kill() {
         super.kill()
-        //TODO: show kill message
     }
 
     @OptIn(DelicateCoroutinesApi::class)

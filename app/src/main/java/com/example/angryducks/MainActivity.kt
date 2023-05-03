@@ -1,16 +1,13 @@
 package com.example.angryducks
 
-//import androidx.appcompat.app.AppCompatActivity
-//import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.GestureDetector
 import android.view.MotionEvent
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity: AppCompatActivity(), GestureDetector.OnGestureListener {
 
-    lateinit var levelView: LevelView
+    private lateinit var levelView: LevelView
     private lateinit var gestureDetector: GestureDetector
 
     override fun onCreate(savedInstanceState: Bundle?) {
