@@ -10,4 +10,7 @@
     <string name="results_format">Nombre de tirs : %1$d \nTemps écoulé : %2$.1f</string>
     <string name="win">win</string>
     <string name="lost">You lost</string>
+    <string name="title_activity_fullscreen">FullscreenActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>
