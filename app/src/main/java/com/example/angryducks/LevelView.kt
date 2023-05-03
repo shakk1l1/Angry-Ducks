@@ -50,9 +50,14 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
     private val bloc = Obstacle(700f, 900f, 600f, 0f, 100f, this)
     private val pig1 = Pig(this, 20.0f, 25f, 450f, 550f, 0.0, 100.0, 0.0f, 0f, 20f, 100, false)
     private val pig2 = Pig(this, 20.0f, 25f, 850f, 550f, 0.0, 100.0, 0.0f, 0f, 20f, 100, false)
+    private val pig3 = Pig(this, 20.0f, 25f, 1050f, 550f, 0.0, 100.0, 0.0f, 0f, 20f, 100, false)
+    private val pig4 = Pig(this, 20.0f, 25f, 1250f, 550f, 0.0, 100.0, 0.0f, 0f, 20f, 100, false)
+
     private val bird1 = Bird(this, groundheight,20f) // peut-etre pas
     private val bird2 = Bird(this, groundheight,20f)
     private val bird3 = Bird(this, groundheight,20f)
+    private val bird4 = Bird(this, groundheight,20f)
+    private val bird5 = Bird(this, groundheight,20f)
     private val ground = Ground(groundheight, 0f, 0f, 0f, this)
     override val observers: ArrayList<Pigobserver> = ArrayList()
 
@@ -61,19 +66,19 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
 
     private var birdavailable = 0
     private var birdsshot = 0
-    var pigleft = 2
+    var pigleft = 4
         set(value){
             field = value
             hasUpdated()
 
         }
-    private val pigs = arrayOf(pig1, pig2)
-    private val birds = arrayOf(bird1, bird2, bird3)
+    private val pigs = arrayOf(pig1, pig2, pig3, pig4)
+    private val birds = arrayOf(bird1, bird2, bird3, bird4, bird5)
     private var gameOver = false
     private var totalElapsedTime = 0.0
     private var waittime = 0.0
     private var fixwaitime = 0.0   //cmb de temp avant prochain oiseau
-    private var maxwaittime = 0.0   //cmb de temp avant fin du jeu
+    private var maxwaittime = 100.0   //cmb de temp avant fin du jeu
     //var TempsFinDernieroiseau = 0L
 
     //----------------------------------------------------------------------------------------------
@@ -92,11 +97,13 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
         skycolor.color = Color.parseColor("#add8e6")
         textPaint.textSize = screenWidth / 10
         textPaint.color = Color.BLACK
-        birdavailable = 3
-        this.pigleft = 2
+        birdavailable = 5
+        this.pigleft = 4
         waittime = 0.0
-        this.add(pig1)
-        this.add(pig2)
+        for (pig in pigs){
+            this.add(pig)
+        }
+
 
         val audioAttributes = AudioAttributes.Builder()
             .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)
@@ -239,13 +246,13 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
 
 
     private fun newGame() {         //new game reset
-        birdavailable = 3
+        birdavailable = 5
         birdsshot = 0
         totalElapsedTime = 0.0
         drawing = true
         for(bird in birds){bird.reset()}
         for(pig in pigs) {pig.reset()}
-        this.pigleft = 2
+        this.pigleft = 4
         if (gameOver) {
             gameOver = false
             thread = Thread(this)
