@@ -7,6 +7,9 @@ class Collision{
         fun birdcollisioner(birds: Array<Bird>, pigs: Array<Pig>, interval: Double){
                 for (bird in birds) {
                     for (pig in pigs) {
+                        if(pig.onscreen==false){
+                            pig.collidingpig=false
+                        }
                         if (bird.collidingObjectCountDown == 0) {
                             for (bird2 in birds) {
                                 if (bird2.collidingObjectCountDown == 0) {        // collision entre oiseaux
@@ -76,7 +79,7 @@ class Collision{
                 }
             for(pig in pigs) {
                 for (pig2 in pigs){
-                    if (pig2 != pig){
+                    if (pig2 != pig && pig2.onscreen && pig.onscreen){
                         pig.collisionSpherePig(
                             pig.coo.x.toDouble(),
                             pig.coo.y.toDouble(),

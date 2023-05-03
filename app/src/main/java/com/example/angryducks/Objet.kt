@@ -61,6 +61,7 @@ abstract class Objet (val mass : Float, var vitessex : Double, var vitessey : Do
         val one = ((x1-x2).pow(2)+(y1-y2).pow(2)).pow(0.5)
         val two = r1+r2
         collidingpig =(one<two)
+
     }
     fun sphereCollidePig(v1x:Double,v1y:Double,m1:Double,v2x:Double,v2y:Double,m2:Double,coef:Double, pig: Pig) {
         val vmoyx:Double = (m1*v1x+m2*v2x)/(m1+m2)

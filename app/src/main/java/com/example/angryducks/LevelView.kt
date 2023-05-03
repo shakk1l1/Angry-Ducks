@@ -289,4 +289,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
             }
         }
     }
+    fun cassepaslesc(){//pour le bouton New Game prcq fun Newgame est private
+        newGame()
+    }
 }
