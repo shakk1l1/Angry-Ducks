@@ -73,6 +73,30 @@ class Bird (view: LevelView, var groundheight: Float, val birdradius:Float)
         collidingObjectCountDown=10
         bird2.changeaftercoll(dv2x, dv2y)
     }
+
+    //fun birdCollideBird2(v1x:Double,v1y:Double, x1:Double, y1:Double,m1:Double,v2x:Double,v2y:Double,x2:Double, y2:Double,m2:Double,coef:Double, bird2: Bird) {
+    //        val distance = ((x1-x2).pow(2)+(y1-y2).pow(2)).pow(0.5)
+    //        val vecteurcollisionx: Double = (x1-x2)/distance
+    //        val vecteurcollisiony: Double = (y1-y2)/distance
+    //        val vmoyx: Double = (m1 * v1x + m2 * v2x) / (m1 + m2)
+    //        val vmoyy: Double = (m1 * v1y + m2 * v2y) / (m1 + m2)
+    //        val vmoycoll=vmoyx*vecteurcollisionx+vmoyy*vecteurcollisiony
+    //        val vmoycollx=vmoycoll*vecteurcollisionx
+    //        val vmoycolly=vmoycoll*vecteurcollisiony
+    //        val prodvect1=v1x * vecteurcollisionx+v1y*vecteurcollisiony
+    //        val prodvect2=v2x * vecteurcollisionx+v2y*vecteurcollisiony
+    //        val dv1x = (1.0 + coef) * (prodvect1 * vecteurcollisionx - vmoycollx)
+    //        val dv1y = (1.0 + coef) * (prodvect1 * vecteurcollisiony - vmoycolly)
+    //        val dv2x = (1 + coef) * (prodvect2 * vecteurcollisionx - vmoyx)
+    //        val dv2y = (1 + coef) * (prodvect2 * vecteurcollisiony - vmoyy)
+    //
+    //        vitessex -= dv1x
+    //        vitessey -= dv1y
+    //        collidingbird = false
+    //        birdtexture.color = Color.GREEN
+    //        collidingObjectCountDown=10
+    //        bird2.changeaftercoll(dv2x, dv2y)
+    //    }
     /*fun changeaftercoll(v2x:Double, v2y:Double) {
         vitessex-=v2x
         vitessey-=v2y
