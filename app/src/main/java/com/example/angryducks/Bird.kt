@@ -130,6 +130,34 @@ class Bird (view: LevelView, var groundheight: Float, val birdradius:Float)
 
         }
     }
+
+
+    override fun touchingobstaclesegment(postionx:Double,postiony:Double,longueur:Double,nx:Double,ny:Double): Boolean {
+        if (((postionx - coo.x) * nx + (postiony - coo.y) * ny).absoluteValue < birdradius) {
+            return (((postionx - coo.x) * ny - (postiony - coo.y) * nx).absoluteValue < (birdradius + longueur))
+        }
+        else{return false}
+    }
+    override fun collideobstaclesegment(nx:Double, ny:Double) {
+        val prodvect=vitessex * nx+vitessey*ny
+        if ((prodvect).absoluteValue<50) {
+            val dvx : Double = prodvect * Collision.nx
+            val dvy : Double = prodvect * Collision.ny
+            vitessex = (vitessex - dvx)*(1.0-Collision.coefRoulement)
+            vitessey = (vitessey - dvy)*(1.0-Collision.coefRoulement)
+
+        }
+        else {
+            val dvx: Double = prodvect * Collision.nx * (1 + Collision.absorbtion)
+            val dvy: Double = prodvect * Collision.ny * (1 + Collision.absorbtion)
+            vitessex = (vitessex - dvx)
+            vitessey = (vitessey - dvy)
+
+            collidingGroundCountDown = 3
+        }
+    }
+
+
     fun launch(diffx: Double, diffy: Double){
         coo.x = (birdradius)
         coo.y = (view.screenHeight - groundheight - 120f)

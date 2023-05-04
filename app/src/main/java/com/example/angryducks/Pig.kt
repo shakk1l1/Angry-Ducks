@@ -119,7 +119,7 @@ class Pig(view: LevelView, val massep : Float, val radius: Float, var xp : Float
             vitessex = (vitessex - dvx)
             vitessey = (vitessey - dvy)
 
-            collidingGroundCountDown=2
+            collidingGroundCountDown=3
 
         }
     }

@@ -94,6 +94,6 @@ abstract class Objet (val mass : Float, var vitessex : Double, var vitessey : Do
 
     abstract fun collideground()
 
-
-
+    abstract fun touchingobstaclesegment(postionx:Double,postiony:Double,longueur:Double,nx:Double,ny:Double) : Boolean
+    abstract fun collideobstaclesegment(nx:Double, ny:Double)
 }
