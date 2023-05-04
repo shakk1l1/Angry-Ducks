@@ -154,16 +154,14 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
 
 
             for (bird in birds) {
-                if (bird.statuslaunched && bird.onscreen)
+                if (bird.statuslaunched)
                     bird.draw(canvas)
             }
 
             ground.draw(canvas)
 
             for(pig in pigs) {
-                if (pig.onscreen) {
-                    pig.draw(canvas)
-                }
+                pig.draw(canvas)
             }
             bloc.draw(canvas)
             holder.unlockCanvasAndPost(canvas)

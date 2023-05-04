@@ -25,9 +25,12 @@ class Bird (view: LevelView, var groundheight: Float, val birdradius:Float)
         coo.y = 0f
     }
     fun draw(canvas: Canvas) { //texture ou hitbox
-        canvas.drawCircle(coo.x, coo.y, birdradius,
-            birdtexture)
-
+        if (onscreen) {
+            canvas.drawCircle(
+                coo.x, coo.y, birdradius,
+                birdtexture
+            )
+        }
     }
 
     override fun attributecollision() {

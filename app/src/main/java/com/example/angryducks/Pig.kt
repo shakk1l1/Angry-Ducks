@@ -47,11 +47,13 @@ class Pig(view: LevelView, val massep : Float, val radius: Float, var xp : Float
         //test
     }
     fun draw(canvas: Canvas) {
-        canvas.drawCircle(
-            coo.x, coo.y, radius, paintpig
-        )
-        canvas.drawText("${coo.x} + ${vitessey}+${coo.y} ", 800f, 500f, paintpig)
-        //onscreen=true
+        if(onscreen) {
+            canvas.drawCircle(
+                coo.x, coo.y, radius, paintpig
+            )
+            canvas.drawText("${coo.x} + ${vitessey}+${coo.y} ", 800f, 500f, paintpig)
+            //onscreen=true
+        }
     }
     override fun update2(interval: Double) {
         super.update2(interval)

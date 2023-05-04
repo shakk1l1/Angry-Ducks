@@ -5,11 +5,13 @@ import kotlin.math.pow
 
 abstract class Objet (val mass : Float, var vitessex : Double, var vitessey : Double, var orientation : Double, var vangul : Double, val view: LevelView){
 
-    var onscreen = true
+    protected var onscreen = true
     var coo = PointF()
     var collidingpig = false
     var collidingGroundCountDown = 0
     var collidingObjectCountDown = 0
+
+    fun getonscreen(): Boolean {return onscreen}
 
     open fun reset(){
         coo.x = 0f
