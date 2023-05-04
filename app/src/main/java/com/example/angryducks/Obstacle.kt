@@ -7,7 +7,10 @@ import android.graphics.RectF
 import com.example.angryducks.Collision.Companion.absorbtion
 import kotlin.math.pow
 
-class Obstacle (var obstacleDistance: Float, var obstacleDebut: Float, var obstacleFin: Float, var initialObstacleVitesse: Float, var width: Float, var view: LevelView)
+class Obstacle (var obstacleDistance: Float, var obstacleDebut: Float, var obstacleFin: Float, var initialObstacleVitesse: Float, var width: Float, view: LevelView,
+                override var hp: Int,
+                override var killed: Boolean
+) : Objet(20f, 0.0, 0.0, 0.0 ,0.0, view), Killable
 {
     private val obstacle = RectF(obstacleDistance, obstacleDebut,
         obstacleDistance + width, obstacleFin)
@@ -54,5 +57,21 @@ class Obstacle (var obstacleDistance: Float, var obstacleDebut: Float, var obsta
         val dvy : Double = vy * ny * (1+coef)
         objet.vitessex = vx - dvx
         objet.vitessey = vy - dvy
+    }
+
+    override fun low() {
+        TODO("Not yet implemented")
+    }
+
+    override fun mid() {
+        TODO("Not yet implemented")
+    }
+
+    override fun touchinggrass(): Boolean {
+        TODO("Not yet implemented")
+    }
+
+    override fun collideground() {
+        TODO("Not yet implemented")
     }
 }
