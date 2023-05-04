@@ -46,7 +46,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
     //----------------------------------------------------------------------------------------------
     // object ans classes
 
-    private val bloc = Obstacle(700f, 900f, 600f, 0f, 100f, this)
+    private val bloc = Obstacle(700f, 900f, 600f, 0f, 100f, this,100, false)
     private val pig1 = Pig(this, 20.0f, 25f, 450f, 550f, 0.0, 100.0, 0.0f, 0f, 20f, 100, false)
     private val pig2 = Pig(this, 20.0f, 25f, 850f, 550f, 0.0, 100.0, 0.0f, 0f, 20f, 100, false)
     private val pig3 = Pig(this, 20.0f, 25f, 1050f, 550f, 0.0, 100.0, 0.0f, 0f, 20f, 100, false)
@@ -139,7 +139,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
         textPaint.isAntiAlias = true
     }
 
-    fun draw() {
+    private fun draw() {
         if (holder.surface.isValid) {
             canvas = holder.lockCanvas()
             canvas.drawRect(

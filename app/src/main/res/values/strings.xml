@@ -6,6 +6,7 @@
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
+    <string name="PAF">Killmessage</string>
     <string name="reset_game">Reset level</string>
     <string name="results_format">Nombre de tirs : %1$d \nTemps écoulé : %2$.1f</string>
     <string name="win">win</string>

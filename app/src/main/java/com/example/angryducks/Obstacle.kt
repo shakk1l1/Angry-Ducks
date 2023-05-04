@@ -74,4 +74,18 @@ class Obstacle (var obstacleDistance: Float, var obstacleDebut: Float, var obsta
     override fun collideground() {
         TODO("Not yet implemented")
     }
+
+    override fun touchingobstaclesegment(
+        postionx: Double,
+        postiony: Double,
+        longueur: Double,
+        nx: Double,
+        ny: Double
+    ): Boolean {
+        TODO("Not yet implemented")
+    }
+
+    override fun collideobstaclesegment(nx: Double, ny: Double) {
+        TODO("Not yet implemented")
+    }
 }

@@ -4,9 +4,11 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlin.math.absoluteValue
 import kotlin.math.pow
 
@@ -18,7 +20,7 @@ class Pig(view: LevelView, val massep : Float, val radius: Float, var xp : Float
     : Objet(massep,vxp,vyp,orp.toDouble(),vangulp.toDouble(), view), Killable, Pigobserver{
     private var paintpig = Paint()
     private var death:Boolean = false
-    private lateinit var canvas: Canvas
+    lateinit var thread2: Thread
 
     val textpaint = Paint()
 
@@ -52,7 +54,6 @@ class Pig(view: LevelView, val massep : Float, val radius: Float, var xp : Float
                 coo.x, coo.y, radius, paintpig
             )
             canvas.drawText("${coo.x} + ${vitessey}+${coo.y} ", 800f, 500f, paintpig)
-            //onscreen=true
         }
     }
     override fun update2(interval: Double) {
@@ -122,6 +123,20 @@ class Pig(view: LevelView, val massep : Float, val radius: Float, var xp : Float
             collidingGroundCountDown=3
 
         }
+    }
+
+    override fun touchingobstaclesegment(
+        postionx: Double,
+        postiony: Double,
+        longueur: Double,
+        nx: Double,
+        ny: Double
+    ): Boolean {
+        TODO("Not yet implemented")
+    }
+
+    override fun collideobstaclesegment(nx: Double, ny: Double) {
+        TODO("Not yet implemented")
     }
 
     override fun low() {
