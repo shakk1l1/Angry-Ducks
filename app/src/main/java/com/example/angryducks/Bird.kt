@@ -1,8 +1,10 @@
 package com.example.angryducks
 
+import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import androidx.core.graphics.scale
 import kotlin.math.absoluteValue
 import kotlin.math.pow
 
@@ -11,12 +13,15 @@ class Bird (view: LevelView, var groundheight: Float, val birdradius:Float, val 
 
 
     private val birdtexture = Paint()
+    private var imagebird = BitmapFactory.decodeResource(view.resources,R.drawable.duck)
     var statuslaunched = false
     var collidingbird = false
 
 
     init {
         birdtexture.color = Color.RED
+        imagebird = imagebird.scale((2*birdradius).toInt(),(2*birdradius).toInt())
+
     }
     override fun reset(){
         onscreen = false
@@ -26,10 +31,12 @@ class Bird (view: LevelView, var groundheight: Float, val birdradius:Float, val 
     }
     fun draw(canvas: Canvas) { //texture ou hitbox
         if (onscreen) {
-            canvas.drawCircle(
+            /*canvas.drawCircle(
                 coo.x, coo.y, birdradius,
                 birdtexture
-            )
+            )*/
+            canvas.drawBitmap(imagebird,coo.x-birdradius,coo.y-birdradius,null)
+
         }
     }
 

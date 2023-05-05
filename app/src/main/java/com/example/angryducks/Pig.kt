@@ -1,8 +1,10 @@
 package com.example.angryducks
 
+import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import androidx.core.graphics.scale
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -20,6 +22,7 @@ class Pig(view: LevelView, val massep : Double, val radius: Float, var xp : Floa
     : Objet(massep,vxp,vyp,orp.toDouble(),vangulp.toDouble(), view), Killable, Pigobserver{
     private var paintpig = Paint()
     private var death:Boolean = false
+    private var imagepig = BitmapFactory.decodeResource(view.resources,R.drawable.pig)
 
     val textpaint = Paint()
 
@@ -33,6 +36,7 @@ class Pig(view: LevelView, val massep : Double, val radius: Float, var xp : Floa
         onscreen=true
         textpaint.textSize = 200f
         textpaint.color = Color.BLACK
+        imagepig = imagepig.scale((2*pigradius).toInt(),(2*pigradius).toInt())
     }
     override fun reset() {
         coo.x = xp
@@ -49,10 +53,11 @@ class Pig(view: LevelView, val massep : Double, val radius: Float, var xp : Floa
 
     fun draw(canvas: Canvas) {
         if(onscreen) {
-            canvas.drawCircle(
+            /*canvas.drawCircle(
                 coo.x, coo.y, radius, paintpig
-            )
-            canvas.drawText("${coo.x} + ${vitessey}+${coo.y} ", 800f, 500f, paintpig)
+            )*/
+            canvas.drawBitmap(imagepig,coo.x-pigradius,coo.y-pigradius,null)
+            //canvas.drawText("${coo.x} + ${vitessey}+${coo.y} ", 800f, 500f, paintpig)
         }
     }
     override fun update2(interval: Double) {
