@@ -126,7 +126,7 @@ class Bird (view: LevelView, var groundheight: Float, val birdradius:Float, val 
             vitessex = (vitessex - dvx)
             vitessey = (vitessey - dvy)
             birdtexture.color = Color.GRAY
-            collidingGroundCountDown=10
+            collidingGroundCountDown=3
         }
     }
 
