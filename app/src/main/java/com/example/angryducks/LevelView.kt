@@ -46,11 +46,11 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
     //----------------------------------------------------------------------------------------------
     // object ans classes
 
-    private val bloc = ObstacleRectangle(1000.0, 400.0, 0.0, 1.0, 100.0, 500.0, 100, false)
+    private val bloc1 = ObstacleRectangle(1000.0, 400.0, 0.0, 1.0, 100.0, 500.0, 200, false)
     private val pig1 = Pig(this, 20.0, 25f, 450f, 550f, 0.0, 100.0, 0.0f, 0f, 20f, 888800, false)
-    private val pig2 = Pig(this, 500.0, 90f, 850f, 550f, 0.0, 100.0, 0.0f, 0f, 90f, 100, false)
-    private val pig3 = Pig(this, 20.0, 25f, 1050f, 550f, 0.0, 100.0, 0.0f, 0f, 20f, 100, false)
-    private val pig4 = Pig(this, 20.0, 25f, 1250f, 550f, 0.0, 100.0, 0.0f, 0f, 20f, 100, false)
+    private val pig2 = Pig(this, 500.0, 90f, 850f, 550f, 0.0, 100.0, 0.0f, 0f, 90f, 200, false)
+    private val pig3 = Pig(this, 20.0, 25f, 1050f, 550f, 0.0, 100.0, 0.0f, 0f, 20f, 200, false)
+    private val pig4 = Pig(this, 20.0, 25f, 1250f, 550f, 0.0, 100.0, 0.0f, 0f, 20f, 200, false)
 
     private val bird1 = Bird(this, groundheight,20f,5555.0)
     private val bird2 = Bird(this, groundheight,20f,1.0)
@@ -73,7 +73,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
         }
     private val pigs = arrayOf(pig1, pig2, pig3, pig4)
     private val birds = arrayOf(bird1, bird2, bird3, bird4, bird5)
-    private val blocs = arrayOf(bloc)
+    private val blocs = arrayOf(bloc1)
     private var gameOver = false
     private var totalElapsedTime = 0.0
     private var waittime = 0.0
@@ -153,10 +153,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
                 50f, 70f, textPaint
             )
 
-            bloc.draw(canvas)
-            for(segment in bloc.obstaacles){
-                segment.draw(canvas)
-            }
+            for(bloc in blocs){bloc.draw(canvas)}
 
 
             for (bird in birds) {
@@ -169,7 +166,6 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
             for(pig in pigs) {
                 pig.draw(canvas)
             }
-            bloc.draw(canvas)
             holder.unlockCanvasAndPost(canvas)
         }
     }
@@ -255,6 +251,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
         drawing = true
         for(bird in birds){bird.reset()}
         for(pig in pigs) {pig.reset()}
+        for(bloc in blocs) {bloc.reset()}
         this.pigleft = 4
         if (gameOver) {
             gameOver = false

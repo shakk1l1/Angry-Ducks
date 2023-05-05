@@ -30,7 +30,6 @@ class Pig(view: LevelView, val massep : Double, val radius: Float, var xp : Floa
         vitessex=vxp
         vitessey=vyp
         killed = false
-        hp = 100
         onscreen=true
         textpaint.textSize = 200f
         textpaint.color = Color.BLACK
@@ -41,7 +40,7 @@ class Pig(view: LevelView, val massep : Double, val radius: Float, var xp : Floa
         onscreen = true
         vitessex = 0.0
         vitessey = 0.0
-        hp = 100
+        hp = 200
         paintpig.color = Color.parseColor("#056517")
         killed = false
         death = false
@@ -156,9 +155,9 @@ class Pig(view: LevelView, val massep : Double, val radius: Float, var xp : Floa
                 paintpig.color = Color.RED
                 delay(150)
             }
-            if(hp<=25){low()}
-            else if(hp <= 50){mid()}
-            else if(hp > 50){paintpig.color = Color.parseColor("#056517")}
+            if(hp<=80){low()}
+            else if(hp <= 150){mid()}
+            else if(hp > 150){paintpig.color = Color.parseColor("#056517")}
         }
 
     }

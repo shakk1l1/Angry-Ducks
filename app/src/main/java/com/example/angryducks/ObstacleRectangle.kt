@@ -16,15 +16,14 @@ class ObstacleRectangle(val positionx:Double, val positiony:Double, val nx:Doubl
     val obstaclePaint = Paint()
     val obstaacles= arrayOf(segmentup,segmentleft,segmentdown,segmentright)
     init {
-        hp = 100
-        killed = false
         obstaclePaint.strokeWidth = largeur.toFloat()
         obstaclePaint.color= Color.BLACK
     }
 
     fun reset(){
         killed = false
-        hp = 100
+        obstaclePaint.color = Color.BLACK
+        hp = 200
     }
 
     fun draw(canvas: Canvas){
@@ -42,10 +41,11 @@ class ObstacleRectangle(val positionx:Double, val positiony:Double, val nx:Doubl
     fun getkilled():Boolean {return killed}
 
     override fun low() {
-        Color.LTGRAY
+        //obstaclePaint.color = Color.parseColor("#aaaaaa")
+        obstaclePaint.color = Color.RED
     }
 
     override fun mid() {
-        Color.GRAY
+        obstaclePaint.color = Color.parseColor("#808080")
     }
 }
