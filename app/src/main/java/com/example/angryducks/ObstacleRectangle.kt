@@ -9,10 +9,10 @@ class ObstacleRectangle(val positionx:Double, val positiony:Double, val nx:Doubl
                         override var hp: Int,
                         override var killed: Boolean
 ): Killable{
-    private val segmentup = ObstacleSegment(positionx+nx*largeur/2,positiony+ny*largeur/2,longueur*2-largeur*2,nx,ny)
-    private val segmentdown=ObstacleSegment(positionx-nx*largeur/2,positiony-ny*largeur/2,longueur*2-largeur*2,-nx,-ny)
-    private val segmentleft=ObstacleSegment (positionx+ny*(longueur-largeur/2),positiony-nx*longueur/2,largeur/2-10,ny,-nx)
-    private val segmentright=ObstacleSegment (positionx-ny*(longueur-largeur/2),positiony+nx*longueur/2,largeur/2-10,-ny,nx)
+    private val segmentup = ObstacleSegment(positionx+nx*largeur/2,positiony+ny*largeur/2,longueur*2-largeur-20,nx,ny)
+    private val segmentdown=ObstacleSegment(positionx-nx*largeur/2,positiony-ny*largeur/2,longueur*2-largeur-20,-nx,-ny)
+    private val segmentleft=ObstacleSegment (positionx+ny*(longueur-largeur/2),positiony-nx*longueur/2,largeur-10,ny,-nx)
+    private val segmentright=ObstacleSegment (positionx-ny*(longueur-largeur/2),positiony+nx*longueur/2,largeur-10,-ny,nx)
     val obstaclePaint = Paint()
     val obstaacles= arrayOf(segmentup,segmentleft,segmentdown,segmentright)
     init {
@@ -23,7 +23,7 @@ class ObstacleRectangle(val positionx:Double, val positiony:Double, val nx:Doubl
     fun reset(){
         killed = false
         obstaclePaint.color = Color.BLACK
-        hp = 200
+        hp = 20000
     }
 
     fun draw(canvas: Canvas){

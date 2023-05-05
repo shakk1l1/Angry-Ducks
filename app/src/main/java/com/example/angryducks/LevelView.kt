@@ -46,17 +46,17 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
     //----------------------------------------------------------------------------------------------
     // object ans classes
 
-    private val bloc1 = ObstacleRectangle(1000.0, 400.0, 0.0, 1.0, 100.0, 500.0, 200000, false)
+    private val bloc1 = ObstacleRectangle(1000.0, 800.0, 0.0, 1.0, 800.0, 800.0, 200000, false)
     private val pig1 = Pig(this, 20.0, 25f, 450f, 550f, 0.0, 100.0, 0.0f, 0f, 20f, 888800, false)
     private val pig2 = Pig(this, 500.0, 90f, 850f, 550f, 0.0, 100.0, 0.0f, 0f, 90f, 200, false)
     private val pig3 = Pig(this, 20.0, 25f, 1050f, 550f, 0.0, 100.0, 0.0f, 0f, 20f, 200, false)
     private val pig4 = Pig(this, 20.0, 25f, 1250f, 550f, 0.0, 100.0, 0.0f, 0f, 20f, 200, false)
 
     private val bird1 = Bird(this, groundheight,10f,5.0)
-    private val bird2 = Bird(this, groundheight,20f,20.0)
-    private val bird3 = Bird(this, groundheight,25f,30.0)
+    private val bird2 = Bird(this, groundheight,10f,20.0)
+    private val bird3 = Bird(this, groundheight,5f,30.0)
     private val bird4 = Bird(this, groundheight,30f,50.0)
-    private val bird5 = Bird(this, groundheight,20f,20.0)
+    private val bird5 = Bird(this, groundheight,60f,20.0)
     private val ground = Ground(groundheight, 0f, 0f, 0f, this)
     override val observers: ArrayList<Pigobserver> = ArrayList()
 
@@ -153,7 +153,12 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
                 50f, 70f, textPaint
             )
 
-            for(bloc in blocs){bloc.draw(canvas)}
+            for(bloc in blocs){
+                bloc.draw(canvas)
+                for (obstacle in bloc.obstaacles){
+                    obstacle.draw(canvas)
+                }
+            }
 
 
             for (bird in birds) {
