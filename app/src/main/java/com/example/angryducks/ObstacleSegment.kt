@@ -12,7 +12,7 @@ class ObstacleSegment (var postionx:Double,var postiony:Double,val longueur:Doub
         segmentPaint.color= Color.RED
     }
     fun draw(canvas: Canvas){
-        canvas.drawLine((postionx+ny*(longueur-largeur/2)).toFloat(),(postiony-nx*(longueur-largeur/2)).toFloat(),(postionx-ny*(longueur-largeur/2)).toFloat(),(postiony+nx*(longueur-largeur/2)).toFloat(), segmentPaint)
+        canvas.drawLine((postionx+ny*(longueur-largeur)/2).toFloat(),(postiony-nx*(longueur-largeur)/2).toFloat(),(postionx-ny*(longueur-largeur)/2).toFloat(),(postiony+nx*(longueur-largeur)/2).toFloat(), segmentPaint)
 
     }
 

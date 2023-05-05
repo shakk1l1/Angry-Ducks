@@ -135,7 +135,7 @@ class Pig(view: LevelView, val massep : Double, val radius: Float, var xp : Floa
         TODO("Not yet implemented")
     }
 
-    override fun collideobstaclesegment(nx: Double, ny: Double) {
+    override fun collideobstaclesegment(nx: Double, ny: Double, bloc: ObstacleRectangle) {
         TODO("Not yet implemented")
     }
 
