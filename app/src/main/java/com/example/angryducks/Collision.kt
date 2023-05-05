@@ -91,6 +91,11 @@ class Collision{
                                             )
                                         }
                                     }
+                                    for (point in bloc.pooints) {
+                                        if (bird.touchingobstaclepoint(point.positionx,point.positiony)) {
+                                            bird.collideobstaclepoint(point.positionx,point.positiony)
+                                        }
+                                    }
                                 }
                             }
                         }

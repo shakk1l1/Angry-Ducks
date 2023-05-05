@@ -133,7 +133,7 @@ class Bird (view: LevelView, var groundheight: Float, val birdradius:Float, val 
 
     override fun touchingobstaclesegment(positionx:Double,positiony:Double,longueur:Double,nx:Double,ny:Double): Boolean {
         if (((positionx - coo.x) * nx + (positiony - coo.y) * ny).absoluteValue < birdradius){
-            return ((positionx - coo.x) * ny - (positiony - coo.y) * nx).absoluteValue < (birdradius + longueur/2)
+            return ((positionx - coo.x) * ny - (positiony - coo.y) * nx).absoluteValue < ( longueur/2)
         }
         else{return false}
         //if (((postionx - coo.x) * nx + (postiony - coo.y) * ny).absoluteValue < birdradius) {
@@ -143,7 +143,7 @@ class Bird (view: LevelView, var groundheight: Float, val birdradius:Float, val 
     }
     override fun collideobstaclesegment(nx: Double, ny: Double, bloc:ObstacleRectangle) {
         val prodvect=vitessex * nx+vitessey*ny
-        if ((prodvect).absoluteValue<200) {
+        if ((prodvect).absoluteValue<100) {
             val dvx : Double = prodvect * nx
             val dvy : Double = prodvect * ny
             vitessex = (vitessex - dvx)*(1.0-Collision.coefRoulement)
@@ -173,8 +173,8 @@ class Bird (view: LevelView, var groundheight: Float, val birdradius:Float, val 
         if ((prodvect).absoluteValue<50) {
             val dvx : Double = prodvect * nx
             val dvy : Double = prodvect * ny
-            vitessex = (vitessex - dvx)*(1.0-Collision.coefRoulement)
-            vitessey = (vitessey - dvy)*(1.0-Collision.coefRoulement)
+            vitessex = (vitessex - dvx)
+            vitessey = (vitessey - dvy)
             birdtexture.color = Color.BLUE
         }
         else {
@@ -183,7 +183,7 @@ class Bird (view: LevelView, var groundheight: Float, val birdradius:Float, val 
             vitessex = (vitessex - dvx)
             vitessey = (vitessey - dvy)
             birdtexture.color = Color.GRAY
-            collidingGroundCountDown=3
+            collidingGroundCountDown=2
         }
     }
 
