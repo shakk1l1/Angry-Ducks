@@ -153,6 +153,9 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
             )
 
             bloc.draw(canvas)
+            for(segment in bloc.obstaacles){
+                segment.draw(canvas)
+            }
 
 
             for (bird in birds) {

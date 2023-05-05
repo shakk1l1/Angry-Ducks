@@ -20,7 +20,6 @@ class Pig(view: LevelView, val massep : Double, val radius: Float, var xp : Floa
     : Objet(massep,vxp,vyp,orp.toDouble(),vangulp.toDouble(), view), Killable, Pigobserver{
     private var paintpig = Paint()
     private var death:Boolean = false
-    lateinit var thread2: Thread
 
     val textpaint = Paint()
 
@@ -48,6 +47,7 @@ class Pig(view: LevelView, val massep : Double, val radius: Float, var xp : Floa
         death = false
         //test
     }
+
     fun draw(canvas: Canvas) {
         if(onscreen) {
             canvas.drawCircle(
@@ -145,11 +145,6 @@ class Pig(view: LevelView, val massep : Double, val radius: Float, var xp : Floa
 
     override fun mid() {
         paintpig.color = Color.parseColor("#3f8f29")
-    }
-
-    override fun kill() {
-        super.kill()
-        //TODO: show "PAF"
     }
 
     @OptIn(DelicateCoroutinesApi::class)
