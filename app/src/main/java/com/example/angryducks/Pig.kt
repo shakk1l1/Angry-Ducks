@@ -13,7 +13,7 @@ import kotlin.math.absoluteValue
 import kotlin.math.pow
 
 
-class Pig(view: LevelView, val massep : Float, val radius: Float, var xp : Float, var yp : Float,
+class Pig(view: LevelView, val massep : Double, val radius: Float, var xp : Float, var yp : Float,
           var vxp : Double, var vyp : Double, var orp : Float, var vangulp : Float, val pigradius:Float,
           override var hp: Int, override var killed: Boolean)
 
@@ -70,7 +70,7 @@ class Pig(view: LevelView, val massep : Float, val radius: Float, var xp : Float
     override fun changeaftercoll(v2x:Double, v2y:Double) {
         vitessex-=v2x
         vitessey-=v2y
-        deteriorationdetect(vitessex, vitessey)
+        deteriorationdetect(vitessex, vitessey,massep.toDouble())
         collidingObjectCountDown=10
     }
 

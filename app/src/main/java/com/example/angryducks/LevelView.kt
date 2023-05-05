@@ -47,16 +47,16 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
     // object ans classes
 
     private val bloc = Obstacle(700f, 900f, 600f, 0f, 100f, this,100, false)
-    private val pig1 = Pig(this, 20.0f, 25f, 450f, 550f, 0.0, 100.0, 0.0f, 0f, 20f, 100, false)
-    private val pig2 = Pig(this, 20.0f, 25f, 850f, 550f, 0.0, 100.0, 0.0f, 0f, 20f, 100, false)
-    private val pig3 = Pig(this, 20.0f, 25f, 1050f, 550f, 0.0, 100.0, 0.0f, 0f, 20f, 100, false)
-    private val pig4 = Pig(this, 20.0f, 25f, 1250f, 550f, 0.0, 100.0, 0.0f, 0f, 20f, 100, false)
+    private val pig1 = Pig(this, 20.0, 25f, 450f, 550f, 0.0, 100.0, 0.0f, 0f, 20f, 100, false)
+    private val pig2 = Pig(this, 500.0, 90f, 850f, 550f, 0.0, 100.0, 0.0f, 0f, 90f, 100, false)
+    private val pig3 = Pig(this, 20.0, 25f, 1050f, 550f, 0.0, 100.0, 0.0f, 0f, 20f, 100, false)
+    private val pig4 = Pig(this, 20.0, 25f, 1250f, 550f, 0.0, 100.0, 0.0f, 0f, 20f, 100, false)
 
-    private val bird1 = Bird(this, groundheight,20f)
-    private val bird2 = Bird(this, groundheight,20f)
-    private val bird3 = Bird(this, groundheight,20f)
-    private val bird4 = Bird(this, groundheight,20f)
-    private val bird5 = Bird(this, groundheight,20f)
+    private val bird1 = Bird(this, groundheight,20f,5555.0)
+    private val bird2 = Bird(this, groundheight,20f,1.0)
+    private val bird3 = Bird(this, groundheight,20f,0.0000000056)
+    private val bird4 = Bird(this, groundheight,20f,5416464.0)
+    private val bird5 = Bird(this, groundheight,50f,666.0)
     private val ground = Ground(groundheight, 0f, 0f, 0f, this)
     override val observers: ArrayList<Pigobserver> = ArrayList()
 

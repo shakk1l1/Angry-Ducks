@@ -3,7 +3,7 @@ package com.example.angryducks
 import android.graphics.PointF
 import kotlin.math.pow
 
-abstract class Objet (val mass : Float, var vitessex : Double, var vitessey : Double, var orientation : Double, var vangul : Double, val view: LevelView){
+abstract class Objet (val mass : Double, var vitessex : Double, var vitessey : Double, var orientation : Double, var vangul : Double, val view: LevelView){
 
     protected var onscreen = true
     var coo = PointF()

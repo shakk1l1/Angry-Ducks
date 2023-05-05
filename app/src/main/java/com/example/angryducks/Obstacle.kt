@@ -10,17 +10,20 @@ import kotlin.math.pow
 class Obstacle (var obstacleDistance: Float, var obstacleDebut: Float, var obstacleFin: Float, var initialObstacleVitesse: Float, var width: Float, view: LevelView,
                 override var hp: Int,
                 override var killed: Boolean
-) : Objet(20f, 0.0, 0.0, 0.0 ,0.0, view), Killable
-{
-    private val obstacle = RectF(obstacleDistance, obstacleDebut,
-        obstacleDistance + width, obstacleFin)
+) : Objet(20.0, 0.0, 0.0, 0.0 ,0.0, view), Killable {
+    private val obstacle = RectF(
+        obstacleDistance, obstacleDebut,
+        obstacleDistance + width, obstacleFin
+    )
     private val obstaclePaint = Paint()
-    private var obstacleVitesse= initialObstacleVitesse
+    private var obstacleVitesse = initialObstacleVitesse
 
     private fun setRect() {
-        obstacle.set(obstacleDistance, obstacleDebut,
-            obstacleDistance + width, obstacleFin)
-        obstacleVitesse= initialObstacleVitesse
+        obstacle.set(
+            obstacleDistance, obstacleDebut,
+            obstacleDistance + width, obstacleFin
+        )
+        obstacleVitesse = initialObstacleVitesse
     }
 
 
@@ -38,23 +41,41 @@ class Obstacle (var obstacleDistance: Float, var obstacleDebut: Float, var obsta
             obstacle.offset(0f, up)
         }
     }
+
     private fun resetObstacle() {
         obstacleVitesse = initialObstacleVitesse
-        obstacle.set(obstacleDistance, obstacleDebut,
-            obstacleDistance + width, obstacleFin)
+        obstacle.set(
+            obstacleDistance, obstacleDebut,
+            obstacleDistance + width, obstacleFin
+        )
     }
     //à implémenter encore
 
-    private fun collisionSpherePlan(objet: Objet,x: Double,y: Double,r: Double,m:Double,p:Double) {
-        val distancecarre = (m*x+p-y).pow(2)/(1+m.pow(2))
-        val colliding=(distancecarre<r.pow(2))
-        if (colliding){
-            collideGround(objet,objet.vitessex,objet.vitessey,1.0,1.0,absorbtion.toDouble())
+    private fun collisionSpherePlan(
+        objet: Objet,
+        x: Double,
+        y: Double,
+        r: Double,
+        m: Double,
+        p: Double
+    ) {
+        val distancecarre = (m * x + p - y).pow(2) / (1 + m.pow(2))
+        val colliding = (distancecarre < r.pow(2))
+        if (colliding) {
+            collideGround(objet, objet.vitessex, objet.vitessey, 1.0, 1.0, absorbtion.toDouble())
         }
     }
-    private fun collideGround(objet: Objet,vx:Double,vy:Double,nx:Double,ny:Double,coef:Double) {
-        val dvx : Double = vx * nx * (1+coef)
-        val dvy : Double = vy * ny * (1+coef)
+
+    private fun collideGround(
+        objet: Objet,
+        vx: Double,
+        vy: Double,
+        nx: Double,
+        ny: Double,
+        coef: Double
+    ) {
+        val dvx: Double = vx * nx * (1 + coef)
+        val dvy: Double = vy * ny * (1 + coef)
         objet.vitessex = vx - dvx
         objet.vitessey = vy - dvy
     }
@@ -82,7 +103,8 @@ class Obstacle (var obstacleDistance: Float, var obstacleDebut: Float, var obsta
         nx: Double,
         ny: Double
     ): Boolean {
-        TODO("Not yet implemented")
+
+        return true
     }
 
     override fun collideobstaclesegment(nx: Double, ny: Double) {
