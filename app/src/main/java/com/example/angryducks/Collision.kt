@@ -127,12 +127,12 @@ class Collision{
         }
 
         const val groundheight = 100f
-        const val absorbtion = 0.2f
+        const val absorbtion = 0.6f
         const val m = 0.0
         //const val p = 1000f+
         const val nx = 0.0
         const val ny = 1.0
-        const val coefRoulement = 0.01
+        const val coefRoulement = 0.005
     }
 
 
