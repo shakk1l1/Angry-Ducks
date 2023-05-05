@@ -21,7 +21,7 @@ class ObstacleRectangle(val positionx:Double, val positiony:Double, val nx:Doubl
     fun draw(canvas: Canvas){
         obstaclePaint.strokeWidth = largeur.toFloat()
         obstaclePaint.color= Color.BLACK
-        canvas.drawLine((positionx-nx*largeur).toFloat(),(positiony-ny*largeur).toFloat(),(positionx-ny*longueur).toFloat(),(positiony+nx*longueur).toFloat(), obstaclePaint)
+        canvas.drawLine((positionx+ny*(longueur-largeur/2)).toFloat(),(positiony-nx*(longueur-largeur/2)).toFloat(),(positionx-ny*(longueur-largeur/2)).toFloat(),(positiony+nx*(longueur-largeur/2)).toFloat(), obstaclePaint)
 
     }
 }
