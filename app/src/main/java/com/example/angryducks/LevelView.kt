@@ -158,6 +158,9 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
                 for (obstacle in bloc.obstaacles){
                     obstacle.draw(canvas)
                 }
+                for (points in bloc.pooints){
+                    points.draw(canvas)
+                }
             }
 
 

@@ -13,8 +13,13 @@ class ObstacleRectangle(val positionx:Double, val positiony:Double, val nx:Doubl
     private val segmentdown=ObstacleSegment(positionx-nx*largeur/2,positiony-ny*largeur/2,longueur*2-largeur-20,-nx,-ny)
     private val segmentleft=ObstacleSegment (positionx+ny*(longueur-largeur/2),positiony-nx*longueur/2,largeur-10,ny,-nx)
     private val segmentright=ObstacleSegment (positionx-ny*(longueur-largeur/2),positiony+nx*longueur/2,largeur-10,-ny,nx)
+    private val pointupright=ObstaclePoint(positionx+nx*largeur/2+ny*(longueur-largeur/2),positiony+ny*largeur/2-nx*longueur/2)
+    private val pointupleft=ObstaclePoint(positionx+nx*largeur/2-ny*(longueur-largeur/2),positiony+ny*largeur/2+nx*longueur/2)
+    private val pointdownright=ObstaclePoint(positionx-nx*largeur/2+ny*(longueur-largeur/2),positiony-ny*largeur/2-nx*longueur/2)
+    private val pointdownleft=ObstaclePoint(positionx-nx*largeur/2-ny*(longueur-largeur/2),positiony-ny*largeur/2+nx*longueur/2)
     val obstaclePaint = Paint()
     val obstaacles= arrayOf(segmentup,segmentleft,segmentdown,segmentright)
+    val pooints= arrayOf(pointupleft,pointupright,pointdownleft,pointdownright)
     init {
         obstaclePaint.strokeWidth = largeur.toFloat()
         obstaclePaint.color= Color.BLACK

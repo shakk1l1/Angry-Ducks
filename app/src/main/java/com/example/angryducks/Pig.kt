@@ -138,6 +138,14 @@ class Pig(view: LevelView, val massep : Double, val radius: Float, var xp : Floa
         TODO("Not yet implemented")
     }
 
+    override fun touchingobstaclepoint(positionx: Double, positiony: Double): Boolean {
+        TODO("Not yet implemented")
+    }
+
+    override fun collideobstaclepoint(positionx: Double, positiony: Double) {
+        TODO("Not yet implemented")
+    }
+
     override fun low() {
         paintpig.color = Color.parseColor("#759116")
     }
