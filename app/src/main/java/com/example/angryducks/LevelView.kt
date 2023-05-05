@@ -185,7 +185,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
     private fun updatePositions(elapsedTimeMS: Double) {
         val interval = elapsedTimeMS / 1000.0
 
-        birdcollisioner(birds, pigs, interval)
+        birdcollisioner(birds, pigs, interval, bloc.obstaacles)
 
         waittime -= interval
         //var temps = System.currentTimeMillis() - TempsFinDernieroiseau

@@ -4,7 +4,7 @@ package com.example.angryducks
 class Collision{
 
     companion object {
-        fun birdcollisioner(birds: Array<Bird>, pigs: Array<Pig>, interval: Double){
+        fun birdcollisioner(birds: Array<Bird>, pigs: Array<Pig>, interval: Double, obstaacles: Array<ObstacleSegment>){
                 for (bird in birds) {
                     for (pig in pigs) {
                         if(!pig.getonscreen()){
@@ -70,6 +70,20 @@ class Collision{
                         if (bird.collidingGroundCountDown == 0) {     // bird colliding ground
                             if (bird.touchinggrass()) {
                                 bird.collideground()
+                            }
+                        }
+                        if (bird.collidingGroundCountDown == 0) {
+                            for (segment in obstaacles) {
+                                if (bird.touchingobstaclesegment(
+                                        segment.postionx,
+                                        segment.postionx,
+                                        segment.longueur,
+                                        segment.nx,
+                                        segment.ny
+                                    )
+                                ) {
+                                    bird.collideobstaclesegment(segment.nx, segment.ny)
+                                }
                             }
                         }
                     }

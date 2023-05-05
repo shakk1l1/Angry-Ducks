@@ -161,8 +161,8 @@ class Bird (view: LevelView, var groundheight: Float, val birdradius:Float, val 
     fun launch(diffx: Double, diffy: Double){
         coo.x = (birdradius)
         coo.y = (view.screenHeight - groundheight - 120f)
-        vitessex= (-(2*diffx).toFloat()).toDouble()
-        vitessey= (-(2*diffy).toFloat()).toDouble()
+        vitessex= (-(3*diffx))
+        vitessey= (-(3*diffy))
         onscreen = true
         statuslaunched = true
     }
