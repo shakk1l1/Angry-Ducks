@@ -76,7 +76,7 @@ class Collision{
                             for (segment in obstaacles) {
                                 if (bird.touchingobstaclesegment(
                                         segment.postionx,
-                                        segment.postionx,
+                                        segment.postiony,
                                         segment.longueur,
                                         segment.nx,
                                         segment.ny
@@ -127,7 +127,7 @@ class Collision{
         }
 
         const val groundheight = 100f
-        const val absorbtion = 0.5f
+        const val absorbtion = 0.2f
         const val m = 0.0
         //const val p = 1000f+
         const val nx = 0.0
