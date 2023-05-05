@@ -2,6 +2,7 @@ package com.example.angryducks
 
 //import androidx.appcompat.app.AppCompatActivity
 //import android.support.v7.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
 import android.view.GestureDetector
 import android.view.MotionEvent
@@ -13,6 +14,7 @@ class MainActivity: AppCompatActivity(), GestureDetector.OnGestureListener {
 
     lateinit var levelView: LevelView
     lateinit var button2: Button
+    lateinit var button3: Button
     private lateinit var gestureDetector: GestureDetector
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,6 +26,12 @@ class MainActivity: AppCompatActivity(), GestureDetector.OnGestureListener {
         button2.setOnClickListener {
             levelView.cassepaslesc()
         }
+        button3 = findViewById(R.id.button3)
+        button3.setOnClickListener {
+            val i = Intent(this@MainActivity, MainActivity2::class.java)
+            startActivity(i)
+        }
+
     }
 
     override fun onPause() {

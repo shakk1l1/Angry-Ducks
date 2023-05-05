@@ -8,6 +8,7 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.media.AudioAttributes
+import android.media.MediaPlayer
 import android.media.SoundPool
 import android.os.Bundle
 import android.os.Handler
@@ -87,6 +88,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
     private val activity = context as FragmentActivity
     private val soundPool: SoundPool
     private val soundMap: SparseIntArray
+    private var mediaPlayer = MediaPlayer.create(context, R.raw.themesong)
 
 
     //----------------------------------------------------------------------------------------------
@@ -116,17 +118,21 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
             .build()
 
         soundMap = SparseIntArray(3)
+
+        mediaPlayer.start() // no need to call prepare(); create() does that for you
     }
 
     fun pause() {
         drawing = false
         thread.join()
+        mediaPlayer.pause()
     }
 
     fun resume() {
         drawing = true
         thread = Thread(this)
         thread.start()
+        mediaPlayer.start()
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) { //en fonction de l'écran
@@ -266,6 +272,10 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
             thread = Thread(this)
             thread.start()
         }
+        //mediaPlayer.pause()
+        //mediaPlayer.reset()
+        mediaPlayer.seekTo(0)
+        mediaPlayer.start()
         //pig.reset()
     }
 
@@ -299,6 +309,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
         }
     }
     fun cassepaslesc(){//pour le bouton New Game prcq fun Newgame est private
+        //mediaPlayer.seekTo(0)
         newGame()
     }
 }
