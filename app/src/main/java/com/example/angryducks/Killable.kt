@@ -5,15 +5,21 @@ import kotlin.math.sqrt
 
 interface Killable {
 
-    var hp: Int
+    //----------------------------------------------------------------------------------------------
+    // Variables init
+    //----------------------------------------------------------------------------------------------
 
+    var hp: Int
     var killed: Boolean
+    //----------------------------------------------------------------------------------------------
+    // Function
+    //----------------------------------------------------------------------------------------------
     fun kill(){
         killed = true
     }
 
     fun hdeterioration(){
-        hp -= 270
+        hp -= 100
         if(hp <= 0){kill()}
         else if(hp<=80){low()}
         else if(hp<=150){mid()}
@@ -27,14 +33,14 @@ interface Killable {
     }
 
     fun ldeterioration(){
-        hp -= 90
+        hp -= 25
         if(hp <= 0){kill()}
         else if(hp<=80){low()}
         else if(hp<=150){mid()}
     }
 
     fun mdeterioration(){
-        hp -= 180
+        hp -= 50
         if(hp <= 0){kill()}
         else if(hp<=80){low()}
         else if(hp<=150){mid()}

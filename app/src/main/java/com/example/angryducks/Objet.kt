@@ -9,8 +9,11 @@ abstract class Objet(
     var vitessex: Double,
     var vitessey: Double,
     val view: LevelView,
-    protected val radius: Float
+    private val radius: Float
 ){
+    //----------------------------------------------------------------------------------------------
+    // Variables init
+    //----------------------------------------------------------------------------------------------
 
     protected var onscreen = true
     var coo = PointF()
@@ -18,6 +21,10 @@ abstract class Objet(
     var collidingGroundCountDown = 0
     var collidingObjectCountDown = 0
     var collidingpointCountDown = 0
+
+    //----------------------------------------------------------------------------------------------
+    // Function
+    //----------------------------------------------------------------------------------------------
 
     fun getonscreen(): Boolean {return onscreen}
 
@@ -51,23 +58,7 @@ abstract class Objet(
             }
 
             vitessey += (interval * 1000.0f).toFloat()
-
-            //else if (coo.y + height* sin(orientation) + width * cos(orientation) >= (view.screenHeight - collision.groundheight).toDouble()) {
-                //if (vitessey > 0.00001) {
-                    //vitessey = -(collision.absorbtion * vitessey)
-                    //vitessex = (vitessex * collision.absorbtion)
-
-
-                //}
-                //else{
-                    //vitessey = 0.0
-                //}
-            //}
-
         }
-    }
-    open fun attributecollision(){
-
     }
 
     fun collisionSphereSphere(x1:Double,y1:Double,r1:Double,x2:Double,y2:Double,r2:Double) {
@@ -86,13 +77,8 @@ abstract class Objet(
         vitessex-=dv1x
         vitessey-=dv1y
         colliding = false
-        //birdtexture.color = Color.GREEN
         collidingObjectCountDown=10
         objet.changeaftercoll(dv2x, dv2y)
-        if(objet is Pig){
-            objet.deteriorationdetect(objet.vitessex - dv2x, objet.vitessey - dv2y, mass)
-        }
-        attributecollision()
     }
 
     open fun changeaftercoll(v2x:Double, v2y:Double) {
@@ -101,17 +87,36 @@ abstract class Objet(
         collidingObjectCountDown=10
     }
 
-    abstract fun touchinggrass(): Boolean
+    fun touchinggrass(): Boolean {
+        val distancecarre = ((Collision.m*coo.x-(view.screenHeight-Collision.groundheight)+coo.y).pow(2)/(1+Collision.m.pow(2)))
+        return (distancecarre<radius.pow(2))
+    }
 
 
-    abstract fun collideground()
+    fun collideground(){
+        val prodvect=vitessex * Collision.nx+vitessey*Collision.ny
+        if ((prodvect).absoluteValue<50) {
+            val dvx : Double = prodvect * Collision.nx
+            val dvy : Double = prodvect * Collision.ny
+            vitessex = (vitessex - dvx)*(1.0-Collision.coefRoulement)
+            vitessey = (vitessey - dvy)*(1.0-Collision.coefRoulement)
+        }
+        else {
+            val dvx : Double = prodvect * Collision.nx * (1+Collision.absorbtion)
+            val dvy : Double = prodvect * Collision.ny * (1+Collision.absorbtion)
+            vitessex = (vitessex - dvx)
+            vitessey = (vitessey - dvy)
+            collidingGroundCountDown=3
+        }
+    }
 
     fun touchingobstaclesegment(positionx:Double,positiony:Double,longueur:Double,nx:Double,ny:Double) : Boolean{
 
-        if (((positionx - coo.x) * nx + (positiony - coo.y) * ny).absoluteValue < radius){
-            return ((positionx - coo.x) * ny - (positiony - coo.y) * nx).absoluteValue < ( longueur/2)
+        return if (((positionx - coo.x) * nx + (positiony - coo.y) * ny).absoluteValue < radius){
+            ((positionx - coo.x) * ny - (positiony - coo.y) * nx).absoluteValue < ( longueur/2)
+        } else{
+            false
         }
-        else{return false}
     }
     fun collideobstaclesegment(nx:Double, ny:Double, bloc: ObstacleRectangle){
         val prodvect=vitessex * nx+vitessey*ny
@@ -147,7 +152,6 @@ abstract class Objet(
             val dvy : Double = prodvect * ny
             vitessex = (vitessex - dvx)
             vitessey = (vitessey - dvy)
-            //birdtexture.color = Color.BLUE
         }
         else {
             val dvx : Double = prodvect * nx * (1+Collision.absorbtion)
@@ -155,7 +159,6 @@ abstract class Objet(
             bloc.deteriorationdetect(vitessex, vitessey, mass)
             vitessex = (vitessex - dvx)
             vitessey = (vitessey - dvy)
-            //birdtexture.color = Color.MAGENTA
             collidingpointCountDown = 3
             collidingGroundCountDown = 3
         }

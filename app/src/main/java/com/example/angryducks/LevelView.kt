@@ -47,7 +47,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
     private var mediaPlayer = MediaPlayer.create(context, R.raw.themesong)
     private var mediaLost = MediaPlayer.create(context, R.raw.levelfailed)
     private var mediaBirdLaunch = MediaPlayer.create(context, R.raw.birdlaunch)
-    var mediaPigdead = MediaPlayer.create(context, R.raw.pigdead)
+    var mediaPigdead: MediaPlayer = MediaPlayer.create(context, R.raw.pigdead)
 
 
     //----------------------------------------------------------------------------------------------
@@ -59,7 +59,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
     // object ans classes
 
     private val bloc1 = ObstacleRectangle(1000.0, 800.0, 0.0, 1.0, 800.0, 800.0, 200, false)
-    private val pig1 = Pig(this, 20.0, 450f, 150f, 0.0, 100.0, 20f, 888800, false)
+    private val pig1 = Pig(this, 20.0, 450f, 150f, 0.0, 100.0, 20f, 200, false)
     private val pig2 = Pig(this, 500.0, 850f, 350f, 0.0, 100.0, 90f, 200, false)
     private val pig3 = Pig(this, 20.0, 1050f, 450f, 0.0, 100.0, 20f, 200, false)
     private val pig4 = Pig(this, 20.0, 1250f, 250f, 0.0, 100.0, 20f, 200, false)
@@ -69,7 +69,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
     private val bird3 = Bird(this, groundheight,5f,30.0)
     private val bird4 = Bird(this, groundheight,30f,50.0)
     private val bird5 = Bird(this, groundheight,60f,20.0)
-    private val ground = Ground(groundheight, 0f, 0f, 0f, this)
+    private val ground = Ground(groundheight, 0f, 0f, this)
     override val observers: ArrayList<Pigobserver> = ArrayList()
 
     //----------------------------------------------------------------------------------------------
@@ -97,7 +97,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
     //----------------------------------------------------------------------------------------------
 
     //----------------------------------------------------------------------------------------------
-    //Fonctions
+    // Functions
     //----------------------------------------------------------------------------------------------
 
     init {
@@ -123,7 +123,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
             .build()
 
         soundMap = SparseIntArray(3)
-        mediaPlayer.setLooping(true)
+        mediaPlayer.isLooping = true
         mediaPlayer.setVolume(0.5f,0.5f)
         mediaPlayer.start() // no need to call prepare(); create() does that for you
     }
