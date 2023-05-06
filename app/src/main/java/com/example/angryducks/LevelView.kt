@@ -85,6 +85,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
         }
     private val pigs = arrayOf(pig1, pig2, pig3, pig4)
     private val birds = arrayOf(bird1, bird2, bird3, bird4, bird5)
+    private val objets = arrayOf(pig1, pig2, pig3, pig4,bird1, bird2, bird3, bird4, bird5)
     private val blocs = arrayOf(bloc1)
     private var gameOver = false
     private var totalElapsedTime = 0.0
@@ -206,7 +207,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
     private fun updatePositions(elapsedTimeMS: Double) {
         val interval = elapsedTimeMS / 1000.0
 
-        birdcollisioner(birds, pigs, interval, blocs)
+        birdcollisioner(birds, pigs, objets, interval, blocs)
 
         waittime -= interval
         //var temps = System.currentTimeMillis() - TempsFinDernieroiseau

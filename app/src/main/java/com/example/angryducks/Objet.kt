@@ -14,7 +14,7 @@ abstract class Objet(
 
     protected var onscreen = true
     var coo = PointF()
-    var collidingpig = false
+    var colliding = false
     var collidingGroundCountDown = 0
     var collidingObjectCountDown = 0
     var collidingpointCountDown = 0
@@ -70,13 +70,13 @@ abstract class Objet(
 
     }
 
-    fun collisionSpherePig(x1:Double,y1:Double,r1:Double,x2:Double,y2:Double,r2:Double) {
+    fun collisionSphereSphere(x1:Double,y1:Double,r1:Double,x2:Double,y2:Double,r2:Double) {
         val one = ((x1-x2).pow(2)+(y1-y2).pow(2)).pow(0.5)
         val two = r1+r2
-        collidingpig =(one<two)
+        colliding =(one<two)
 
     }
-    fun sphereCollidePig(v1x:Double,v1y:Double,m1:Double,v2x:Double,v2y:Double,m2:Double,coef:Double, pig: Pig) {
+    fun sphereCollideSphere(v1x:Double,v1y:Double,m1:Double,v2x:Double,v2y:Double,m2:Double,coef:Double, objet: Objet) {
         val vmoyx:Double = (m1*v1x+m2*v2x)/(m1+m2)
         val vmoyy:Double = (m1*v1y+m2*v2y)/(m1+m2)
         val dv1x=(1.0+coef)*(v1x-vmoyx)
@@ -84,13 +84,11 @@ abstract class Objet(
         val dv2x=(1+coef)*(v2x-vmoyx)
         val dv2y=(1+coef)*(v2y-vmoyy)
         vitessex-=dv1x
-        //v2x-=dv2x
         vitessey-=dv1y
-        //v2y-=dv2y
-        //println(vitessex)
-        collidingpig = false
+        colliding = false
         //birdtexture.color = Color.GREEN
-        pig.changeaftercoll(dv2x, dv2y)
+        collidingObjectCountDown=10
+        objet.changeaftercoll(dv2x, dv2y)
         attributecollision()
     }
 

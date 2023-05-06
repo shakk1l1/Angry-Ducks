@@ -61,12 +61,12 @@ class Bird (view: LevelView, var groundheight: Float, val birdradius:Float, priv
         birdtexture.color = Color.GREEN
         pig.changeaftercoll(dv2x, dv2y)
     }*/
-    fun collisionSpherebird(x1:Double,y1:Double,r1:Double,x2:Double,y2:Double,r2:Double) {
+    /*fun collisionSpherebird(x1:Double,y1:Double,r1:Double,x2:Double,y2:Double,r2:Double) {
         val one = ((x1-x2).pow(2)+(y1-y2).pow(2)).pow(0.5)
         val two = r1+r2
         collidingbird =(one<two)
 
-    }
+    }*/
     fun birdCollideBird2(v1x:Double,v1y:Double,m1:Double,v2x:Double,v2y:Double,m2:Double,coef:Double, bird2: Bird) {
         val vmoyx: Double = (m1 * v1x + m2 * v2x) / (m1 + m2)
         val vmoyy: Double = (m1 * v1y + m2 * v2y) / (m1 + m2)
