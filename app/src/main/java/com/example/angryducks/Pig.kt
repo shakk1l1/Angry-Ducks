@@ -73,10 +73,12 @@ class Pig(
         if(killed && onscreen){
             onscreen = false
             view.pigleft -= 1
+            view.mediaPigdead.start()
         }
         if(!onscreen && !death && !killed){
             killed = true
             view.pigleft -= 1
+            view.mediaPigdead.start()
         }
     }
     override fun changeaftercoll(v2x:Double, v2y:Double) {

@@ -18,6 +18,7 @@ class Bird (view: LevelView, var groundheight: Float, val birdradius:Float, priv
     var collidingbird = false
 
 
+
     init {
         birdtexture.color = Color.RED
         imagebird = imagebird.scale((2*birdradius).toInt(),(2*birdradius).toInt())
@@ -202,5 +203,6 @@ class Bird (view: LevelView, var groundheight: Float, val birdradius:Float, priv
         vitessey= (-(3*diffy))
         onscreen = true
         statuslaunched = true
+
     }
 }

@@ -39,6 +39,17 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
     private var drawing = false
     private var skycolor = Paint()
 
+    //sound
+
+    private val activity = context as FragmentActivity
+    private val soundPool: SoundPool
+    private val soundMap: SparseIntArray
+    private var mediaPlayer = MediaPlayer.create(context, R.raw.themesong)
+    private var mediaLost = MediaPlayer.create(context, R.raw.levelfailed)
+    private var mediaBirdLaunch = MediaPlayer.create(context, R.raw.birdlaunch)
+    var mediaPigdead = MediaPlayer.create(context, R.raw.pigdead)
+
+
     //----------------------------------------------------------------------------------------------
     // Threads
 
@@ -79,17 +90,10 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
     private var totalElapsedTime = 0.0
     private var waittime = 0.0
     private var fixwaitime = 0.0   //cmb de temp avant prochain oiseau
-    private var maxwaittime = 100.0   //cmb de temp avant fin du jeu
+    private var maxwaittime = 10.0   //cmb de temp avant fin du jeu
     //var TempsFinDernieroiseau = 0L
 
     //----------------------------------------------------------------------------------------------
-    //sound
-
-    private val activity = context as FragmentActivity
-    private val soundPool: SoundPool
-    private val soundMap: SparseIntArray
-    private var mediaPlayer = MediaPlayer.create(context, R.raw.themesong)
-
 
     //----------------------------------------------------------------------------------------------
     //Fonctions
@@ -119,6 +123,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
 
         soundMap = SparseIntArray(3)
         mediaPlayer.setLooping(true)
+        mediaPlayer.setVolume(0.5f,0.5f)
         mediaPlayer.start() // no need to call prepare(); create() does that for you
     }
 
@@ -216,6 +221,8 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
             gameOver = true
             drawing = false
             showGameOverDialog(R.string.lost)
+            mediaPlayer.pause()
+            mediaLost.start()
         }
 
     }
@@ -276,6 +283,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
         }
         //mediaPlayer.pause()
         //mediaPlayer.reset()
+        mediaLost.pause()
         mediaPlayer.seekTo(0)
         mediaPlayer.start()
         //pig.reset()
@@ -290,6 +298,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
              */
             if (waittime <= 0.0) {
                 bird.launch(diffx, diffy)
+                mediaBirdLaunch.start()
                 birdavailable --
                 birdsshot ++
                 waittime = fixwaitime
