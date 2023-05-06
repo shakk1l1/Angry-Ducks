@@ -13,11 +13,19 @@ import kotlin.math.absoluteValue
 import kotlin.math.pow
 
 
-class Pig(view: LevelView, val massep : Double, radius: Float, var xp : Float, var yp : Float,
-          var vxp : Double, var vyp : Double, var orp : Float, var vangulp : Float, val pigradius:Float,
-          override var hp: Int, override var killed: Boolean)
+class Pig(
+    view: LevelView,
+    private val massep: Double,
+    private var xp: Float,
+    private var yp: Float,
+    private var vxp: Double,
+    private var vyp: Double,
+    val pigradius: Float,
+    override var hp: Int,
+    override var killed: Boolean
+)
 
-    : Objet(massep,vxp,vyp,orp.toDouble(),vangulp.toDouble(), view, radius), Killable, Pigobserver{
+    : Objet(massep, vxp, vyp, view, pigradius), Killable, Pigobserver{
     private var paintpig = Paint()
     private var death:Boolean = false
     private var imagepig = BitmapFactory.decodeResource(view.resources,R.drawable.pig1)

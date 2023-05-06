@@ -8,8 +8,8 @@ import androidx.core.graphics.scale
 import kotlin.math.absoluteValue
 import kotlin.math.pow
 
-class Bird (view: LevelView, var groundheight: Float, val birdradius:Float, val masseb:Double)
-    : Objet(masseb, 0.0, 0.0, 0.0 ,0.0, view, birdradius){
+class Bird (view: LevelView, var groundheight: Float, val birdradius:Float, private val masseb:Double)
+    : Objet(masseb, 0.0, 0.0, view, birdradius){
 
 
     private val birdtexture = Paint()

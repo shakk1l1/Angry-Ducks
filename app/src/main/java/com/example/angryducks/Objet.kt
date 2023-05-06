@@ -4,7 +4,13 @@ import android.graphics.PointF
 import kotlin.math.absoluteValue
 import kotlin.math.pow
 
-abstract class Objet (val mass : Double, var vitessex : Double, var vitessey : Double, var orientation : Double, var vangul : Double, val view: LevelView, val radius: Float){
+abstract class Objet(
+    val mass: Double,
+    var vitessex: Double,
+    var vitessey: Double,
+    val view: LevelView,
+    protected val radius: Float
+){
 
     protected var onscreen = true
     var coo = PointF()
@@ -152,4 +158,6 @@ abstract class Objet (val mass : Double, var vitessex : Double, var vitessey : D
             collidingpointCountDown = 3
         }
     }
+
+    fun getradius(): Float{return radius}
 }

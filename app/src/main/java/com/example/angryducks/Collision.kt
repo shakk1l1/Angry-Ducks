@@ -47,7 +47,7 @@ class Collision{
                                         bird.birdradius.toDouble(),
                                         pig.coo.x.toDouble(),
                                         pig.coo.y.toDouble(),
-                                        pig.radius.toDouble(),
+                                        pig.getradius().toDouble(),
                                     )
 
                                 }
@@ -123,7 +123,7 @@ class Collision{
                             pig.pigradius.toDouble(),
                             pig2.coo.x.toDouble(),
                             pig2.coo.y.toDouble(),
-                            pig2.radius.toDouble(),
+                            pig2.getradius().toDouble(),
                         )
                     }
                     if (pig.collidingpig) {              //bird collide bird
