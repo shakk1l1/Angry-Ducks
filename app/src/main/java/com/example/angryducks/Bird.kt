@@ -9,7 +9,7 @@ import kotlin.math.absoluteValue
 import kotlin.math.pow
 
 class Bird (view: LevelView, var groundheight: Float, val birdradius:Float, val masseb:Double)
-    : Objet(masseb, 0.0, 0.0, 0.0 ,0.0, view){
+    : Objet(masseb, 0.0, 0.0, 0.0 ,0.0, view, birdradius){
 
 
     private val birdtexture = Paint()
@@ -137,13 +137,14 @@ class Bird (view: LevelView, var groundheight: Float, val birdradius:Float, val 
         }
     }
 
-
+/*
     override fun touchingobstaclesegment(positionx:Double,positiony:Double,longueur:Double,nx:Double,ny:Double): Boolean {
-        if (((positionx - coo.x) * nx + (positiony - coo.y) * ny).absoluteValue < birdradius){
-            return ((positionx - coo.x) * ny - (positiony - coo.y) * nx).absoluteValue < ( longueur/2)
-        }
-        else{return false}
+            if (((positionx - coo.x) * nx + (positiony - coo.y) * ny).absoluteValue < birdradius){
+                return ((positionx - coo.x) * ny - (positiony - coo.y) * nx).absoluteValue < ( longueur/2)
+            }
+            else{return false}
     }
+
     override fun collideobstaclesegment(nx: Double, ny: Double, bloc:ObstacleRectangle) {
         val prodvect=vitessex * nx+vitessey*ny
         if ((prodvect).absoluteValue<100) {
@@ -156,12 +157,12 @@ class Bird (view: LevelView, var groundheight: Float, val birdradius:Float, val 
         else {
             val dvx: Double = prodvect * nx * (1 + Collision.absorbtion)
             val dvy: Double = prodvect * ny * (1 + Collision.absorbtion)
+            bloc.deteriorationdetect(vitessex, vitessey, mass)
             vitessex = (vitessex - dvx)
             vitessey = (vitessey - dvy)
 
             collidingGroundCountDown = 3
         }
-        bloc.deteriorationdetect(vitessex, vitessey, mass)
     }
 
     override fun touchingobstaclepoint(positionx: Double, positiony: Double, rayon:Double): Boolean {
@@ -183,13 +184,15 @@ class Bird (view: LevelView, var groundheight: Float, val birdradius:Float, val 
         else {
             val dvx : Double = prodvect * nx * (1+Collision.absorbtion)
             val dvy : Double = prodvect * ny * (1+Collision.absorbtion)
+            bloc.deteriorationdetect(vitessex, vitessey, mass)
             vitessex = (vitessex - dvx)
             vitessey = (vitessey - dvy)
             birdtexture.color = Color.MAGENTA
             collidingpointCountDown = 3
         }
-        bloc.deteriorationdetect(vitessex, vitessey, mass)
     }
+
+ */
 
 
     fun launch(diffx: Double, diffy: Double){

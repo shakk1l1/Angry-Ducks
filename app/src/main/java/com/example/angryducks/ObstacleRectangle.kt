@@ -17,7 +17,7 @@ class ObstacleRectangle(val positionx:Double, val positiony:Double, val nx:Doubl
     private val pointupleft=ObstaclePoint(positionx+nx*(largeur/2-10)-ny*(longueur-largeur/2-10),positiony+ny*(largeur/2-5)+nx*(longueur/2-5),5.0)
     private val pointdownright=ObstaclePoint(positionx-nx*(largeur/2-10)+ny*(longueur-largeur/2-10),positiony-ny*(largeur/2-5)-nx*(longueur/2-5), 5.0)
     private val pointdownleft=ObstaclePoint(positionx-nx*(largeur/2-10)-ny*(longueur-largeur/2-10),positiony-ny*(largeur/2-5)+nx*(longueur/2-5), 5.0)
-    val obstaclePaint = Paint()
+    private var obstaclePaint = Paint()
     val obstaacles= arrayOf(segmentup,segmentleft,segmentdown,segmentright)
     val pooints= arrayOf(pointupleft,pointupright,pointdownleft,pointdownright)
     init {
@@ -28,7 +28,7 @@ class ObstacleRectangle(val positionx:Double, val positiony:Double, val nx:Doubl
     fun reset(){
         killed = false
         obstaclePaint.color = Color.BLACK
-        hp = 20000
+        hp = 200
     }
 
     fun draw(canvas: Canvas){

@@ -1,9 +1,10 @@
 package com.example.angryducks
 
 import android.graphics.PointF
+import kotlin.math.absoluteValue
 import kotlin.math.pow
 
-abstract class Objet (val mass : Double, var vitessex : Double, var vitessey : Double, var orientation : Double, var vangul : Double, val view: LevelView){
+abstract class Objet (val mass : Double, var vitessex : Double, var vitessey : Double, var orientation : Double, var vangul : Double, val view: LevelView, val radius: Float){
 
     protected var onscreen = true
     var coo = PointF()
@@ -98,10 +99,57 @@ abstract class Objet (val mass : Double, var vitessex : Double, var vitessey : D
 
     abstract fun collideground()
 
-    abstract fun touchingobstaclesegment(postionx:Double,postiony:Double,longueur:Double,nx:Double,ny:Double) : Boolean
-    abstract fun collideobstaclesegment(nx:Double, ny:Double, bloc: ObstacleRectangle)
+    fun touchingobstaclesegment(positionx:Double,positiony:Double,longueur:Double,nx:Double,ny:Double) : Boolean{
 
-    abstract fun touchingobstaclepoint(positionx:Double,positiony:Double,rayon:Double) :Boolean
+        if (((positionx - coo.x) * nx + (positiony - coo.y) * ny).absoluteValue < radius){
+            return ((positionx - coo.x) * ny - (positiony - coo.y) * nx).absoluteValue < ( longueur/2)
+        }
+        else{return false}
+    }
+    fun collideobstaclesegment(nx:Double, ny:Double, bloc: ObstacleRectangle){
+        val prodvect=vitessex * nx+vitessey*ny
+        if ((prodvect).absoluteValue<100) {
+            val dvx : Double = prodvect * nx
+            val dvy : Double = prodvect * ny
+            vitessex = (vitessex - dvx)*(1.0-Collision.coefRoulement)
+            vitessey = (vitessey - dvy)*(1.0-Collision.coefRoulement)
 
-    abstract fun collideobstaclepoint(positionx:Double,positiony:Double, bloc: ObstacleRectangle)
+        }
+        else {
+            val dvx: Double = prodvect * nx * (1 + Collision.absorbtion)
+            val dvy: Double = prodvect * ny * (1 + Collision.absorbtion)
+            bloc.deteriorationdetect(vitessex, vitessey, mass)
+            vitessex = (vitessex - dvx)
+            vitessey = (vitessey - dvy)
+
+            collidingGroundCountDown = 3
+        }
+    }
+
+    fun touchingobstaclepoint(positionx:Double,positiony:Double,rayon:Double) :Boolean{
+        return((coo.x-positionx).pow(2)+(coo.y-positiony).pow(2) < (radius+rayon).pow(2))
+    }
+
+    fun collideobstaclepoint(positionx:Double,positiony:Double, bloc: ObstacleRectangle){
+        val distance=((coo.x-positionx).pow(2)+(coo.y-positiony).pow(2)).pow(0.5)
+        val nx=(coo.x-positionx)/distance
+        val ny=(coo.y-positiony)/distance
+        val prodvect=vitessex * nx+vitessey*ny
+        if ((prodvect).absoluteValue<50) {
+            val dvx : Double = prodvect * nx
+            val dvy : Double = prodvect * ny
+            vitessex = (vitessex - dvx)
+            vitessey = (vitessey - dvy)
+            //birdtexture.color = Color.BLUE
+        }
+        else {
+            val dvx : Double = prodvect * nx * (1+Collision.absorbtion)
+            val dvy : Double = prodvect * ny * (1+Collision.absorbtion)
+            bloc.deteriorationdetect(vitessex, vitessey, mass)
+            vitessex = (vitessex - dvx)
+            vitessey = (vitessey - dvy)
+            //birdtexture.color = Color.MAGENTA
+            collidingpointCountDown = 3
+        }
+    }
 }

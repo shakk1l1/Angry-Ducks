@@ -47,7 +47,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
     //----------------------------------------------------------------------------------------------
     // object ans classes
 
-    private val bloc1 = ObstacleRectangle(1000.0, 800.0, 0.0, 1.0, 800.0, 800.0, 200000, false)
+    private val bloc1 = ObstacleRectangle(1000.0, 800.0, 0.0, 1.0, 800.0, 800.0, 200, false)
     private val pig1 = Pig(this, 20.0, 25f, 450f, 150f, 0.0, 100.0, 0.0f, 0f, 20f, 888800, false)
     private val pig2 = Pig(this, 500.0, 90f, 850f, 350f, 0.0, 100.0, 0.0f, 0f, 90f, 200, false)
     private val pig3 = Pig(this, 20.0, 25f, 1050f, 450f, 0.0, 100.0, 0.0f, 0f, 20f, 200, false)
@@ -161,12 +161,14 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
 
             for(bloc in blocs){
                 bloc.draw(canvas)
+                /*
                 for (obstacle in bloc.obstaacles){
                     obstacle.draw(canvas)
                 }
                 for (points in bloc.pooints){
                     points.draw(canvas)
                 }
+                */
             }
 
 

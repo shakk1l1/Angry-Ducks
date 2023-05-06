@@ -13,11 +13,11 @@ import kotlin.math.absoluteValue
 import kotlin.math.pow
 
 
-class Pig(view: LevelView, val massep : Double, val radius: Float, var xp : Float, var yp : Float,
+class Pig(view: LevelView, val massep : Double, radius: Float, var xp : Float, var yp : Float,
           var vxp : Double, var vyp : Double, var orp : Float, var vangulp : Float, val pigradius:Float,
           override var hp: Int, override var killed: Boolean)
 
-    : Objet(massep,vxp,vyp,orp.toDouble(),vangulp.toDouble(), view), Killable, Pigobserver{
+    : Objet(massep,vxp,vyp,orp.toDouble(),vangulp.toDouble(), view, radius), Killable, Pigobserver{
     private var paintpig = Paint()
     private var death:Boolean = false
     private var imagepig = BitmapFactory.decodeResource(view.resources,R.drawable.pig1)
@@ -129,31 +129,6 @@ class Pig(view: LevelView, val massep : Double, val radius: Float, var xp : Floa
         }
     }
 
-    override fun touchingobstaclesegment(
-        postionx: Double,
-        postiony: Double,
-        longueur: Double,
-        nx: Double,
-        ny: Double
-    ): Boolean {
-        TODO("Not yet implemented")
-    }
-
-    override fun collideobstaclesegment(nx: Double, ny: Double, bloc: ObstacleRectangle) {
-        TODO("Not yet implemented")
-    }
-
-    override fun touchingobstaclepoint(positionx: Double, positiony: Double,rayon:Double): Boolean {
-        TODO("Not yet implemented")
-    }
-
-    override fun collideobstaclepoint(
-        positionx: Double,
-        positiony: Double,
-        bloc: ObstacleRectangle
-    ) {
-        TODO("Not yet implemented")
-    }
     override fun low() {
         imagepig = imagepig.scale((2*pigradius).toInt(),(2*pigradius).toInt())
         imagepig = BitmapFactory.decodeResource(view.resources,R.drawable.pig_low)

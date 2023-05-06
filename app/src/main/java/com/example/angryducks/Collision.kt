@@ -144,6 +144,43 @@ class Collision{
                         pig.collideground()
                     }
                 }
+                for(bloc in blocs) {
+                    if (pig.collidingGroundCountDown == 0) {
+                        if (!bloc.getkilled()) {
+                            for (segment in bloc.obstaacles) {
+                                if (pig.touchingobstaclesegment(
+                                        segment.postionx,
+                                        segment.postiony,
+                                        segment.longueur,
+                                        segment.nx,
+                                        segment.ny
+                                    )
+                                ) {
+                                    //bloc.deteriorationdetect(bird.vitessex, bird.vitessey, bird.mass)
+                                    pig.collideobstaclesegment(
+                                        segment.nx,
+                                        segment.ny,
+                                        bloc
+                                    )
+                                }
+                            }
+                        }
+                    }
+
+                    for (point in bloc.pooints) {
+                        if (pig.collidingpointCountDown==0) {
+                            if (pig.touchingobstaclepoint(
+                                    point.positionx,
+                                    point.positiony,
+                                    point.rayon
+                                )
+                            ) {
+                                //bloc.deteriorationdetect(bird.vitessex, bird.vitessey, bird.mass)
+                                pig.collideobstaclepoint(point.positionx, point.positiony, bloc)
+                            }
+                        }
+                    }
+                }
 
                 pig.update2(interval)
             }
