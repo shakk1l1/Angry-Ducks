@@ -73,6 +73,20 @@ class Collision{
                             }
                         }
                         for(bloc in blocs) {
+
+                            for (point in bloc.pooints) {
+                                if (bird.collidingpointCountDown==0) {
+                                    if (bird.touchingobstaclepoint(
+                                            point.positionx,
+                                            point.positiony,
+                                            point.rayon
+                                        )
+                                    ) {
+                                        //bloc.deteriorationdetect(bird.vitessex, bird.vitessey, bird.mass)
+                                        bird.collideobstaclepoint(point.positionx, point.positiony, bloc)
+                                    }
+                                }
+                            }
                             if (bird.collidingGroundCountDown == 0) {
                                 if (!bloc.getkilled()) {
                                     for (segment in bloc.obstaacles) {
@@ -95,19 +109,6 @@ class Collision{
                                 }
                             }
 
-                            for (point in bloc.pooints) {
-                                if (bird.collidingpointCountDown==0) {
-                                    if (bird.touchingobstaclepoint(
-                                            point.positionx,
-                                            point.positiony,
-                                            point.rayon
-                                        )
-                                    ) {
-                                        //bloc.deteriorationdetect(bird.vitessex, bird.vitessey, bird.mass)
-                                        bird.collideobstaclepoint(point.positionx, point.positiony, bloc)
-                                    }
-                                }
-                            }
                         }
                     }
                     if (bird.statuslaunched) {

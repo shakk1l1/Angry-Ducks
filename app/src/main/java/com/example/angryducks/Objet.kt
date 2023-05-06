@@ -156,6 +156,7 @@ abstract class Objet(
             vitessey = (vitessey - dvy)
             //birdtexture.color = Color.MAGENTA
             collidingpointCountDown = 3
+            collidingGroundCountDown = 3
         }
     }
 
