@@ -58,8 +58,8 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
     //----------------------------------------------------------------------------------------------
     // object ans classes
 
-    private val bloc1 = ObstacleRectangle(1000.0, 800.0, 0.0, 1.0, 800.0, 800.0, 200, false)
-    private val pig1 = Pig(this, 20.0, 450f, 150f, 0.0, 100.0, 20f, 888800, false)
+    private val bloc1 = ObstacleRectangle(1000.0, 800.0, 0.0, 1.0, 800.0, 800.0, 2000, false)
+    private val pig1 = Pig(this, 20.0, 450f, 150f, 0.0, 100.0, 20f, 200, false)
     private val pig2 = Pig(this, 500.0, 850f, 350f, 0.0, 100.0, 90f, 200, false)
     private val pig3 = Pig(this, 20.0, 1050f, 450f, 0.0, 100.0, 20f, 200, false)
     private val pig4 = Pig(this, 20.0, 1250f, 250f, 0.0, 100.0, 20f, 200, false)
@@ -85,7 +85,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
         }
     private val pigs = arrayOf(pig1, pig2, pig3, pig4)
     private val birds = arrayOf(bird1, bird2, bird3, bird4, bird5)
-    private val objets = arrayOf(pig1, pig2, pig3, pig4,bird1, bird2, bird3, bird4, bird5)
+    private val objets = arrayOf(bird1, bird2, bird3, bird4, bird5,pig1, pig2, pig3, pig4)
     private val blocs = arrayOf(bloc1)
     private var gameOver = false
     private var totalElapsedTime = 0.0

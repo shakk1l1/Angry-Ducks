@@ -195,7 +195,6 @@ class Collision{
             blocs: Array<ObstacleRectangle>
         ) {
             for (objet in objets) {
-                //for (pig in pigs) {
                 if (!objet.getonscreen()) {
                     objet.colliding = false
                 }

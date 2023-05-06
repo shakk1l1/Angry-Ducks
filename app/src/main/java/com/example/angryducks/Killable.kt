@@ -13,7 +13,7 @@ interface Killable {
     }
 
     fun hdeterioration(){
-        hp -= 100
+        hp -= 270
         if(hp <= 0){kill()}
         else if(hp<=80){low()}
         else if(hp<=150){mid()}
@@ -21,20 +21,20 @@ interface Killable {
 
     fun deteriorationdetect(vx: Double, vy: Double,m:Double){
         val v = sqrt(vx.pow(2)+vy.pow(2))
-        if(m*v>1500000){hdeterioration()}
+        if(m*v>15000){hdeterioration()}
         else if(m*v>10000){mdeterioration()}
         else if (m*v>5000){ldeterioration()}
     }
 
     fun ldeterioration(){
-        hp -= 25
+        hp -= 90
         if(hp <= 0){kill()}
         else if(hp<=80){low()}
         else if(hp<=150){mid()}
     }
 
     fun mdeterioration(){
-        hp -= 50
+        hp -= 180
         if(hp <= 0){kill()}
         else if(hp<=80){low()}
         else if(hp<=150){mid()}
