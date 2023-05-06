@@ -46,6 +46,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
     private val soundMap: SparseIntArray
     private var mediaPlayer = MediaPlayer.create(context, R.raw.themesong)
     private var mediaLost = MediaPlayer.create(context, R.raw.levelfailed)
+    private var mediaWin = MediaPlayer.create(context, R.raw.levelwin)
     private var mediaBirdLaunch = MediaPlayer.create(context, R.raw.birdlaunch)
     var mediaPigdead = MediaPlayer.create(context, R.raw.pigdead)
 
@@ -69,6 +70,8 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
     private val bird3 = Bird(this, groundheight,5f,30.0)
     private val bird4 = Bird(this, groundheight,30f,50.0)
     private val bird5 = Bird(this, groundheight,60f,20.0)
+    private val bird6 = Bird(this, groundheight,60f,20.0)
+    private val bird7 = Bird(this, groundheight,60f,20.0)
     private val ground = Ground(groundheight, 0f, 0f, 0f, this)
     override val observers: ArrayList<Pigobserver> = ArrayList()
 
@@ -84,8 +87,8 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
 
         }
     private val pigs = arrayOf(pig1, pig2, pig3, pig4)
-    private val birds = arrayOf(bird1, bird2, bird3, bird4, bird5)
-    private val objets = arrayOf(pig1, pig2, pig3, pig4,bird1, bird2, bird3, bird4, bird5)
+    private val birds = arrayOf(bird1, bird2, bird3, bird4, bird5, bird6, bird7)
+    private val objets = arrayOf(pig1, pig2, pig3, pig4,bird1, bird2, bird3, bird4, bird5, bird6, bird7)
     private val blocs = arrayOf(bloc1)
     private var gameOver = false
     private var totalElapsedTime = 0.0
@@ -104,7 +107,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
         skycolor.color = Color.parseColor("#add8e6")
         textPaint.textSize = screenWidth / 10
         textPaint.color = Color.BLACK
-        birdavailable = 5
+        birdavailable = 7
         this.pigleft = 4
         waittime = 0.0
         for (pig in pigs){
@@ -124,7 +127,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
 
         soundMap = SparseIntArray(3)
         mediaPlayer.setLooping(true)
-        mediaPlayer.setVolume(0.5f,0.5f)
+        mediaPlayer.setVolume(0.2f,0.2f)
         mediaPlayer.start() // no need to call prepare(); create() does that for you
     }
 
@@ -216,6 +219,8 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
             gameOver = true
             drawing = false
             showGameOverDialog(R.string.win)
+            mediaPlayer.pause()
+            mediaWin.start()
         }
 
         else if(birdavailable == 0 && waittime <= -maxwaittime /*&& temps>10000L*/){
@@ -269,7 +274,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
 
 
     private fun newGame() {         //new game reset
-        birdavailable = 5
+        birdavailable = 7
         birdsshot = 0
         totalElapsedTime = 0.0
         drawing = true
@@ -284,7 +289,10 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
         }
         //mediaPlayer.pause()
         //mediaPlayer.reset()
+        mediaWin.pause()
+        mediaWin.seekTo(0)
         mediaLost.pause()
+        mediaLost.seekTo(0)
         mediaPlayer.seekTo(0)
         mediaPlayer.start()
         //pig.reset()
@@ -299,6 +307,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
              */
             if (waittime <= 0.0) {
                 bird.launch(diffx, diffy)
+                mediaBirdLaunch.seekTo(0)
                 mediaBirdLaunch.start()
                 birdavailable --
                 birdsshot ++
