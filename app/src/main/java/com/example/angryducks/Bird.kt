@@ -31,11 +31,11 @@ class Bird (view: LevelView, var groundheight: Float, val birdradius:Float, priv
     }
     fun draw(canvas: Canvas) { //texture ou hitbox
         if (onscreen) {
-            canvas.drawCircle(
+            /*canvas.drawCircle(
                 coo.x, coo.y, birdradius,
                 birdtexture
-            )
-            //canvas.drawBitmap(imagebird,coo.x-birdradius,coo.y-birdradius,null)
+            )*/
+            canvas.drawBitmap(imagebird,coo.x-birdradius,coo.y-birdradius,null)
 
         }
     }

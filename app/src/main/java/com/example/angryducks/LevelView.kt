@@ -118,7 +118,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
             .build()
 
         soundMap = SparseIntArray(3)
-
+        mediaPlayer.setLooping(true)
         mediaPlayer.start() // no need to call prepare(); create() does that for you
     }
 

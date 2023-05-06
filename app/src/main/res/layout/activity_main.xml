@@ -19,7 +19,6 @@
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
         android:layout_marginEnd="37dp"
         android:text="New Game"
         app:layout_constraintEnd_toEndOf="parent"
