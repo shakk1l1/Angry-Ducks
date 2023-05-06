@@ -84,6 +84,7 @@ class Collision{
                                                 segment.ny
                                             )
                                         ) {
+                                            //bloc.deteriorationdetect(bird.vitessex, bird.vitessey, bird.mass)
                                             bird.collideobstaclesegment(
                                                 segment.nx,
                                                 segment.ny,
@@ -102,7 +103,8 @@ class Collision{
                                             point.rayon
                                         )
                                     ) {
-                                        bird.collideobstaclepoint(point.positionx, point.positiony)
+                                        //bloc.deteriorationdetect(bird.vitessex, bird.vitessey, bird.mass)
+                                        bird.collideobstaclepoint(point.positionx, point.positiony, bloc)
                                     }
                                 }
                             }

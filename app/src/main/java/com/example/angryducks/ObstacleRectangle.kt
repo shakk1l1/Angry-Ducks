@@ -46,8 +46,7 @@ class ObstacleRectangle(val positionx:Double, val positiony:Double, val nx:Doubl
     fun getkilled():Boolean {return killed}
 
     override fun low() {
-        //obstaclePaint.color = Color.parseColor("#aaaaaa")
-        obstaclePaint.color = Color.RED
+        obstaclePaint.color = Color.parseColor("#aaaaaa")
     }
 
     override fun mid() {

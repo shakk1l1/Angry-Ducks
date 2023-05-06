@@ -143,10 +143,6 @@ class Bird (view: LevelView, var groundheight: Float, val birdradius:Float, val 
             return ((positionx - coo.x) * ny - (positiony - coo.y) * nx).absoluteValue < ( longueur/2)
         }
         else{return false}
-        //if (((postionx - coo.x) * nx + (postiony - coo.y) * ny).absoluteValue < birdradius) {
-        //return (true)
-        //} //((postionx - coo.x) * ny + (postiony - coo.y) * nx).absoluteValue < (birdradius + longueur)
-        //else{return false}
     }
     override fun collideobstaclesegment(nx: Double, ny: Double, bloc:ObstacleRectangle) {
         val prodvect=vitessex * nx+vitessey*ny
@@ -172,7 +168,7 @@ class Bird (view: LevelView, var groundheight: Float, val birdradius:Float, val 
         return((coo.x-positionx).pow(2)+(coo.y-positiony).pow(2) < (birdradius+rayon).pow(2))
     }
 
-    override fun collideobstaclepoint(positionx:Double,positiony:Double) {
+    override fun collideobstaclepoint(positionx:Double,positiony:Double, bloc: ObstacleRectangle) {
         val distance=((coo.x-positionx).pow(2)+(coo.y-positiony).pow(2)).pow(0.5)
         val nx=(coo.x-positionx)/distance
         val ny=(coo.y-positiony)/distance
@@ -192,6 +188,7 @@ class Bird (view: LevelView, var groundheight: Float, val birdradius:Float, val 
             birdtexture.color = Color.MAGENTA
             collidingpointCountDown = 3
         }
+        bloc.deteriorationdetect(vitessex, vitessey, mass)
     }
 
 

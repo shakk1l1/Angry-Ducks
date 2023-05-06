@@ -6,11 +6,9 @@ import android.graphics.Color
 import android.graphics.Paint
 import androidx.core.graphics.scale
 import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import kotlin.math.absoluteValue
 import kotlin.math.pow
 
@@ -22,12 +20,12 @@ class Pig(view: LevelView, val massep : Double, val radius: Float, var xp : Floa
     : Objet(massep,vxp,vyp,orp.toDouble(),vangulp.toDouble(), view), Killable, Pigobserver{
     private var paintpig = Paint()
     private var death:Boolean = false
-    private var imagepig = BitmapFactory.decodeResource(view.resources,R.drawable.pig)
+    private var imagepig = BitmapFactory.decodeResource(view.resources,R.drawable.pig1)
 
     val textpaint = Paint()
 
     init {
-        paintpig.color = Color.parseColor("#056517")
+        //paintpig.color = Color.parseColor("#056517")
         coo.x=xp
         coo.y = yp
         vitessex=vxp
@@ -45,10 +43,11 @@ class Pig(view: LevelView, val massep : Double, val radius: Float, var xp : Floa
         vitessex = 0.0
         vitessey = 0.0
         hp = 200
-        paintpig.color = Color.parseColor("#056517")
+        //paintpig.color = Color.parseColor("#056517")
+        imagepig = BitmapFactory.decodeResource(view.resources,R.drawable.pig1)
+        imagepig = imagepig.scale((2*pigradius).toInt(),(2*pigradius).toInt())
         killed = false
         death = false
-        //test
     }
 
     fun draw(canvas: Canvas) {
@@ -56,6 +55,7 @@ class Pig(view: LevelView, val massep : Double, val radius: Float, var xp : Floa
             /*canvas.drawCircle(
                 coo.x, coo.y, radius, paintpig
             )*/
+            imagepig = imagepig.scale((2*pigradius).toInt(),(2*pigradius).toInt())
             canvas.drawBitmap(imagepig,coo.x-pigradius,coo.y-pigradius,null)
             //canvas.drawText("${coo.x} + ${vitessey}+${coo.y} ", 800f, 500f, paintpig)
         }
@@ -147,30 +147,35 @@ class Pig(view: LevelView, val massep : Double, val radius: Float, var xp : Floa
         TODO("Not yet implemented")
     }
 
-    override fun collideobstaclepoint(positionx: Double, positiony: Double) {
+    override fun collideobstaclepoint(
+        positionx: Double,
+        positiony: Double,
+        bloc: ObstacleRectangle
+    ) {
         TODO("Not yet implemented")
     }
-
     override fun low() {
-        paintpig.color = Color.parseColor("#759116")
+        imagepig = imagepig.scale((2*pigradius).toInt(),(2*pigradius).toInt())
+        imagepig = BitmapFactory.decodeResource(view.resources,R.drawable.pig_low)
     }
 
     override fun mid() {
-        paintpig.color = Color.parseColor("#3f8f29")
+        imagepig = imagepig.scale((2*pigradius).toInt(),(2*pigradius).toInt())
+        imagepig = BitmapFactory.decodeResource(view.resources,R.drawable.pig_mid)
     }
 
     @OptIn(DelicateCoroutinesApi::class)
     override fun update(){
         GlobalScope.launch {
-            repeat(3) {
-                paintpig.color = Color.YELLOW
-                delay(150)
-                paintpig.color = Color.RED
-                delay(150)
-            }
+            imagepig = imagepig.scale((2*pigradius).toInt(),(2*pigradius).toInt())
+            imagepig = BitmapFactory.decodeResource(view.resources,R.drawable.scared_pig)
+            delay(800)
             if(hp<=80){low()}
             else if(hp <= 150){mid()}
-            else if(hp > 150){paintpig.color = Color.parseColor("#056517")}
+            else if(hp > 150){
+                imagepig = imagepig.scale((2*pigradius).toInt(),(2*pigradius).toInt())
+                imagepig = BitmapFactory.decodeResource(view.resources,R.drawable.pig1)
+            }
         }
 
     }
