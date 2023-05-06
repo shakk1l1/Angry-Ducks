@@ -21,7 +21,7 @@ class MainActivity: AppCompatActivity(), GestureDetector.OnGestureListener {
         button2 = findViewById(R.id.button2)
         gestureDetector = GestureDetector(this)
         button2.setOnClickListener {
-            levelView.newgamebutton()
+            levelView.cassepaslesc()
         }
         button3 = findViewById(R.id.button3)
         button3.setOnClickListener {
