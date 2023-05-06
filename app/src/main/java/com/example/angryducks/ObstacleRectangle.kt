@@ -17,14 +17,16 @@ class ObstacleRectangle(
     //----------------------------------------------------------------------------------------------
     // Variables init
     //----------------------------------------------------------------------------------------------
-    private val segmentup = ObstacleSegment(positionx+nx*largeur/2,positiony+ny*largeur/2,longueur*2-largeur,nx,ny)
-    private val segmentdown=ObstacleSegment(positionx-nx*largeur/2,positiony-ny*largeur/2,longueur*2-largeur,-nx,-ny)
-    private val segmentleft=ObstacleSegment (positionx+ny*(longueur-largeur/2),positiony-nx*longueur/2,largeur,ny,-nx)
-    private val segmentright=ObstacleSegment (positionx-ny*(longueur-largeur/2),positiony+nx*longueur/2,largeur,-ny,nx)
-    private val pointupright=ObstaclePoint(positionx+nx*(largeur/2-10)+ny*(longueur-largeur/2-10),positiony+ny*(largeur/2-5)-nx*(longueur/2-5),5.0)
-    private val pointupleft=ObstaclePoint(positionx+nx*(largeur/2-10)-ny*(longueur-largeur/2-10),positiony+ny*(largeur/2-5)+nx*(longueur/2-5),5.0)
-    private val pointdownright=ObstaclePoint(positionx-nx*(largeur/2-10)+ny*(longueur-largeur/2-10),positiony-ny*(largeur/2-5)-nx*(longueur/2-5), 5.0)
-    private val pointdownleft=ObstaclePoint(positionx-nx*(largeur/2-10)-ny*(longueur-largeur/2-10),positiony-ny*(largeur/2-5)+nx*(longueur/2-5), 5.0)
+    val longueurprim=(longueur+largeur)/2
+    val hpinit = hp
+    private val segmentup = ObstacleSegment(positionx+nx*largeur/2,positiony+ny*largeur/2,longueur,nx,ny)
+    private val segmentdown=ObstacleSegment(positionx-nx*largeur/2,positiony-ny*largeur/2,longueur,-nx,-ny)
+    private val segmentleft=ObstacleSegment (positionx+ny*(longueur/2),positiony-nx*longueurprim/2,largeur,ny,-nx)
+    private val segmentright=ObstacleSegment (positionx-ny*(longueur/2),positiony+nx*longueurprim/2,largeur,-ny,nx)
+    private val pointupright=ObstaclePoint(positionx+nx*(largeur/2-10)+ny*(longueur/2-10),positiony+ny*(largeur/2-5)-nx*(longueurprim/2-5),3.0)
+    private val pointupleft=ObstaclePoint(positionx+nx*(largeur/2-10)-ny*(longueur/2-10),positiony+ny*(largeur/2-5)+nx*(longueurprim/2-5),3.0)
+    private val pointdownright=ObstaclePoint(positionx-nx*(largeur/2-10)+ny*(longueur/2-10),positiony-ny*(largeur/2-5)-nx*(longueurprim/2-5), 3.0)
+    private val pointdownleft=ObstaclePoint(positionx-nx*(largeur/2-10)-ny*(longueur/2-10),positiony-ny*(largeur/2-5)+nx*(longueurprim/2-5), 3.0)
     private var obstaclePaint = Paint()
     val obstaacles= arrayOf(segmentup,segmentleft,segmentdown,segmentright)
     val pooints= arrayOf(pointupleft,pointupright,pointdownleft,pointdownright)
@@ -41,16 +43,16 @@ class ObstacleRectangle(
     fun reset(){
         killed = false
         obstaclePaint.color = Color.BLACK
-        hp = 200
+        hp = hpinit
     }
 
     fun draw(canvas: Canvas){
         if(!killed) {
             canvas.drawLine(
-                (positionx + ny * (longueur - largeur / 2)).toFloat(),
-                (positiony - nx * (longueur - largeur / 2)).toFloat(),
-                (positionx - ny * (longueur - largeur / 2)).toFloat(),
-                (positiony + nx * (longueur - largeur / 2)).toFloat(),
+                (positionx + ny * (longueur/ 2)).toFloat(),
+                (positiony - nx * (longueur/ 2)).toFloat(),
+                (positionx - ny * (longueur/ 2)).toFloat(),
+                (positiony + nx * (longueur/ 2)).toFloat(),
                 obstaclePaint
             )
         }

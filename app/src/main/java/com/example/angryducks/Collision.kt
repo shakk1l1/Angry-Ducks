@@ -37,7 +37,7 @@ class Collision{
                                         objet2.vitessex,
                                         objet2.vitessey,
                                         objet2.mass,
-                                        1.0,
+                                        0.7,
                                         objet2
                                     )
                                     if(objet2 is Pig){

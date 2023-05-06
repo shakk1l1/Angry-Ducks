@@ -77,14 +77,14 @@ abstract class Objet(
         vitessex-=dv1x
         vitessey-=dv1y
         colliding = false
-        collidingObjectCountDown=10
+        collidingObjectCountDown=8
         objet.changeaftercoll(dv2x, dv2y)
     }
 
     open fun changeaftercoll(v2x:Double, v2y:Double) {
         vitessex-=v2x
         vitessey-=v2y
-        collidingObjectCountDown=10
+        collidingObjectCountDown=8
     }
 
     fun touchinggrass(): Boolean {
