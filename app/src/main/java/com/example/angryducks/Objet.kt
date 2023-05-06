@@ -89,6 +89,9 @@ abstract class Objet(
         //birdtexture.color = Color.GREEN
         collidingObjectCountDown=10
         objet.changeaftercoll(dv2x, dv2y)
+        if(objet is Pig){
+            objet.deteriorationdetect(objet.vitessex - dv2x, objet.vitessey - dv2y, mass)
+        }
         attributecollision()
     }
 
