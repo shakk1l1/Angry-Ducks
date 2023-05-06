@@ -66,7 +66,7 @@ class Bird (view: LevelView, var groundheight: Float, val birdradius:Float, priv
         val two = r1+r2
         collidingbird =(one<two)
 
-    }*/
+    }
     fun birdCollideBird2(v1x:Double,v1y:Double,m1:Double,v2x:Double,v2y:Double,m2:Double,coef:Double, bird2: Bird) {
         val vmoyx: Double = (m1 * v1x + m2 * v2x) / (m1 + m2)
         val vmoyy: Double = (m1 * v1y + m2 * v2y) / (m1 + m2)
@@ -110,6 +110,8 @@ class Bird (view: LevelView, var groundheight: Float, val birdradius:Float, priv
         vitessey-=v2y
         collidingObjectCountDown=10
     }*/
+
+     */
 
 
     override fun touchinggrass(): Boolean {
