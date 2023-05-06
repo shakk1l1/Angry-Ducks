@@ -143,7 +143,7 @@ class Pig(view: LevelView, val massep : Double, val radius: Float, var xp : Floa
         TODO("Not yet implemented")
     }
 
-    override fun touchingobstaclepoint(positionx: Double, positiony: Double): Boolean {
+    override fun touchingobstaclepoint(positionx: Double, positiony: Double,rayon:Double): Boolean {
         TODO("Not yet implemented")
     }
 

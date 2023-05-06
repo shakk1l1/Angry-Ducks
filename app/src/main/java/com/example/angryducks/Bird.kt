@@ -31,11 +31,11 @@ class Bird (view: LevelView, var groundheight: Float, val birdradius:Float, val 
     }
     fun draw(canvas: Canvas) { //texture ou hitbox
         if (onscreen) {
-            /*canvas.drawCircle(
+            canvas.drawCircle(
                 coo.x, coo.y, birdradius,
                 birdtexture
-            )*/
-            canvas.drawBitmap(imagebird,coo.x-birdradius,coo.y-birdradius,null)
+            )
+            //canvas.drawBitmap(imagebird,coo.x-birdradius,coo.y-birdradius,null)
 
         }
     }
@@ -163,20 +163,20 @@ class Bird (view: LevelView, var groundheight: Float, val birdradius:Float, val 
             vitessex = (vitessex - dvx)
             vitessey = (vitessey - dvy)
 
-            collidingGroundCountDown = 8
+            collidingGroundCountDown = 3
         }
         bloc.deteriorationdetect(vitessex, vitessey, mass)
     }
 
-    override fun touchingobstaclepoint(positionx: Double, positiony: Double): Boolean {
-        return((coo.x-positionx).pow(2)+(coo.y-positiony).pow(2) < birdradius.pow(2))
+    override fun touchingobstaclepoint(positionx: Double, positiony: Double, rayon:Double): Boolean {
+        return((coo.x-positionx).pow(2)+(coo.y-positiony).pow(2) < (birdradius+rayon).pow(2))
     }
 
     override fun collideobstaclepoint(positionx:Double,positiony:Double) {
         val distance=((coo.x-positionx).pow(2)+(coo.y-positiony).pow(2)).pow(0.5)
         val nx=(coo.x-positionx)/distance
         val ny=(coo.y-positiony)/distance
-        val prodvect=vitessex * Collision.nx+vitessey*Collision.ny
+        val prodvect=vitessex * nx+vitessey*ny
         if ((prodvect).absoluteValue<50) {
             val dvx : Double = prodvect * nx
             val dvy : Double = prodvect * ny
@@ -185,12 +185,12 @@ class Bird (view: LevelView, var groundheight: Float, val birdradius:Float, val 
             birdtexture.color = Color.BLUE
         }
         else {
-            val dvx : Double = prodvect * Collision.nx * (1+Collision.absorbtion)
-            val dvy : Double = prodvect * Collision.ny * (1+Collision.absorbtion)
+            val dvx : Double = prodvect * nx * (1+Collision.absorbtion)
+            val dvy : Double = prodvect * ny * (1+Collision.absorbtion)
             vitessex = (vitessex - dvx)
             vitessey = (vitessey - dvy)
-            birdtexture.color = Color.GRAY
-            collidingGroundCountDown=2
+            birdtexture.color = Color.MAGENTA
+            collidingpointCountDown = 3
         }
     }
 

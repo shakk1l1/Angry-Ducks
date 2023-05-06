@@ -72,8 +72,8 @@ class Collision{
                                 bird.collideground()
                             }
                         }
-                        if (bird.collidingGroundCountDown == 0) {
-                            for(bloc in blocs) {
+                        for(bloc in blocs) {
+                            if (bird.collidingGroundCountDown == 0) {
                                 if (!bloc.getkilled()) {
                                     for (segment in bloc.obstaacles) {
                                         if (bird.touchingobstaclesegment(
@@ -91,10 +91,18 @@ class Collision{
                                             )
                                         }
                                     }
-                                    for (point in bloc.pooints) {
-                                        if (bird.touchingobstaclepoint(point.positionx,point.positiony)) {
-                                            bird.collideobstaclepoint(point.positionx,point.positiony)
-                                        }
+                                }
+                            }
+
+                            for (point in bloc.pooints) {
+                                if (bird.collidingpointCountDown==0) {
+                                    if (bird.touchingobstaclepoint(
+                                            point.positionx,
+                                            point.positiony,
+                                            point.rayon
+                                        )
+                                    ) {
+                                        bird.collideobstaclepoint(point.positionx, point.positiony)
                                     }
                                 }
                             }

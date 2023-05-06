@@ -10,6 +10,7 @@ abstract class Objet (val mass : Double, var vitessex : Double, var vitessey : D
     var collidingpig = false
     var collidingGroundCountDown = 0
     var collidingObjectCountDown = 0
+    var collidingpointCountDown = 0
 
     fun getonscreen(): Boolean {return onscreen}
 
@@ -37,6 +38,9 @@ abstract class Objet (val mass : Double, var vitessex : Double, var vitessey : D
             }
             if (collidingObjectCountDown>0) {
                 collidingObjectCountDown-=1
+            }
+            if (collidingpointCountDown>0) {
+                collidingpointCountDown-=1
             }
 
             vitessey += (interval * 1000.0f).toFloat()
@@ -97,7 +101,7 @@ abstract class Objet (val mass : Double, var vitessex : Double, var vitessey : D
     abstract fun touchingobstaclesegment(postionx:Double,postiony:Double,longueur:Double,nx:Double,ny:Double) : Boolean
     abstract fun collideobstaclesegment(nx:Double, ny:Double, bloc: ObstacleRectangle)
 
-    abstract fun touchingobstaclepoint(positionx:Double,positiony:Double) :Boolean
+    abstract fun touchingobstaclepoint(positionx:Double,positiony:Double,rayon:Double) :Boolean
 
     abstract fun collideobstaclepoint(positionx:Double,positiony:Double)
 }
