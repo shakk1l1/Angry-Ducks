@@ -170,14 +170,6 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
 
             for(bloc in blocs){
                 bloc.draw(canvas)
-                /*
-                for (obstacle in bloc.obstaacles){
-                    obstacle.draw(canvas)
-                }
-                for (points in bloc.pooints){
-                    points.draw(canvas)
-                }
-                */
             }
 
 
@@ -213,8 +205,6 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
         birdcollisioner(birds, pigs, objets, interval, blocs)
 
         waittime -= interval
-        //var temps = System.currentTimeMillis() - TempsFinDernieroiseau
-        //println(temps)
         if (pigleft == 0){
             gameOver = true
             drawing = false
@@ -225,7 +215,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
 
         }
 
-        else if(birdavailable == 0 && waittime <= -maxwaittime /*&& temps>10000L*/){
+        else if(birdavailable == 0 && waittime <= -maxwaittime){
             gameOver = true
             drawing = false
             showGameOverDialog(R.string.lost)
@@ -243,7 +233,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
 
     override fun surfaceDestroyed(holder: SurfaceHolder) {}
 
-    private fun showGameOverDialog(messageId: Int) {        //message de fin de jeu
+    private fun showGameOverDialog(messageId: Int) {
         class GameResult: DialogFragment() {
             @SuppressLint("StringFormatInvalid")
             override fun onCreateDialog(bundle: Bundle?): Dialog {
@@ -276,7 +266,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
 
 
 
-    private fun newGame() {         //new game reset
+    private fun newGame() {
         birdavailable = 5
         birdsshot = 0
         totalElapsedTime = 0.0
@@ -290,24 +280,16 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
             thread = Thread(this)
             thread.start()
         }
-        //mediaPlayer.pause()
-        //mediaPlayer.reset()
-        //mediaWin.pause()
         mediaWin.seekTo(10000)
-        //mediaLost.pause()
         mediaLost.seekTo(10000)
         mediaPlayer.seekTo(0)
         mediaPlayer.start()
-        //pig.reset()
     }
 
     fun shootbird(diffx: Double, diffy: Double){       // shoot bird
         if (birdavailable > 0){
             val bird = birds[birdavailable-1]
-            /*
-            slingshot.align(diffx, diffy)
 
-             */
             if (waittime <= 0.0) {
                 bird.launch(diffx, diffy)
                 mediaBirdLaunch.seekTo(0)
@@ -315,8 +297,6 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
                 birdavailable --
                 birdsshot ++
                 waittime = fixwaitime
-                //TempsFinDernieroiseau = System.currentTimeMillis()
-
             }
             else{
                 val formatted = String.format("%.2f", waittime)
@@ -332,8 +312,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
             }
         }
     }
-    fun cassepaslesc(){//pour le bouton New Game prcq fun Newgame est private
-        //mediaPlayer.seekTo(0)
+    fun newgamebutton(){
         newGame()
     }
 }
