@@ -46,8 +46,9 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
     private val soundMap: SparseIntArray
     private var mediaPlayer = MediaPlayer.create(context, R.raw.themesong)
     private var mediaLost = MediaPlayer.create(context, R.raw.levelfailed)
+    private var mediaWin = MediaPlayer.create(context, R.raw.levelwin)
     private var mediaBirdLaunch = MediaPlayer.create(context, R.raw.birdlaunch)
-    var mediaPigdead: MediaPlayer = MediaPlayer.create(context, R.raw.pigdead)
+    var mediaPigdead = MediaPlayer.create(context, R.raw.pigdead)
 
 
     //----------------------------------------------------------------------------------------------
@@ -59,7 +60,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
     // object ans classes
 
     private val bloc1 = ObstacleRectangle(1000.0, 800.0, 0.0, 1.0, 800.0, 800.0, 200, false)
-    private val pig1 = Pig(this, 20.0, 450f, 150f, 0.0, 100.0, 20f, 200, false)
+    private val pig1 = Pig(this, 20.0, 450f, 150f, 0.0, 100.0, 20f, 888800, false)
     private val pig2 = Pig(this, 500.0, 850f, 350f, 0.0, 100.0, 90f, 200, false)
     private val pig3 = Pig(this, 20.0, 1050f, 450f, 0.0, 100.0, 20f, 200, false)
     private val pig4 = Pig(this, 20.0, 1250f, 250f, 0.0, 100.0, 20f, 200, false)
@@ -69,6 +70,8 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
     private val bird3 = Bird(this, groundheight,5f,30.0)
     private val bird4 = Bird(this, groundheight,30f,50.0)
     private val bird5 = Bird(this, groundheight,60f,20.0)
+    private val bird6 = Bird(this, groundheight,60f,20.0)
+    private val bird7 = Bird(this, groundheight,60f,20.0)
     private val ground = Ground(groundheight, 0f, 0f, this)
     override val observers: ArrayList<Pigobserver> = ArrayList()
 
@@ -84,8 +87,8 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
 
         }
     private val pigs = arrayOf(pig1, pig2, pig3, pig4)
-    private val birds = arrayOf(bird1, bird2, bird3, bird4, bird5)
-    private val objets = arrayOf(bird1, bird2, bird3, bird4, bird5,pig1, pig2, pig3, pig4)
+    private val birds = arrayOf(bird1, bird2, bird3, bird4, bird5, bird6, bird7)
+    private val objets = arrayOf(pig1, pig2, pig3, pig4,bird1, bird2, bird3, bird4, bird5, bird6, bird7)
     private val blocs = arrayOf(bloc1)
     private var gameOver = false
     private var totalElapsedTime = 0.0
@@ -124,7 +127,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
 
         soundMap = SparseIntArray(3)
         mediaPlayer.isLooping = true
-        mediaPlayer.setVolume(0.5f,0.5f)
+        mediaPlayer.setVolume(0.2f,0.2f)
         mediaPlayer.start() // no need to call prepare(); create() does that for you
     }
 
@@ -215,7 +218,11 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
         if (pigleft == 0){
             gameOver = true
             drawing = false
+            mediaWin.seekTo(0)
+            mediaWin.start()
+            mediaPlayer.pause()
             showGameOverDialog(R.string.win)
+
         }
 
         else if(birdavailable == 0 && waittime <= -maxwaittime /*&& temps>10000L*/){
@@ -223,6 +230,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
             drawing = false
             showGameOverDialog(R.string.lost)
             mediaPlayer.pause()
+            mediaLost.seekTo(0)
             mediaLost.start()
         }
 
@@ -284,7 +292,10 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
         }
         //mediaPlayer.pause()
         //mediaPlayer.reset()
-        mediaLost.pause()
+        //mediaWin.pause()
+        mediaWin.seekTo(10000)
+        //mediaLost.pause()
+        mediaLost.seekTo(10000)
         mediaPlayer.seekTo(0)
         mediaPlayer.start()
         //pig.reset()
@@ -299,6 +310,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
              */
             if (waittime <= 0.0) {
                 bird.launch(diffx, diffy)
+                mediaBirdLaunch.seekTo(0)
                 mediaBirdLaunch.start()
                 birdavailable --
                 birdsshot ++
