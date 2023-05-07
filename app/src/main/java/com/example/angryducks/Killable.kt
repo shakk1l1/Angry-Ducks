@@ -27,7 +27,7 @@ interface Killable {
 
     fun deteriorationdetect(vx: Double, vy: Double,m:Double){
         val v = sqrt(vx.pow(2)+vy.pow(2))
-        if(m*v>1500000){hdeterioration()}
+        if(m*v>15000){hdeterioration()}
         else if(m*v>10000){mdeterioration()}
         else if (m*v>5000){ldeterioration()}
     }

@@ -14,6 +14,7 @@ class Collision{
                 //for (pig in pigs) {
                 if (!objet.getonscreen()) {
                     objet.colliding = false
+
                 }
                 if (objet.collidingObjectCountDown == 0) {
                     for (objet2 in objets) {

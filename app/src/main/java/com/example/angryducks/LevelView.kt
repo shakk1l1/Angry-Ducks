@@ -87,7 +87,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
 
     private var birdavailable = 0
     private var birdsshot = 0
-    var pigleft = 4
+    var pigleft = 2
         set(value){
             field = value
             hasUpdated()
@@ -115,7 +115,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
         textPaint.textSize = screenWidth / 10
         textPaint.color = Color.BLACK
         birdavailable = 7
-        this.pigleft = 4
+        this.pigleft = 2
         waittime = 0.0
         for (pig in pigs){
             this.add(pig)
@@ -283,7 +283,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
         for(bird in birds){bird.reset()}
         for(pig in pigs) {pig.reset()}
         for(bloc in blocs) {bloc.reset()}
-        this.pigleft = 4
+        this.pigleft = 2
         if (gameOver) {
             gameOver = false
             thread = Thread(this)
