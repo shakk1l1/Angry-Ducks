@@ -39,7 +39,7 @@ abstract class Objet(
             coo.y += (interval * vitessey).toFloat()
 
             if (coo.x > view.screenWidth + 100f
-                || coo.x < -5f
+                || coo.x < 0
             ) {
                 onscreen = false
             }
