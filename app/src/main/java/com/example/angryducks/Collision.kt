@@ -96,12 +96,14 @@ class Collision{
 
             }
             for (bird in birds) {
-                if (bird.statuslaunched) {
+                if (bird.statuslaunched && bird.getonscreen()) {
                     bird.update2(interval)
                 }
             }
             for (pig in pigs) {
-                pig.update2(interval)
+                if(pig.getonscreen()) {
+                    pig.update2(interval)
+                }
             }
 
         }
