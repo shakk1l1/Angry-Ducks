@@ -48,7 +48,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
     private var mediaLost = MediaPlayer.create(context, R.raw.levelfailed)
     private var mediaWin = MediaPlayer.create(context, R.raw.levelwin)
     private var mediaBirdLaunch = MediaPlayer.create(context, R.raw.birdlaunch)
-    var mediaPigdead = MediaPlayer.create(context, R.raw.pigdead)
+    var mediaPigdead: MediaPlayer = MediaPlayer.create(context, R.raw.pigdead)
 
 
     //----------------------------------------------------------------------------------------------
@@ -67,10 +67,10 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
     private val bloc7 = ObstacleRectangle(530.0, 880.0, -0.5, 50.0, 100.0, 2000, false)
     private val bloc8 = ObstacleRectangle(1285.0, 680.0, -1.3, 20.0, 700.0, 200, false)
     private val bloc9 = ObstacleRectangle(600.0, 950.0, 1.047, 20.0, 100.0, 2000, false)
-    /*private val pig1 = Pig(this, 20.0, 450f, 150f, 0.0, 100.0, 20f, 888800, false)
-    private val pig2 = Pig(this, 500.0, 850f, 350f, 0.0, 100.0, 90f, 200, true)*/
-    private val pig3 = Pig(this, 20.0, 1050f, 400f, 0.0, 100.0, 30f, 30, true)
-    private val pig4 = Pig(this, 20.0, 1150f, 230f, 0.0, 100.0, 30f, 30, true)
+    private val pig1 = Pig(this, 20.0, 450f, 150f, 0.0, 100.0, 20f, 888800, false)
+    private val pig2 = Pig(this, 500.0, 850f, 350f, 0.0, 100.0, 90f, 200, false)
+    private val pig3 = Pig(this, 20.0, 1050f, 400f, 0.0, 100.0, 30f, 30, false)
+    private val pig4 = Pig(this, 20.0, 1150f, 230f, 0.0, 100.0, 30f, 30, false)
 
     private val bird1 = Bird(this, groundheight,30f,5.0)
     private val bird2 = Bird(this, groundheight,20f,20.0)
@@ -93,16 +93,15 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
             hasUpdated()
 
         }
-    private val pigs = arrayOf(/*pig1, pig2,*/ pig3, pig4)
+    private val pigs = arrayOf(pig1, pig2, pig3, pig4)
     private val birds = arrayOf(bird1, bird2, bird3, bird4, bird5, bird6, bird7)
-    private val objets = arrayOf(bird1, bird2, bird3, bird4, bird5, bird6, bird7,/*pig1, pig2,*/ pig3, pig4)
+    private val objets = arrayOf(bird1, bird2, bird3, bird4, bird5, bird6, bird7,pig1, pig2, pig3, pig4)
     private val blocs = arrayOf(bloc1,bloc2,bloc3,bloc4,bloc5,bloc6,bloc7,bloc8,bloc9)
     private var gameOver = false
     private var totalElapsedTime = 0.0
     private var waittime = 0.0
     private var fixwaitime = 0.0   //cmb de temp avant prochain oiseau
     private var maxwaittime = 10.0   //cmb de temp avant fin du jeu
-    //var TempsFinDernieroiseau = 0L
 
     //----------------------------------------------------------------------------------------------
 
@@ -115,7 +114,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
         textPaint.textSize = screenWidth / 10
         textPaint.color = Color.BLACK
         birdavailable = 7
-        this.pigleft = 2
+        this.pigleft = pigs.size
         waittime = 0.0
         for (pig in pigs){
             this.add(pig)
@@ -135,7 +134,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
         soundMap = SparseIntArray(3)
         mediaPlayer.isLooping = true
         mediaPlayer.setVolume(0.2f,0.2f)
-        mediaPlayer.start() // no need to call prepare(); create() does that for you
+        mediaPlayer.start()
     }
 
     fun pause() {
@@ -151,7 +150,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
         mediaPlayer.start()
     }
 
-    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) { //en fonction de l'écran
+    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
         screenWidth = w.toFloat()
         screenHeight = h.toFloat()
@@ -212,8 +211,6 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
         birdcollisioner(birds, pigs, objets, interval, blocs)
 
         waittime -= interval
-        //var temps = System.currentTimeMillis() - TempsFinDernieroiseau
-        //println(temps)
         if (pigleft == 0){
             gameOver = true
             drawing = false
@@ -224,7 +221,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
 
         }
 
-        else if(birdavailable == 0 && waittime <= -maxwaittime /*&& temps>10000L*/){
+        else if(birdavailable == 0 && waittime <= -maxwaittime){
             gameOver = true
             drawing = false
             showGameOverDialog(R.string.lost)
@@ -242,7 +239,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
 
     override fun surfaceDestroyed(holder: SurfaceHolder) {}
 
-    private fun showGameOverDialog(messageId: Int) {        //message de fin de jeu
+    private fun showGameOverDialog(messageId: Int) {
         class GameResult: DialogFragment() {
             @SuppressLint("StringFormatInvalid")
             override fun onCreateDialog(bundle: Bundle?): Dialog {
@@ -275,7 +272,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
 
 
 
-    private fun newGame() {         //new game reset
+    private fun newGame() {
         birdavailable = 7
         birdsshot = 0
         totalElapsedTime = 0.0
@@ -283,30 +280,21 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
         for(bird in birds){bird.reset()}
         for(pig in pigs) {pig.reset()}
         for(bloc in blocs) {bloc.reset()}
-        this.pigleft = 2
+        this.pigleft = pigs.size
         if (gameOver) {
             gameOver = false
             thread = Thread(this)
             thread.start()
         }
-        //mediaPlayer.pause()
-        //mediaPlayer.reset()
-        //mediaWin.pause()
         mediaWin.seekTo(10000)
-        //mediaLost.pause()
         mediaLost.seekTo(10000)
         mediaPlayer.seekTo(0)
         mediaPlayer.start()
-        //pig.reset()
     }
 
     fun shootbird(diffx: Double, diffy: Double){       // shoot bird
         if (birdavailable > 0){
             val bird = birds[birdavailable-1]
-            /*
-            slingshot.align(diffx, diffy)
-
-             */
             if (waittime <= 0.0) {
                 bird.launch(diffx, diffy)
                 mediaBirdLaunch.seekTo(0)
@@ -314,7 +302,6 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
                 birdavailable --
                 birdsshot ++
                 waittime = fixwaitime
-                //TempsFinDernieroiseau = System.currentTimeMillis()
 
             }
             else{
@@ -331,8 +318,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
             }
         }
     }
-    fun cassepaslesc(){//pour le bouton New Game prcq fun Newgame est private
-        //mediaPlayer.seekTo(0)
+    fun newgamebutton(){
         newGame()
     }
 }

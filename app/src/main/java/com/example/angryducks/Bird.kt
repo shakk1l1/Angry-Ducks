@@ -2,8 +2,6 @@ package com.example.angryducks
 
 import android.graphics.BitmapFactory
 import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
 import androidx.core.graphics.scale
 
 class Bird (view: LevelView,
@@ -17,7 +15,6 @@ class Bird (view: LevelView,
     // Variables init
     //----------------------------------------------------------------------------------------------
 
-    private val birdtexture = Paint()
     private var imagebird = BitmapFactory.decodeResource(view.resources,R.drawable.duck)
     var statuslaunched = false
 
@@ -25,13 +22,11 @@ class Bird (view: LevelView,
     // Functions
     //----------------------------------------------------------------------------------------------
     init {
-        birdtexture.color = Color.RED
         imagebird = imagebird.scale((2*birdradius).toInt(),(2*birdradius).toInt())
 
     }
     override fun reset(){
         onscreen = false
-        birdtexture.color = Color.RED
         coo.x = 0f
         coo.y = 0f
     }

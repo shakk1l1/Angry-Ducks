@@ -2,8 +2,6 @@ package com.example.angryducks
 
 import android.graphics.BitmapFactory
 import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
 import androidx.core.graphics.scale
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
@@ -45,12 +43,12 @@ class Pig(
         coo.x = xp
         coo.y = yp
         onscreen = true
+        killed = false
         vitessex = 0.0
         vitessey = 0.0
         hp = 200
         imagepig = BitmapFactory.decodeResource(view.resources,R.drawable.pig1)
         imagepig = imagepig.scale((2*pigradius).toInt(),(2*pigradius).toInt())
-        killed = false
     }
 
     fun draw(canvas: Canvas) {
