@@ -20,7 +20,7 @@ class Collision{
                         for (objet2 in objets) {
                             if (objet2.collidingObjectCountDown == 0) {        // collision entre oiseaux
                                 if (objet != objet2) {
-                                    if (objet.coo.x != 0f /*&& objet.coo.y != view.screenHeight - groundheight - 120f*/) {
+                                    if (objet.coo.x != 120f && objet.coo.y != 100 - groundheight - 120f) {
                                         objet.collisionSphereSphere(
                                             objet.coo.x.toDouble(),
                                             objet.coo.y.toDouble(),

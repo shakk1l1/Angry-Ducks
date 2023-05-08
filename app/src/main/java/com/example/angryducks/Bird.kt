@@ -38,10 +38,10 @@ class Bird (view: LevelView,
     }
 
     fun launch(diffx: Double, diffy: Double){
-        coo.x = (birdradius)
-        coo.y = (view.screenHeight - groundheight - 120f)
-        vitessex= (-(3*diffx))
-        vitessey= (-(3*diffy))
+        coo.x = (view.startpositionx)
+        coo.y = (view.screenHeight - groundheight - view.startpositiony)
+        vitessex= (-(2*diffx))
+        vitessey= (-(2*diffy))
         onscreen = true
         statuslaunched = true
 

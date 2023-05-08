@@ -38,6 +38,8 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
     var screenHeight = 1000f
     private var drawing = false
     private var skycolor = Paint()
+    val startpositionx = 120f
+    val startpositiony = 120f
 
     //sound
 
@@ -58,17 +60,17 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
 
     //----------------------------------------------------------------------------------------------
     // object ans classes
-    private val bloc1 = ObstacleRectangle(1000.0, 600.0, 1.047, 50.0, 500.0, 2000, false)
-    private val bloc2 = ObstacleRectangle(1157.0, 394.0, 0.0, 50.0, 100.0, 2000, false)
-    private val bloc3 = ObstacleRectangle(855.0, 840.0, 0.785, 50.0, 100.0, 2000, false)
-    private val bloc4 = ObstacleRectangle(785.0, 890.0, 0.523, 50.0, 100.0, 2000, false)
-    private val bloc5 = ObstacleRectangle(700.0, 915.0, 0.1, 50.0, 100.0, 2000, false)
-    private val bloc6 = ObstacleRectangle(610.0, 909.0, -0.17, 50.0, 100.0, 2000, false)
-    private val bloc7 = ObstacleRectangle(530.0, 880.0, -0.5, 50.0, 100.0, 2000, false)
+    private val bloc1 = ObstacleRectangle(1000.0, 600.0, 1.047, 50.0, 500.0, 200, false)
+    private val bloc2 = ObstacleRectangle(1157.0, 394.0, 0.0, 50.0, 100.0, 200, false)
+    private val bloc3 = ObstacleRectangle(855.0, 840.0, 0.785, 50.0, 100.0, 200, false)
+    private val bloc4 = ObstacleRectangle(785.0, 890.0, 0.523, 50.0, 100.0, 200, false)
+    private val bloc5 = ObstacleRectangle(700.0, 915.0, 0.1, 50.0, 100.0, 200, false)
+    private val bloc6 = ObstacleRectangle(610.0, 909.0, -0.17, 50.0, 100.0, 200, false)
+    private val bloc7 = ObstacleRectangle(530.0, 880.0, -0.5, 50.0, 100.0, 200, false)
     private val bloc8 = ObstacleRectangle(1285.0, 680.0, -1.3, 20.0, 700.0, 200, false)
-    private val bloc9 = ObstacleRectangle(600.0, 950.0, 1.047, 20.0, 100.0, 2000, false)
-    private val pig1 = Pig(this, 20.0, 450f, 150f, 0.0, 100.0, 20f, 888800, false)
-    private val pig2 = Pig(this, 500.0, 850f, 350f, 0.0, 100.0, 90f, 200, false)
+    private val bloc9 = ObstacleRectangle(600.0, 950.0, 1.047, 20.0, 100.0, 200, false)
+    private val pig1 = Pig(this, 20.0, 1500f, 900f, 0.0, 100.0, 20f, 88, false)
+    private val pig2 = Pig(this, 500.0, 1700f, 900f, 0.0, 100.0, 90f, 200, false)
     private val pig3 = Pig(this, 20.0, 1050f, 400f, 0.0, 100.0, 30f, 30, false)
     private val pig4 = Pig(this, 20.0, 1150f, 230f, 0.0, 100.0, 30f, 30, false)
 
@@ -173,6 +175,8 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
                 "Il reste $birdavailable oiseaux et $pigleft cochons",
                 50f, 70f, textPaint
             )
+
+            canvas.drawCircle(startpositionx,screenHeight - groundheight - startpositiony,7f,textPaint)
 
             for(bloc in blocs){
                 bloc.draw(canvas)
