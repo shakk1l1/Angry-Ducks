@@ -310,7 +310,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
 
 
     private fun newGame() {
-        birdavailable = 7
+        birdavailable = 10
         birdsshot = 0
         totalElapsedTime = 0.0
         drawing = true
