@@ -60,45 +60,68 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
 
     //----------------------------------------------------------------------------------------------
     // object ans classes
-    private val bloc1 = ObstacleRectangle(1000.0, 520.0, 1.047, 50.0, 500.0, 250, false)
-    private val bloc2 = ObstacleRectangle(1157.0, 314.0, 0.0, 50.0, 100.0, 250, false)
-    private val bloc3 = ObstacleRectangle(855.0, 760.0, 0.785, 50.0, 100.0, 250, false)
-    private val bloc4 = ObstacleRectangle(785.0, 810.0, 0.523, 50.0, 100.0, 250, false)
-    private val bloc5 = ObstacleRectangle(700.0, 835.0, 0.1, 50.0, 100.0, 250, false)
-    private val bloc6 = ObstacleRectangle(610.0, 829.0, -0.17, 50.0, 100.0, 250, false)
-    private val bloc7 = ObstacleRectangle(530.0, 800.0, -0.5, 50.0, 100.0, 250, false)
-    private val bloc8 = ObstacleRectangle(1285.0, 600.0, -1.3, 20.0, 700.0, 250, false)
-    private val bloc9 = ObstacleRectangle(600.0, 870.0, 1.047, 20.0, 100.0, 250, false)
-    private val pig1 = Pig(this, 20.0, 1500f, 880f, 0.0, 0.0, 20f, 100, false)
-    private val pig2 = Pig(this, 500.0, 1700f, 810f, 0.0, 0.0, 90f, 250, false)
-    private val pig3 = Pig(this, 20.0, 1050f, 325f, 0.0, 0.0, 30f, 60, false)
-    private val pig4 = Pig(this, 20.0, 1150f, 210f, 0.0, 0.0, 30f, 60, false)
+    private val bloc1 = ObstacleRectangle(1200.0, 900.0, 0.0, 100.0, 1700.0, 2500, false)
+    private val bloc2 = ObstacleRectangle(330.0, 896.0, 0.6, 50.0, 100.0, 2500, false)
+    private val bloc3 = ObstacleRectangle(650.0, 600.0, 0.0, 500.0, 30.0, 250, false)
+    private val bloc4 = ObstacleRectangle(1275.0, 500.0, 0.0, 30.0, 750.0, 100, false)
+    private val bloc5 = ObstacleRectangle(900.0, 600.0, 0.0, 500.0, 30.0, 250, false)
+    private val bloc6 = ObstacleRectangle(775.0, 550.0, 0.0, 30.0, 250.0, 250, false)
+    private val bloc7 = ObstacleRectangle(1650.0, 600.0, 0.0, 500.0, 30.0, 250, false)
+    private val bloc8 = ObstacleRectangle(1900.0, 600.0, 0.0, 500.0, 30.0, 250, false)
+    private val bloc9 = ObstacleRectangle(1775.0, 550.0, 0.0, 30.0, 250.0, 100, false)
+    private val bloc10 = ObstacleRectangle(685.0, 270.0, 1.1, 35.0, 400.0, 150, false)
+    private val bloc11 = ObstacleRectangle(865.0, 270.0, -1.1, 35.0, 400.0, 150, false)
+    private val bloc12 = ObstacleRectangle(1685.0, 270.0, 1.1, 35.0, 400.0, 150, false)
+    private val bloc13 = ObstacleRectangle(1865.0, 270.0, -1.1, 35.0, 400.0, 150, false)
+    private val bloc14 = ObstacleRectangle(775.0, 50.0, 0.0, 100.0, 10.0, 10, false)
+    private val bloc15 = ObstacleRectangle(1775.0, 50.0, 0.0, 100.0, 10.0, 10, false)
+    private val bloc16 = ObstacleRectangle(1100.0, 375.0, 0.0, 250.0, 30.0, 250, false)
+    private val bloc17 = ObstacleRectangle(1450.0, 375.0, 0.0, 250.0, 30.0, 250, false)
+    private val bloc18 = ObstacleRectangle(1175.0, 100.0, 1.0, 25.0, 400.0, 150, false)
+    private val bloc19 = ObstacleRectangle(1375.0, 100.0, -1.0, 25.0, 400.0, 150, false)
+    private val bloc20 = ObstacleRectangle(1275.0, -100.0, 0.0, 100.0, 10.0, 10, false)
+    private val bloc21 = ObstacleRectangle(1275.0, 200.0, 0.0, 10.0, 350.0, 100, false)
+    private val bloc22 = ObstacleRectangle(1450.0, 800.0, 0.0, 100.0, 10.0, 10, false)
+    private val bloc23 = ObstacleRectangle(1100.0, 800.0, 0.0, 100.0, 10.0, 10, false)
+    private val bloc24 = ObstacleRectangle(1150.0, 825.0, 0.0, 50.0, 10.0, 10, false)
+    private val bloc25 = ObstacleRectangle(1400.0, 825.0, 0.0, 50.0, 10.0, 10, false)
+    private val bloc26 = ObstacleRectangle(1425.0, 800.0, 0.0, 10.0, 50.0, 10, false)
+    private val bloc27 = ObstacleRectangle(1125.0, 800.0, 0.0, 10.0, 50.0, 10, false)
+    private val bloc28 = ObstacleRectangle(1275.0, 825.0, 0.0, 50.0, 175.0, 100, false)
+    private val pig1 = Pig(this, 20.0, 1350f, 180f, 0.0, 0.0, 20f, 100, false)
+    private val pig2 = Pig(this, 500.0, 1800f, 450f, 0.0, 0.0, 90f, 250, false)
+    private val pig3 = Pig(this, 20.0, 1140f, 765f, 0.0, 0.0, 30f, 60, false)
+    private val pig4 = Pig(this, 20.0, 1330f, 760f, 0.0, 0.0, 30f, 60, false)
+    private val pig5 = Pig(this, 100.0, 710f,490f,0.0, 0.0, 40f, 100, false)
 
-    private val bird1 = Bird(this, groundheight,30f,5.0)
-    private val bird2 = Bird(this, groundheight,20f,20.0)
-    private val bird3 = Bird(this, groundheight,50f,30.0)
-    private val bird4 = Bird(this, groundheight,30f,50.0)
-    private val bird5 = Bird(this, groundheight,30f,20.0)
-    private val bird6 = Bird(this, groundheight,30f,20.0)
-    private val bird7 = Bird(this, groundheight,30f,20.0)
-    private val ground = Ground(groundheight, 0f, 0f, this)
+    private val bird1 = Bird(this, Collision.groundheight,30f,5.0)
+    private val bird2 = Bird(this, Collision.groundheight,20f,20.0)
+    private val bird3 = Bird(this, Collision.groundheight,50f,30.0)
+    private val bird4 = Bird(this, Collision.groundheight,30f,50.0)
+    private val bird5 = Bird(this, Collision.groundheight,30f,20.0)
+    private val bird6 = Bird(this, Collision.groundheight,30f,20.0)
+    private val bird7 = Bird(this, Collision.groundheight,30f,20.0)
+    private val bird8 = Bird(this, Collision.groundheight,30f,20.0)
+    private val bird9 = Bird(this, Collision.groundheight,30f,20.0)
+    private val bird10 = Bird(this, Collision.groundheight,90f,1000.0)
+    private val ground = Ground(Collision.groundheight, 0f, 0f, this)
     override val observers: ArrayList<Pigobserver> = ArrayList()
 
-    //----------------------------------------------------------------------------------------------
-    //var
+//----------------------------------------------------------------------------------------------
+//var
 
     private var birdavailable = 0
     private var birdsshot = 0
-    var pigleft = 2
+    var pigleft = 5
         set(value){
             field = value
             hasUpdated()
 
         }
-    private val pigs = arrayOf(pig1, pig2, pig3, pig4)
-    private val birds = arrayOf(bird1, bird2, bird3, bird4, bird5, bird6, bird7)
-    private val objets = arrayOf(bird1, bird2, bird3, bird4, bird5, bird6, bird7,pig1, pig2, pig3, pig4)
-    private val blocs = arrayOf(bloc1,bloc2,bloc3,bloc4,bloc5,bloc6,bloc7,bloc8,bloc9)
+    private val pigs = arrayOf(pig1, pig2, pig3, pig4,pig5)
+    private val birds = arrayOf(bird1, bird2, bird3, bird4, bird5, bird6, bird7,bird8,bird9,bird10)
+    private val objets = arrayOf(bird1, bird2, bird3, bird4, bird5, bird6, bird7,bird8,bird9,bird10,pig1, pig2, pig3, pig4,pig5)
+    private val blocs = arrayOf(bloc1,bloc2,bloc3,bloc4,bloc5,bloc6,bloc7,bloc8,bloc9,bloc10,bloc11,bloc12,bloc13,bloc14,bloc15,bloc16,bloc17,bloc18,bloc19,bloc20,bloc21,bloc22,bloc23,bloc24,bloc25,bloc26,bloc27,bloc28)
     private var gameOver = false
     private var totalElapsedTime = 0.0
     private var waittime = 0.0
