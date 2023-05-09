@@ -3,13 +3,13 @@ package com.example.angryducks
 
 class Collision{
     companion object {
-        fun birdcollisioner(
-            birds: Array<Bird>,
-            pigs: Array<Pig>,
-            objets: Array<Objet>,
-            interval: Double,
-            blocs: Array<ObstacleRectangle>
-        ) {
+        fun birdcollisioner(        //Entrées: la liste des oiseaux, la liste des cochons, la liste des objets, l'intervalle d'intégration, la liste des blocs
+            birds: Array<Bird>,     //Sorties: None
+            pigs: Array<Pig>,               //Vérifie pour l'ensemble des objets du niveau, si ceux-ci entrent en collision, en appellant les méthodes nécessaires
+            objets: Array<Objet>,           //et déclenche le calcul de la collision le cas-échéant
+            interval: Double,               //Vérifie ensuite pour l'ensemble des objets si ceux-ci rentrent en collision avec les blocs statiques ou avec le sol,
+            blocs: Array<ObstacleRectangle> //et appelle les méthodes de collision
+        ) {                                 //Ensuite la méthode actualise la position des objets en intégrant leur vitesse sur l'intervalle de temps.
             for (objet in objets) {
                 //for (pig in pigs) {
                 if (objet.getonscreen()) {
@@ -18,9 +18,9 @@ class Collision{
                     }
                     if (objet.collidingObjectCountDown == 0) {
                         for (objet2 in objets) {
-                            if (objet2.collidingObjectCountDown == 0) {        // collision entre oiseaux
+                            if (objet2.collidingObjectCountDown == 0) {        // collision entre les objets
                                 if (objet != objet2) {
-                                    if (objet.coo.x != 120f && objet.coo.y != 100 - groundheight - 120f) {
+                                    if (objet.coo.x != 120f && objet.coo.y != 100 - groundheight - 120f) {      //Vérification de la condition de collision
                                         objet.collisionSphereSphere(
                                             objet.coo.x.toDouble(),
                                             objet.coo.y.toDouble(),
@@ -30,7 +30,7 @@ class Collision{
                                             objet2.getradius().toDouble(),
                                         )
                                     }
-                                    if (objet.colliding) {              //bird collide bird
+                                    if (objet.colliding) {              //activation de la collision
                                         objet.sphereCollideSphere(
                                             objet.vitessex,
                                             objet.vitessey,
@@ -41,7 +41,7 @@ class Collision{
                                             0.7,
                                             objet2
                                         )
-                                        if (objet2 is Pig) {
+                                        if (objet2 is Pig) {        //Appel de la méthode de détection de dégat si l'objet qui collisionne est un cochon
                                             objet2.deteriorationdetect(
                                                 objet2.vitessex,
                                                 objet2.vitessey,
@@ -54,7 +54,7 @@ class Collision{
                             }
                         }
                     }
-                    if (objet.collidingGroundCountDown == 0) {     // bird colliding ground
+                    if (objet.collidingGroundCountDown == 0) {     // Vérification de la collision entre l'objet et le sol
                         if (objet.touchinggrass()) {
                             objet.collideground()
                         }
@@ -62,8 +62,8 @@ class Collision{
                     for (bloc in blocs) {
                         if (!bloc.getkilled()) {
                             for (point in bloc.pooints) {
-                                if (objet.collidingpointCountDown == 0) {
-                                    if (objet.touchingobstaclepoint(
+                                if (objet.collidingpointCountDown == 0) {     // Vérification de la collision entre l'objet et les différents blocs
+                                    if (objet.touchingobstaclepoint(          //La "hit-box" est composée des 4 coins et des 4 segments qui les relient
                                             point.positionx,
                                             point.positiony,
                                             point.rayon
@@ -101,23 +101,23 @@ class Collision{
                 }
             }
             for (bird in birds) {
-                if (bird.statuslaunched && bird.getonscreen()) {
+                if (bird.statuslaunched && bird.getonscreen()) {        //actualisation de la position des oiseaux
                     bird.update2(interval)
                 }
             }
-            for (pig in pigs) {
+            for (pig in pigs) {                                         //actualisation de la position des cochons
                 if(pig.getonscreen()) {
                     pig.update2(interval)
                 }
             }
 
         }
-        const val groundheight = 100f
-        const val absorbtion = 0.6f
-        const val m = 0.0
-        const val nx = 0.0
+        const val groundheight = 100f   //hauteur du sol
+        const val absorbtion = 0.6f     //facteur d'absorbtion lors des collisions entre un objet et un bloc ou le sol
+        const val m = 0.0               //pente du sol
+        const val nx = 0.0              //Vecteur normal à la surface du sol
         const val ny = 1.0
-        const val coefRoulement = 0.005
+        const val coefRoulement = 0.005 //coefficient de frottement de roulement
     }
 }
 

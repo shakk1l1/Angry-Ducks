@@ -82,24 +82,24 @@ class Pig(
         collidingObjectCountDown=10
     }
 
-    override fun collideground(){
-        super.collideground()
+    override fun collideground(){       //Entrées:None, Sorties:None
+        super.collideground()           //Appelle la détection de dégat et la fonction collideground de la classe abstraite dont cochon hérite
         deteriorationdetect(vitessex, vitessey, mass, hpinit)
     }
 
-    override fun low() {                                                            //Entrées:, Sorties:None
-        imagepig = imagepig.scale((2*pigradius).toInt(),(2*pigradius).toInt())
+    override fun low() {                                                            //Entrées:None, Sorties:None
+        imagepig = imagepig.scale((2*pigradius).toInt(),(2*pigradius).toInt())      //Modifie l'apparence du cochon lorsque celui-ci a perdu des points de vie
         imagepig = BitmapFactory.decodeResource(view.resources,R.drawable.pig_low)
     }
 
     override fun mid() {
-        imagepig = imagepig.scale((2*pigradius).toInt(),(2*pigradius).toInt())
-        imagepig = BitmapFactory.decodeResource(view.resources,R.drawable.pig_mid)
+        imagepig = imagepig.scale((2*pigradius).toInt(),(2*pigradius).toInt())      //Entrées:None, Sorties:None
+        imagepig = BitmapFactory.decodeResource(view.resources,R.drawable.pig_mid)  //Modifie l'apparence du cochon lorsque celui-ci a perdu des points de vie
     }
 
     @OptIn(DelicateCoroutinesApi::class)
-    override fun update(){
-        GlobalScope.launch {
+    override fun update(){                              //Entrées:None, Sorties:None
+        GlobalScope.launch {             //Actualise l'image du cochon
             imagepig = imagepig.scale((2*pigradius).toInt(),(2*pigradius).toInt())
             imagepig = BitmapFactory.decodeResource(view.resources,R.drawable.scared_pig)
             delay(800)

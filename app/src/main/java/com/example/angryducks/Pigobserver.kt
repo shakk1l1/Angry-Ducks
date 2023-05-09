@@ -1,5 +1,5 @@
 package com.example.angryducks
 
 interface Pigobserver {
-     fun update()
+     fun update()   //Update les objets de l'observeur
 }

@@ -12,7 +12,7 @@ class MainActivity: AppCompatActivity(), GestureDetector.OnGestureListener {
     private lateinit var levelView: LevelView
     private lateinit var button2: Button
     private lateinit var button3: Button
-    private lateinit var gestureDetector: GestureDetector
+    private lateinit var gestureDetector: GestureDetector       //Cette classe sert d'intermédiaire avec l'utilisateur lorsque celui-ci est en jeu
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

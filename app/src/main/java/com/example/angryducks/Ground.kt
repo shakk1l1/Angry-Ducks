@@ -23,8 +23,8 @@ class Ground(
     init {
         groundtexture.color = Color.parseColor("#4caf50")
     }
-    fun draw(canvas: Canvas) {
-        canvas.drawRect(ground, groundtexture)
+    fun draw(canvas: Canvas) {                  //Entrées:canva , Sorties:None
+        canvas.drawRect(ground, groundtexture)  //Affiche le sol
     }
 
     fun setRect() {
