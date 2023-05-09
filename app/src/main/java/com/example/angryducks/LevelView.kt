@@ -4,9 +4,7 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
+import android.graphics.*
 import android.media.AudioAttributes
 import android.media.MediaPlayer
 import android.media.SoundPool
@@ -70,7 +68,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
     private val bloc8 = ObstacleRectangle(1285.0, 680.0, -1.3, 20.0, 700.0, 200, false)
     private val bloc9 = ObstacleRectangle(600.0, 950.0, 1.047, 20.0, 100.0, 200, false)
     private val pig1 = Pig(this, 20.0, 1500f, 900f, 0.0, 100.0, 20f, 88, false)
-    private val pig2 = Pig(this, 500.0, 1700f, 900f, 0.0, 100.0, 90f, 200, false)
+    private val pig2 = Pig(this, 500.0, 1700f, 810f, 0.0, 100.0, 90f, 200, false)
     private val pig3 = Pig(this, 20.0, 1050f, 400f, 0.0, 100.0, 30f, 30, false)
     private val pig4 = Pig(this, 20.0, 1150f, 230f, 0.0, 100.0, 30f, 30, false)
 
@@ -154,6 +152,8 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
+        val screenWidth1=screenWidth
+        val screenHeight1 = screenHeight
         screenWidth = w.toFloat()
         screenHeight = h.toFloat()
         ground.screenHeight = screenHeight
@@ -161,6 +161,14 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
         ground.setRect()
         textPaint.textSize = w / 25f
         textPaint.isAntiAlias = true
+        for (pig in pigs){
+            pig.onsizechanged(screenHeight-screenHeight1)
+            //pig.setxp(screenWidth-screenWidth1)
+        }
+        for (bloc in blocs){
+            bloc.onsizechanged(screenHeight-screenHeight1)
+            //bloc.setxp(screenWidth-screenWidth1)
+        }
     }
 
     private fun draw() {
@@ -194,6 +202,10 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
                 pig.draw(canvas)
             }
             holder.unlockCanvasAndPost(canvas)
+            var Contour_rect = RectF(0f,200f ,600f,200f )
+            var bitmap = BitmapFactory.decodeResource(resources, R.drawable.angry)
+            canvas?.drawBitmap(bitmap, null, Contour_rect, textPaint)
+
         }
     }
 

@@ -5,8 +5,8 @@ import android.graphics.Color
 import android.graphics.Paint
 
 class ObstacleRectangle(
-    private val positionx:Double,
-    private val positiony:Double,
+    private var positionx:Double,
+    private var positiony:Double,
     private val angle:Double,
     private val largeur:Double,
     private val longueur:Double,
@@ -39,11 +39,29 @@ class ObstacleRectangle(
         obstaclePaint.strokeWidth = largeur.toFloat()
         obstaclePaint.color= Color.BLACK
     }
+    fun onsizechanged(newy: Float){
+        positiony += newy
+        for (obstacle in obstaacles){
+            obstacle.postiony +=newy
+        }
+        for (point in pooints){
+            point.positiony +=newy
+        }
+    }
 
     fun reset(){
         killed = false
         obstaclePaint.color = Color.BLACK
         hp = hpinit
+    }
+    fun setyp(newy: Float) {
+        positiony += newy
+        //coo.y = yp
+    }
+
+    fun setxp(newx: Float) {
+        positionx += newx
+        // coo.x = xp
     }
 
     fun draw(canvas: Canvas){

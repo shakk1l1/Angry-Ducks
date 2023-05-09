@@ -22,6 +22,7 @@ class Pig(
 )
 
     : Objet(massep, vxp, vyp, view, pigradius), Killable, Pigobserver{
+
     //----------------------------------------------------------------------------------------------
     // Variables init
     //----------------------------------------------------------------------------------------------
@@ -49,6 +50,10 @@ class Pig(
         hp = 200
         imagepig = BitmapFactory.decodeResource(view.resources,R.drawable.pig1)
         imagepig = imagepig.scale((2*pigradius).toInt(),(2*pigradius).toInt())
+    }
+    fun onsizechanged(newy: Float){
+        yp += newy
+        coo.y = yp
     }
 
     fun draw(canvas: Canvas) {
