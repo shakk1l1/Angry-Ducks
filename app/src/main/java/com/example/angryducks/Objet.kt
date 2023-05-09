@@ -130,7 +130,7 @@ abstract class Objet(
         else {
             val dvx: Double = prodvect * nx * (1 + Collision.absorbtion)
             val dvy: Double = prodvect * ny * (1 + Collision.absorbtion)
-            bloc.deteriorationdetect(vitessex, vitessey, mass)
+            bloc.deteriorationdetect(vitessex, vitessey, mass, bloc.hpinit)
             vitessex = (vitessex - dvx)
             vitessey = (vitessey - dvy)
 
@@ -156,7 +156,7 @@ abstract class Objet(
         else {
             val dvx : Double = prodvect * nx * (1+Collision.absorbtion)
             val dvy : Double = prodvect * ny * (1+Collision.absorbtion)
-            bloc.deteriorationdetect(vitessex, vitessey, mass)
+            bloc.deteriorationdetect(vitessex, vitessey, mass,bloc.hpinit)
             vitessex = (vitessex - dvx)
             vitessey = (vitessey - dvy)
             collidingpointCountDown = 3

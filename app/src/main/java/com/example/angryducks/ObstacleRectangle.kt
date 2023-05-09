@@ -18,7 +18,7 @@ class ObstacleRectangle(
     //----------------------------------------------------------------------------------------------
     // Variables init
     //----------------------------------------------------------------------------------------------
-    private val hpinit = hp
+    val hpinit = hp
     private val nx= sin(angle)
     private val ny= cos(angle)
     private val segmentup = ObstacleSegment(positionx+nx*largeur/2,positiony+ny*largeur/2,longueur,nx,ny)
