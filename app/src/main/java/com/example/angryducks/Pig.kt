@@ -20,7 +20,7 @@ class Pig(
     override var killed: Boolean
 )
 
-    : Objet(massep, vxp, vyp, view, pigradius), Killable, Pigobserver{
+    : Objet(massep, vxp, vyp, view, pigradius), Killable, Pigobserver, OnSizeChanged{
 
     //----------------------------------------------------------------------------------------------
     // Variables init
@@ -51,7 +51,8 @@ class Pig(
         imagepig = BitmapFactory.decodeResource(view.resources,R.drawable.pig1)
         imagepig = imagepig.scale((2*pigradius).toInt(),(2*pigradius).toInt())
     }
-    fun onsizechanged(newy: Float){
+
+    override fun set_posy(newy: Float){
         yp += newy
         coo.y = yp
     }

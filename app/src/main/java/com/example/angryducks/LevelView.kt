@@ -24,7 +24,12 @@ import com.example.angryducks.Collision.Companion.birdcollisioner
 import com.example.angryducks.Collision.Companion.groundheight
 
 
-class LevelView @JvmOverloads constructor (context: Context, attributes: AttributeSet? = null, defStyleAttr: Int = 0): SurfaceView(context, attributes,defStyleAttr), SurfaceHolder.Callback, Runnable, Pigdobservable {
+class LevelView @JvmOverloads constructor
+    (context: Context,
+     attributes: AttributeSet? = null,
+     defStyleAttr: Int = 0
+): SurfaceView(context, attributes,defStyleAttr), SurfaceHolder.Callback, Runnable, Pigdobservable {
+
     private lateinit var canvas: Canvas
     //----------------------------------------------------------------------------------------------
     // Variables init
@@ -190,11 +195,11 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
         textPaint.textSize = w / 25f
         textPaint.isAntiAlias = true
         for (pig in pigs){
-            pig.onsizechanged(screenHeight-screenHeight1)
+            pig.set_posy(screenHeight-screenHeight1)
             //pig.setxp(screenWidth-screenWidth1)
         }
         for (bloc in blocs){
-            bloc.onsizechanged(screenHeight-screenHeight1)
+            bloc.set_posy(screenHeight-screenHeight1)
             //bloc.setxp(screenWidth-screenWidth1)
         }
     }
