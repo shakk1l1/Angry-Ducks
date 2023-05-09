@@ -41,7 +41,7 @@ class ObstacleRectangle(
         obstaclePaint.strokeWidth = largeur.toFloat()
         obstaclePaint.color= Color.BLACK
     }
-    override fun onsizechanged(newy: Float){
+    override fun set_posy(newy: Float){
         positiony += newy
         for (obstacle in obstaacles){
             obstacle.postiony +=newy

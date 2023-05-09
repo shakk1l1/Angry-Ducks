@@ -51,7 +51,8 @@ class Pig(
         imagepig = BitmapFactory.decodeResource(view.resources,R.drawable.pig1)
         imagepig = imagepig.scale((2*pigradius).toInt(),(2*pigradius).toInt())
     }
-    override fun onsizechanged(newy: Float){
+
+    override fun set_posy(newy: Float){
         yp += newy
         coo.y = yp
     }
