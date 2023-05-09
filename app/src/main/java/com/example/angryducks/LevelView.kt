@@ -4,7 +4,9 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
-import android.graphics.*
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
 import android.media.AudioAttributes
 import android.media.MediaPlayer
 import android.media.SoundPool
@@ -202,10 +204,6 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
                 pig.draw(canvas)
             }
             holder.unlockCanvasAndPost(canvas)
-            var Contour_rect = RectF(0f,200f ,600f,200f )
-            var bitmap = BitmapFactory.decodeResource(resources, R.drawable.angry)
-            canvas?.drawBitmap(bitmap, null, Contour_rect, textPaint)
-
         }
     }
 
