@@ -14,7 +14,7 @@ class ObstacleRectangle(
     private val longueur:Double,
     override var hp: Int,
     override var killed: Boolean
-): Killable{
+): Killable,OnSizeChanged{
     //----------------------------------------------------------------------------------------------
     // Variables init
     //----------------------------------------------------------------------------------------------
@@ -41,7 +41,7 @@ class ObstacleRectangle(
         obstaclePaint.strokeWidth = largeur.toFloat()
         obstaclePaint.color= Color.BLACK
     }
-    fun onsizechanged(newy: Float){
+    override fun onsizechanged(newy: Float){
         positiony += newy
         for (obstacle in obstaacles){
             obstacle.postiony +=newy
