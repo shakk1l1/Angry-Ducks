@@ -18,32 +18,32 @@ interface Killable {
         killed = true
     }
 
-    fun hdeterioration(){
+    fun hdeterioration(hpinit: Int){
         hp -= 100
         if(hp <= 0){kill()}
-        else if(hp<=80){low()}
-        else if(hp<=150){mid()}
+        else if(hp<=hpinit/4){low()}
+        else if(hp<=hpinit/2){mid()}
     }
 
-    fun deteriorationdetect(vx: Double, vy: Double,m:Double){
+    fun deteriorationdetect(vx: Double, vy: Double,m:Double, hpinit: Int){
         val v = sqrt(vx.pow(2)+vy.pow(2))
-        if(m*v>15000){hdeterioration()}
-        else if(m*v>10000){mdeterioration()}
-        else if (m*v>5000){ldeterioration()}
+        if(m*v>15000){hdeterioration(hpinit)}
+        else if(m*v>10000){mdeterioration(hpinit)}
+        else if (m*v>5000){ldeterioration(hpinit)}
     }
 
-    fun ldeterioration(){
+    fun ldeterioration(hpinit: Int){
         hp -= 25
         if(hp <= 0){kill()}
-        else if(hp<=80){low()}
-        else if(hp<=150){mid()}
+        else if(hp<=hpinit/4){low()}
+        else if(hp<=hpinit/2){mid()}
     }
 
-    fun mdeterioration(){
+    fun mdeterioration(hpinit: Int){
         hp -= 50
         if(hp <= 0){kill()}
-        else if(hp<=80){low()}
-        else if(hp<=150){mid()}
+        else if(hp<=hpinit/4){low()}
+        else if(hp<=hpinit/2){mid()}
     }
 
     fun low()

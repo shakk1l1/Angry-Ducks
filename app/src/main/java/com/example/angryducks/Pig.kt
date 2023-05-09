@@ -78,13 +78,13 @@ class Pig(
     override fun changeaftercoll(v2x:Double, v2y:Double) {    //Entrées:changement de vitesse en x et en y, Sorties:None
         vitessex-=v2x                                         //Modifie la vitesse du cochon après une collision et active la détection des dégats
         vitessey-=v2y
-        deteriorationdetect(vitessex, vitessey,massep)
+        deteriorationdetect(vitessex, vitessey,massep, hpinit)
         collidingObjectCountDown=10
     }
 
     override fun collideground(){
         super.collideground()
-        deteriorationdetect(vitessex, vitessey, mass)
+        deteriorationdetect(vitessex, vitessey, mass, hpinit)
     }
 
     override fun low() {                                                            //Entrées:, Sorties:None

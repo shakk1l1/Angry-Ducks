@@ -45,7 +45,8 @@ class Collision{
                                             objet2.deteriorationdetect(
                                                 objet2.vitessex,
                                                 objet2.vitessey,
-                                                objet2.mass
+                                                objet2.mass,
+                                                objet2.hpinit
                                             )
                                         }
                                     }
