@@ -3,12 +3,14 @@ package com.example.angryducks
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import kotlin.math.cos
+import kotlin.math.sin
 
 class ObstacleRectangle(
     private var positionx:Double,
     private var positiony:Double,
-    private val angle:Double,
-    private val largeur:Double,
+    angle:Double,
+    largeur:Double,
     private val longueur:Double,
     override var hp: Int,
     override var killed: Boolean
@@ -16,9 +18,9 @@ class ObstacleRectangle(
     //----------------------------------------------------------------------------------------------
     // Variables init
     //----------------------------------------------------------------------------------------------
-    val hpinit = hp
-    private val nx=Math.sin(angle)
-    private val ny=Math.cos(angle)
+    private val hpinit = hp
+    private val nx= sin(angle)
+    private val ny= cos(angle)
     private val segmentup = ObstacleSegment(positionx+nx*largeur/2,positiony+ny*largeur/2,longueur,nx,ny)
     private val segmentdown=ObstacleSegment(positionx-nx*largeur/2,positiony-ny*largeur/2,longueur,-nx,-ny)
     private val segmentleft=ObstacleSegment (positionx+ny*(longueur/2),positiony-nx*longueur/2,largeur,ny,-nx)
@@ -54,16 +56,6 @@ class ObstacleRectangle(
         obstaclePaint.color = Color.BLACK
         hp = hpinit
     }
-    fun setyp(newy: Float) {
-        positiony += newy
-        //coo.y = yp
-    }
-
-    fun setxp(newx: Float) {
-        positionx += newx
-        // coo.x = xp
-    }
-
     fun draw(canvas: Canvas){
         if(!killed) {
             canvas.drawLine(

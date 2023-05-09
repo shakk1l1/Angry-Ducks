@@ -8,7 +8,6 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-
 class Pig(
     view: LevelView,
     private val massep: Double,
@@ -81,6 +80,11 @@ class Pig(
         vitessey-=v2y
         deteriorationdetect(vitessex, vitessey,massep)
         collidingObjectCountDown=10
+    }
+
+    override fun collideground(){
+        super.collideground()
+        deteriorationdetect(vitessex, vitessey, mass)
     }
 
     override fun low() {                                                            //Entrées:, Sorties:None

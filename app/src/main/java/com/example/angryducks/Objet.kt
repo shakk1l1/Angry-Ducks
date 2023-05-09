@@ -93,7 +93,7 @@ abstract class Objet(
     }
 
 
-    fun collideground(){
+    open fun collideground(){
         val prodvect=vitessex * Collision.nx+vitessey*Collision.ny
         if ((prodvect).absoluteValue<50) {
             val dvx : Double = prodvect * Collision.nx
