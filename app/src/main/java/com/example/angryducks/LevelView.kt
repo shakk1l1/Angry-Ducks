@@ -24,7 +24,12 @@ import com.example.angryducks.Collision.Companion.birdcollisioner
 import com.example.angryducks.Collision.Companion.groundheight
 
 
-class LevelView @JvmOverloads constructor (context: Context, attributes: AttributeSet? = null, defStyleAttr: Int = 0): SurfaceView(context, attributes,defStyleAttr), SurfaceHolder.Callback, Runnable, Pigdobservable {
+class LevelView @JvmOverloads constructor
+    (context: Context,
+     attributes: AttributeSet? = null,
+     defStyleAttr: Int = 0
+): SurfaceView(context, attributes,defStyleAttr), SurfaceHolder.Callback, Runnable, Pigdobservable {
+
     private lateinit var canvas: Canvas
     //----------------------------------------------------------------------------------------------
     // Variables init
