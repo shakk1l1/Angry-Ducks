@@ -27,6 +27,7 @@ abstract class Objet(
     //----------------------------------------------------------------------------------------------
 
     fun getonscreen(): Boolean {return onscreen}
+    fun getradius(): Float{return radius}
 
     open fun reset(){
         coo.x = 0f
@@ -111,7 +112,6 @@ abstract class Objet(
     }
 
     fun touchingobstaclesegment(positionx:Double,positiony:Double,longueur:Double,nx:Double,ny:Double) : Boolean{
-
         return if (((positionx - coo.x) * nx + (positiony - coo.y) * ny).absoluteValue < radius){
             ((positionx - coo.x) * ny - (positiony - coo.y) * nx).absoluteValue < ( longueur/2)
         } else{
@@ -162,6 +162,4 @@ abstract class Objet(
             collidingGroundCountDown = 1
         }
     }
-
-    fun getradius(): Float{return radius}
 }
