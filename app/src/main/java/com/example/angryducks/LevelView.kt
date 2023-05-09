@@ -138,7 +138,7 @@ class LevelView @JvmOverloads constructor (context: Context, attributes: Attribu
         skycolor.color = Color.parseColor("#add8e6")
         textPaint.textSize = screenWidth / 10
         textPaint.color = Color.BLACK
-        birdavailable = 7
+        birdavailable = 10
         this.pigleft = pigs.size
         waittime = 0.0
         for (pig in pigs){
