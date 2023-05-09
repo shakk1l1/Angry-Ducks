@@ -94,19 +94,19 @@ abstract class Objet(
 
 
     open fun collideground(){
-        val prodvect=vitessex * Collision.nx+vitessey*Collision.ny
-        if ((prodvect).absoluteValue<50) {
+        val prodvect=vitessex * Collision.nx-vitessey*Collision.ny
+        if (-50.0<prodvect && prodvect<=0.0) {
             val dvx : Double = prodvect * Collision.nx
-            val dvy : Double = prodvect * Collision.ny
+            val dvy : Double = -prodvect * Collision.ny
             vitessex = (vitessex - dvx)*(1.0-Collision.coefRoulement)
             vitessey = (vitessey - dvy)*(1.0-Collision.coefRoulement)
         }
-        else {
+        else if (prodvect<=-50.0){
             val dvx : Double = prodvect * Collision.nx * (1+Collision.absorbtion)
-            val dvy : Double = prodvect * Collision.ny * (1+Collision.absorbtion)
+            val dvy : Double = -prodvect * Collision.ny * (1+Collision.absorbtion)
             vitessex = (vitessex - dvx)
             vitessey = (vitessey - dvy)
-            collidingGroundCountDown=3
+            collidingGroundCountDown=1
         }
     }
 
@@ -120,21 +120,20 @@ abstract class Objet(
     }
     fun collideobstaclesegment(nx:Double, ny:Double, bloc: ObstacleRectangle){
         val prodvect=vitessex * nx+vitessey*ny
-        if ((prodvect).absoluteValue<100) {
+        if (-50.0<prodvect && prodvect< 0.0) {
             val dvx : Double = prodvect * nx
             val dvy : Double = prodvect * ny
             vitessex = (vitessex - dvx)*(1.0-Collision.coefRoulement)
             vitessey = (vitessey - dvy)*(1.0-Collision.coefRoulement)
 
         }
-        else {
+        else if (-50.0>=prodvect){
             val dvx: Double = prodvect * nx * (1 + Collision.absorbtion)
             val dvy: Double = prodvect * ny * (1 + Collision.absorbtion)
             bloc.deteriorationdetect(vitessex, vitessey, mass, bloc.hpinit)
             vitessex = (vitessex - dvx)
             vitessey = (vitessey - dvy)
-
-            collidingGroundCountDown = 3
+            collidingGroundCountDown = 1
         }
     }
 
@@ -147,20 +146,20 @@ abstract class Objet(
         val nx=(coo.x-positionx)/distance
         val ny=(coo.y-positiony)/distance
         val prodvect=vitessex * nx+vitessey*ny
-        if ((prodvect).absoluteValue<50) {
+        if (0.0<=prodvect && prodvect<50.0) {
             val dvx : Double = prodvect * nx
             val dvy : Double = prodvect * ny
             vitessex = (vitessex - dvx)
             vitessey = (vitessey - dvy)
         }
-        else {
+        else if (50.0>=prodvect) {
             val dvx : Double = prodvect * nx * (1+Collision.absorbtion)
             val dvy : Double = prodvect * ny * (1+Collision.absorbtion)
             bloc.deteriorationdetect(vitessex, vitessey, mass,bloc.hpinit)
             vitessex = (vitessex - dvx)
             vitessey = (vitessey - dvy)
-            collidingpointCountDown = 3
-            collidingGroundCountDown = 3
+            collidingpointCountDown = 1
+            collidingGroundCountDown = 1
         }
     }
 

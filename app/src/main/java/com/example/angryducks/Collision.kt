@@ -77,10 +77,8 @@ class Collision{
                                     }
                                 }
                             }
-                        }
-                        if (objet.collidingGroundCountDown == 0) {
-                            if (!bloc.getkilled()) {
-                                for (segment in bloc.obstaacles) {
+                            for (segment in bloc.obstaacles) {
+                                if (objet.collidingGroundCountDown == 0) {
                                     if (objet.touchingobstaclesegment(
                                             segment.postionx,
                                             segment.postiony,
