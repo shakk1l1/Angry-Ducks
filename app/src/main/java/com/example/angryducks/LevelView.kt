@@ -67,7 +67,7 @@ class LevelView @JvmOverloads constructor
 
     //----------------------------------------------------------------------------------------------
     // object ans classes
-    private val bloc0 = ObstacleRectangle(200.0, 100.0, 0.0, 10.0, 100.0, 25, false)
+    private val bloc0 = ObstacleRectangle(10.0, -90.0, 0.0, 10.0, 10.0, 25, false)
     private val bloc1 = ObstacleRectangle(1300.0, 900.0, 0.0, 100.0, 1900.0, 2500, false)   //Initialisation des obstacles
     private val bloc2 = ObstacleRectangle(330.0, 896.0, 0.6, 50.0, 100.0, 2500, false)
     private val bloc3 = ObstacleRectangle(650.0, 650.0, 0.0, 400.0, 30.0, 250, false)
