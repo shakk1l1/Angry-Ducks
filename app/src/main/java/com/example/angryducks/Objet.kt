@@ -82,7 +82,7 @@ abstract class Objet(
         objet.changeaftercoll(dv2x, dv2y)
     }
 
-    open fun changeaftercoll(v2x:Double, v2y:Double) {      //Entrées:différence de vitesse x et y , Sorties:None
+    protected open fun changeaftercoll(v2x:Double, v2y:Double) {      //Entrées:différence de vitesse x et y , Sorties:None
         vitessex-=v2x                                       //Change la vitesse de l'objet collisioné avec le résultat calculé dans la fonction juste au dessus
         vitessey-=v2y
         collidingObjectCountDown=10

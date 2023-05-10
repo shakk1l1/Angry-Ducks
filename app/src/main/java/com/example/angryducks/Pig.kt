@@ -40,7 +40,7 @@ class Pig(
         onscreen=true
         imagepig = imagepig.scale((2*pigradius).toInt(),(2*pigradius).toInt())
     }
-    override fun reset() {   //Entrées:None, Sorties:None
+     override fun reset() {   //Entrées:None, Sorties:None
         coo.x = xp           //Replace les cochons à leur position initiale lorque le niveau est réinitialisé et réinitialise leurs variables
         coo.y = yp
         onscreen = true

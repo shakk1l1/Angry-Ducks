@@ -58,6 +58,7 @@ class LevelView @JvmOverloads constructor
     private var mediaBirdLaunch = MediaPlayer.create(context, R.raw.birdlaunch)
     var mediaPigdead: MediaPlayer = MediaPlayer.create(context, R.raw.pigdead)
     private var secretachieved = false
+    private var nbrachieved = 0
 
 
     //----------------------------------------------------------------------------------------------
@@ -174,12 +175,13 @@ class LevelView @JvmOverloads constructor
 
     fun pause() {               //Entrées:None, Sorties:None
         drawing = false         //Met le niveau en pause
-        thread.join()
+
         if(secretachieved)
         {mediaSecret.pause()}
         else{
             mediaPlayer.pause()
         }
+        thread.join()
     }
 
     fun resume() {              //Entrées:None, Sorties:None
@@ -261,12 +263,13 @@ class LevelView @JvmOverloads constructor
 
     private fun updatePositions(elapsedTimeMS: Double) {        //Entrées:temps écoulé, Sorties:None
         val interval = elapsedTimeMS / 1000.0                   //Appelle la méthode statique birdcollisioner et vérifie que le jeu n'est pas fini
-
         birdcollisioner(birds, pigs, objets, interval, blocs)
-        if(bloc0.killed){
+        if(nbrachieved==0 && bloc0.killed  ){
+            nbrachieved=1
             secretachieved = true
             mediaPlayer.pause()
             mediaSecret.setVolume(0.2f,0.2f)
+            mediaSecret.seekTo(0)
             mediaSecret.start()
         }
 
@@ -276,7 +279,6 @@ class LevelView @JvmOverloads constructor
             drawing = false
             mediaWin.seekTo(0)
             mediaWin.start()
-            mediaPlayer.pause()
             if(secretachieved)
                 {mediaSecret.pause()}
             else{
@@ -346,8 +348,9 @@ class LevelView @JvmOverloads constructor
         birdavailable = 10              //Réinitialisation du niveau lorsque le bouton new game est pressé
         birdsshot = 0
         totalElapsedTime = 0.0
-        drawing = true
         secretachieved = false
+        nbrachieved = 0
+        drawing = true
         for(bird in birds){bird.reset()}
         for(pig in pigs) {pig.reset()}
         for(bloc in blocs) {bloc.reset()}
@@ -359,15 +362,9 @@ class LevelView @JvmOverloads constructor
         }
         mediaWin.seekTo(10000)
         mediaLost.seekTo(10000)
-        if(secretachieved){
-            mediaSecret.seekTo(0)
-            mediaSecret.start()
-        }
-        else{
-            mediaPlayer.seekTo(0)
-            mediaPlayer.start()
-        }
-
+        mediaSecret.seekTo(100000)
+        mediaPlayer.seekTo(0)
+        mediaPlayer.start()
     }
 
     fun shootbird(diffx: Double, diffy: Double){       //Entrées:Différences de position lors du glissement du doigt sur l'écran, Sorties:None
