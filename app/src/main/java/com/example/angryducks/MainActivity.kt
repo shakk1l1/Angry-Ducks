@@ -27,7 +27,9 @@ class MainActivity: AppCompatActivity(), GestureDetector.OnGestureListener {
         button3 = findViewById(R.id.button3)
         button3.setOnClickListener {
             val i = Intent(this@MainActivity, MainActivity2::class.java)
+            this.finish()
             startActivity(i)
+
         }
 
     }
