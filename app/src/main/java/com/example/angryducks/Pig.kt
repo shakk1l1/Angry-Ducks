@@ -13,8 +13,8 @@ class Pig(
     private val massep: Double,
     private var xp: Float,
     private var yp: Float,
-    val vxp: Double,
-    val vyp: Double,
+    private val vxp: Double,
+    private val vyp: Double,
     private val pigradius: Float,
     override var hp: Int,
     override var killed: Boolean

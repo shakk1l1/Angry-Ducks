@@ -57,7 +57,7 @@ class LevelView @JvmOverloads constructor
     private var mediaWin = MediaPlayer.create(context, R.raw.levelwin)
     private var mediaBirdLaunch = MediaPlayer.create(context, R.raw.birdlaunch)
     var mediaPigdead: MediaPlayer = MediaPlayer.create(context, R.raw.pigdead)
-    var secretachieved = false
+    private var secretachieved = false
 
 
     //----------------------------------------------------------------------------------------------
@@ -103,18 +103,18 @@ class LevelView @JvmOverloads constructor
     private val pig4 = Pig(this, 20.0, 1330f, 760f, 0.0, 0.0, 30f, 60, false)
     private val pig5 = Pig(this, 100.0, 710f,490f,0.0, 0.0, 40f, 100, false)
 
-    private val bird1 = Bird(this, Collision.groundheight,30f,5.0)      //Initialisation des oiseaux
-    private val bird2 = Bird(this, Collision.groundheight,20f,20.0)
-    private val bird3 = Bird(this, Collision.groundheight,50f,30.0)
-    private val bird4 = Bird(this, Collision.groundheight,30f,50.0)
-    private val bird5 = Bird(this, Collision.groundheight,30f,20.0)
-    private val bird6 = Bird(this, Collision.groundheight,30f,20.0)
-    private val bird7 = Bird(this, Collision.groundheight,30f,20.0)
-    private val bird8 = Bird(this, Collision.groundheight,30f,20.0)
-    private val bird9 = Bird(this, Collision.groundheight,30f,20.0)
-    private val bird10 = Bird(this, Collision.groundheight,90f,1000.0)
+    private val bird1 = Bird(this, groundheight,30f,5.0)      //Initialisation des oiseaux
+    private val bird2 = Bird(this, groundheight,20f,20.0)
+    private val bird3 = Bird(this, groundheight,50f,30.0)
+    private val bird4 = Bird(this, groundheight,30f,50.0)
+    private val bird5 = Bird(this, groundheight,30f,20.0)
+    private val bird6 = Bird(this, groundheight,30f,20.0)
+    private val bird7 = Bird(this, groundheight,30f,20.0)
+    private val bird8 = Bird(this, groundheight,30f,20.0)
+    private val bird9 = Bird(this, groundheight,30f,20.0)
+    private val bird10 = Bird(this, groundheight,90f,1000.0)
 
-    private val ground = Ground(Collision.groundheight, 0f, 0f, this)   //Initialisation du sol
+    private val ground = Ground(groundheight, 0f, 0f, this)   //Initialisation du sol
 
     override val observers: ArrayList<Pigobserver> = ArrayList()    //Initialisation de l'observeur des cochons
 
@@ -195,7 +195,6 @@ class LevelView @JvmOverloads constructor
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {      //Entrées:width, height, old width , old width, Sorties:None
         super.onSizeChanged(w, h, oldw, oldh)                               //Adapte le niveau à la taille de l'écran
-        val screenWidth1=screenWidth
         val screenHeight1 = screenHeight
         screenWidth = w.toFloat()
         screenHeight = h.toFloat()
