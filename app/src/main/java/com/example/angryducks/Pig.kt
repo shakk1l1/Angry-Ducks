@@ -104,8 +104,8 @@ class Pig(
             imagepig = imagepig.scale((2*pigradius).toInt(),(2*pigradius).toInt())
             imagepig = BitmapFactory.decodeResource(view.resources,R.drawable.scared_pig)
             delay(800)
-            if(hp<=80){low()}
-            else if(hp <= 150){mid()}
+            if(hp<=hpinit/4){low()}
+            else if(hp <= hpinit/2){mid()}
             else {
                 imagepig = imagepig.scale((2*pigradius).toInt(),(2*pigradius).toInt())
                 imagepig = BitmapFactory.decodeResource(view.resources,R.drawable.pig1)

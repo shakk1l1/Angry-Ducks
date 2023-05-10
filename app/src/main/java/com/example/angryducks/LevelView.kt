@@ -52,10 +52,12 @@ class LevelView @JvmOverloads constructor
     private val soundPool: SoundPool
     private val soundMap: SparseIntArray
     private var mediaPlayer = MediaPlayer.create(context, R.raw.themesong)
+    private var mediaSecret = MediaPlayer.create(context, R.raw.secret_theme)
     private var mediaLost = MediaPlayer.create(context, R.raw.levelfailed)
     private var mediaWin = MediaPlayer.create(context, R.raw.levelwin)
     private var mediaBirdLaunch = MediaPlayer.create(context, R.raw.birdlaunch)
     var mediaPigdead: MediaPlayer = MediaPlayer.create(context, R.raw.pigdead)
+    var secretachieved = false
 
 
     //----------------------------------------------------------------------------------------------
@@ -65,6 +67,7 @@ class LevelView @JvmOverloads constructor
 
     //----------------------------------------------------------------------------------------------
     // object ans classes
+    private val bloc0 = ObstacleRectangle(200.0, 100.0, 0.0, 10.0, 100.0, 25, false)
     private val bloc1 = ObstacleRectangle(1200.0, 900.0, 0.0, 100.0, 1700.0, 2500, false)   //Initialisation des obstacles
     private val bloc2 = ObstacleRectangle(330.0, 896.0, 0.6, 50.0, 100.0, 2500, false)
     private val bloc3 = ObstacleRectangle(650.0, 600.0, 0.0, 500.0, 30.0, 250, false)
@@ -129,7 +132,7 @@ class LevelView @JvmOverloads constructor
     private val pigs = arrayOf(pig1, pig2, pig3, pig4,pig5)             //Initialisation des listes
     private val birds = arrayOf(bird1, bird2, bird3, bird4, bird5, bird6, bird7,bird8,bird9,bird10)
     private val objets = arrayOf(bird1, bird2, bird3, bird4, bird5, bird6, bird7,bird8,bird9,bird10,pig1, pig2, pig3, pig4,pig5)
-    private val blocs = arrayOf(bloc1,bloc2,bloc3,bloc4,bloc5,bloc6,bloc7,bloc8,bloc9,bloc10,bloc11,bloc12,bloc13,bloc14,bloc15,bloc16,bloc17,bloc18,bloc19,bloc20,bloc21,bloc22,bloc23,bloc24,bloc25,bloc26,bloc27,bloc28)
+    private val blocs = arrayOf(bloc0,bloc1,bloc2,bloc3,bloc4,bloc5,bloc6,bloc7,bloc8,bloc9,bloc10,bloc11,bloc12,bloc13,bloc14,bloc15,bloc16,bloc17,bloc18,bloc19,bloc20,bloc21,bloc22,bloc23,bloc24,bloc25,bloc26,bloc27,bloc28)
     private var gameOver = false
     private var totalElapsedTime = 0.0
     private var waittime = 0.0
@@ -153,7 +156,6 @@ class LevelView @JvmOverloads constructor
             this.add(pig)
         }
 
-
         val audioAttributes = AudioAttributes.Builder()
             .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)
             .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
@@ -173,14 +175,22 @@ class LevelView @JvmOverloads constructor
     fun pause() {               //Entrées:None, Sorties:None
         drawing = false         //Met le niveau en pause
         thread.join()
-        mediaPlayer.pause()
+        if(secretachieved)
+        {mediaSecret.pause()}
+        else{
+            mediaPlayer.pause()
+        }
     }
 
     fun resume() {              //Entrées:None, Sorties:None
         drawing = true          //Reprend le niveau
         thread = Thread(this)
         thread.start()
-        mediaPlayer.start()
+        if(secretachieved)
+        {mediaSecret.start()}
+        else{
+            mediaPlayer.start()
+        }
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {      //Entrées:width, height, old width , old width, Sorties:None
@@ -254,6 +264,12 @@ class LevelView @JvmOverloads constructor
         val interval = elapsedTimeMS / 1000.0                   //Appelle la méthode statique birdcollisioner et vérifie que le jeu n'est pas fini
 
         birdcollisioner(birds, pigs, objets, interval, blocs)
+        if(bloc0.killed){
+            secretachieved = true
+            mediaPlayer.pause()
+            mediaSecret.setVolume(0.2f,0.2f)
+            mediaSecret.start()
+        }
 
         waittime -= interval
         if (pigleft == 0){          //Vérifie si il y a encore des cochons à tuer
@@ -262,6 +278,12 @@ class LevelView @JvmOverloads constructor
             mediaWin.seekTo(0)
             mediaWin.start()
             mediaPlayer.pause()
+            if(secretachieved)
+                {mediaSecret.pause()}
+            else{
+                mediaPlayer.pause()
+            }
+
             showGameOverDialog(R.string.win)
 
         }
@@ -270,7 +292,11 @@ class LevelView @JvmOverloads constructor
             gameOver = true
             drawing = false
             showGameOverDialog(R.string.lost)
-            mediaPlayer.pause()
+            if(secretachieved)
+            {mediaSecret.pause()}
+            else{
+                mediaPlayer.pause()
+            }
             mediaLost.seekTo(0)
             mediaLost.start()
         }
@@ -317,11 +343,12 @@ class LevelView @JvmOverloads constructor
 
 
 
-    private fun newGame() {             //Entrées:None, Sorties:None
+    private fun newGame() { //Entrées:None, Sorties:None
         birdavailable = 10              //Réinitialisation du niveau lorsque le bouton new game est pressé
         birdsshot = 0
         totalElapsedTime = 0.0
         drawing = true
+        secretachieved = false
         for(bird in birds){bird.reset()}
         for(pig in pigs) {pig.reset()}
         for(bloc in blocs) {bloc.reset()}
@@ -333,8 +360,15 @@ class LevelView @JvmOverloads constructor
         }
         mediaWin.seekTo(10000)
         mediaLost.seekTo(10000)
-        mediaPlayer.seekTo(0)
-        mediaPlayer.start()
+        if(secretachieved){
+            mediaSecret.seekTo(0)
+            mediaSecret.start()
+        }
+        else{
+            mediaPlayer.seekTo(0)
+            mediaPlayer.start()
+        }
+
     }
 
     fun shootbird(diffx: Double, diffy: Double){       //Entrées:Différences de position lors du glissement du doigt sur l'écran, Sorties:None
