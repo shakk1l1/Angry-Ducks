@@ -3,12 +3,14 @@ package com.example.angryducks
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.view.DragEvent
 import android.view.GestureDetector
 import android.view.MotionEvent
+import android.view.View
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 
-class MainActivity: AppCompatActivity(), GestureDetector.OnGestureListener {
+class MainActivity: AppCompatActivity(), GestureDetector.OnGestureListener, View.OnDragListener {
 
     private lateinit var levelView: LevelView
     private lateinit var button2: Button
@@ -83,6 +85,10 @@ class MainActivity: AppCompatActivity(), GestureDetector.OnGestureListener {
             exception.printStackTrace()
         }
         return true
+    }
+
+    override fun onDrag(p0: View?, p1: DragEvent?): Boolean {
+        TODO("Not yet implemented")
     }
 
 
