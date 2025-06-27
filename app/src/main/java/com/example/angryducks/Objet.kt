@@ -78,7 +78,8 @@ abstract class Objet(
         frictionCoef: Double,
         objet: Objet,
         x1: Double, y1: Double,
-        x2: Double, y2: Double
+        x2: Double, y2: Double,
+        rayon1: Double, rayon2: Double
     ) {
         val dx = x2 - x1
         val dy = y2 - y1
@@ -90,40 +91,52 @@ abstract class Objet(
         val utx = -uny
         val uty = unx
 
-        // Projeter les vitesses sur (n, t)
         val v1n = v1x * unx + v1y * uny
         val v1t = v1x * utx + v1y * uty
         val v2n = v2x * unx + v2y * uny
         val v2t = v2x * utx + v2y * uty
 
-        // Moyenne pondérée de la vitesse normale
         val vmoyn = (m1 * v1n + m2 * v2n) / (m1 + m2)
 
-        // Collision normale
         val v1nAfter = v1n - (1 + restitutionCoef) * (v1n - vmoyn)
         val v2nAfter = v2n - (1 + restitutionCoef) * (v2n - vmoyn)
 
-        // Impulsion normale transférée
-        val deltaP_n = m1 * (v1nAfter - v1n)
+        val deltaP_n = m1 * (v1nAfter - v1n) // Impulsion normale reçue par objet 1
 
-        // Différence tangentielle
+        // ⚠️ Friction façon Unity : impulsion tangentielle limitée
         val deltaVt = v1t - v2t
-        val sign = if (deltaVt != 0.0) deltaVt / kotlin.math.abs(deltaVt) else 0.0
+        val effectiveMass = (m1 * m2) / (m1 + m2)
+        val idealJt = -deltaVt * effectiveMass
+        val maxJt = frictionCoef * kotlin.math.abs(deltaP_n)
+        val J_friction = idealJt.coerceIn(-maxJt, maxJt) // Clamp la friction
 
-        // Impulsion tangentielle appliquée proportionnellement à la différence
-        val J_friction = frictionCoef * kotlin.math.abs(deltaP_n) * sign
+        val v1tAfter = v1t //+ J_friction / m1
+        val v2tAfter = v2t //- J_friction / m2
 
-        // Variation des vitesses tangentielles
-        val v1tAfter = v1t - J_friction / m1
-        val v2tAfter = v2t + J_friction / m2
-
-        // Reconstruction
         val newV1x = v1nAfter * unx + v1tAfter * utx
         val newV1y = v1nAfter * uny + v1tAfter * uty
         val newV2x = v2nAfter * unx + v2tAfter * utx
         val newV2y = v2nAfter * uny + v2tAfter * uty
 
-        // Appliquer à l’objet actuel
+        // Résolution de l'interpénétration en pondérant par la masse
+        val penetration = (rayon1 + rayon2) - dist
+        if (penetration > 0) {
+            val totalMass = m1 + m2
+            val correction1 = (m2 / totalMass) * penetration
+            val correction2 = (m1 / totalMass) * penetration
+
+            val correctionX1 = unx * correction1
+            val correctionY1 = uny * correction1
+            val correctionX2 = unx * correction2
+            val correctionY2 = uny * correction2
+
+            // Appliquer les corrections inverses (pour séparer les sphères)
+            coo.x -= correctionX1.toFloat()
+            coo.y -= correctionY1.toFloat()
+            objet.coo.x += correctionX2.toFloat()
+            objet.coo.y += correctionY2.toFloat()
+        }
+
         vitessex = newV1x
         vitessey = newV1y
         colliding = false
@@ -131,6 +144,7 @@ abstract class Objet(
 
         objet.changeaftercoll(newV2x, newV2y)
     }
+
 
 
     protected open fun changeaftercoll(v2x:Double, v2y:Double) {      //Entrées:différence de vitesse x et y , Sorties:None

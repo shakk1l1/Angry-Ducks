@@ -45,6 +45,8 @@ class Collision{
                                             objet.coo.y.toDouble(),
                                             objet2.coo.x.toDouble(),
                                             objet2.coo.y.toDouble(),
+                                            objet.getradius() .toDouble(),
+                                            objet2.getradius().toDouble()
                                         )
                                         if (objet2 is Pig) {        //Appel de la méthode de détection de dégat si l'objet qui collisionne est un cochon
                                             objet2.deteriorationdetect(
