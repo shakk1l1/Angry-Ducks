@@ -2,6 +2,7 @@ package com.example.angryducks
 
 import android.graphics.PointF
 import kotlin.math.absoluteValue
+import kotlin.math.hypot
 import kotlin.math.pow
 
 abstract class Objet(
@@ -68,19 +69,69 @@ abstract class Objet(
         colliding =(one<two)
 
     }
-    fun sphereCollideSphere(v1x:Double,v1y:Double,m1:Double,v2x:Double,v2y:Double,m2:Double,coef:Double, objet: Objet) {
-        val vmoyx:Double = (m1*v1x+m2*v2x)/(m1+m2)
-        val vmoyy:Double = (m1*v1y+m2*v2y)/(m1+m2)  //Entrées: vitesse x et y des 2 objets ainsi que leurs masses respectives, Sorties:None
-        val dv1x=(1.0+coef)*(v1x-vmoyx)             //Calcule les vitesses finale des 2 objets qui se collisionnent, modifie la vitesse de l'objet exécutat la méthode
-        val dv1y=(1.0+coef)*(v1y-vmoyy)             //et appelle le deuxième objet pour qu'il change lui même sa vitesse
-        val dv2x=(1+coef)*(v2x-vmoyx)
-        val dv2y=(1+coef)*(v2y-vmoyy)
-        vitessex-=dv1x
-        vitessey-=dv1y
+    fun sphereCollideSphere(
+        v1x: Double, v1y: Double,
+        m1: Double,
+        v2x: Double, v2y: Double,
+        m2: Double,
+        restitutionCoef: Double,
+        frictionCoef: Double,
+        objet: Objet,
+        x1: Double, y1: Double,
+        x2: Double, y2: Double
+    ) {
+        val dx = x2 - x1
+        val dy = y2 - y1
+        val dist = hypot(dx, dy)
+        if (dist == 0.0) return
+
+        val unx = dx / dist
+        val uny = dy / dist
+        val utx = -uny
+        val uty = unx
+
+        // Projeter les vitesses sur (n, t)
+        val v1n = v1x * unx + v1y * uny
+        val v1t = v1x * utx + v1y * uty
+        val v2n = v2x * unx + v2y * uny
+        val v2t = v2x * utx + v2y * uty
+
+        // Moyenne pondérée de la vitesse normale
+        val vmoyn = (m1 * v1n + m2 * v2n) / (m1 + m2)
+
+        // Collision normale
+        val v1nAfter = v1n - (1 + restitutionCoef) * (v1n - vmoyn)
+        val v2nAfter = v2n - (1 + restitutionCoef) * (v2n - vmoyn)
+
+        // Impulsion normale transférée
+        val deltaP_n = m1 * (v1nAfter - v1n)
+
+        // Différence tangentielle
+        val deltaVt = v1t - v2t
+        val sign = if (deltaVt != 0.0) deltaVt / kotlin.math.abs(deltaVt) else 0.0
+
+        // Impulsion tangentielle appliquée proportionnellement à la différence
+        val J_friction = frictionCoef * kotlin.math.abs(deltaP_n) * sign
+
+        // Variation des vitesses tangentielles
+        val v1tAfter = v1t - J_friction / m1
+        val v2tAfter = v2t + J_friction / m2
+
+        // Reconstruction
+        val newV1x = v1nAfter * unx + v1tAfter * utx
+        val newV1y = v1nAfter * uny + v1tAfter * uty
+        val newV2x = v2nAfter * unx + v2tAfter * utx
+        val newV2y = v2nAfter * uny + v2tAfter * uty
+
+        // Appliquer à l’objet actuel
+        vitessex = newV1x
+        vitessey = newV1y
         colliding = false
-        collidingObjectCountDown=10
-        objet.changeaftercoll(dv2x, dv2y)
+        collidingObjectCountDown = 10
+
+        objet.changeaftercoll(newV2x, newV2y)
     }
+
 
     protected open fun changeaftercoll(v2x:Double, v2y:Double) {      //Entrées:différence de vitesse x et y , Sorties:None
         vitessex-=v2x                                       //Change la vitesse de l'objet collisioné avec le résultat calculé dans la fonction juste au dessus

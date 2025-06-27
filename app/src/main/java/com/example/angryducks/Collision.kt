@@ -39,7 +39,12 @@ class Collision{
                                             objet2.vitessey,
                                             objet2.mass,
                                             0.7,
-                                            objet2
+                                            1.0,
+                                            objet2,
+                                            objet.coo.x.toDouble(),
+                                            objet.coo.y.toDouble(),
+                                            objet2.coo.x.toDouble(),
+                                            objet2.coo.y.toDouble(),
                                         )
                                         if (objet2 is Pig) {        //Appel de la méthode de détection de dégat si l'objet qui collisionne est un cochon
                                             objet2.deteriorationdetect(
