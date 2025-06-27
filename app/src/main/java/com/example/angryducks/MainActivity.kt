@@ -9,8 +9,14 @@ import android.view.MotionEvent
 import android.view.View
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import kotlin.math.hypot
+import kotlin.math.atan
+
 
 class MainActivity: AppCompatActivity(), GestureDetector.OnGestureListener, View.OnDragListener {
+
+    private var dragStartX = 0f
+    private var dragStartY = 0f
 
     private lateinit var levelView: LevelView
     private lateinit var button2: Button
@@ -22,7 +28,7 @@ class MainActivity: AppCompatActivity(), GestureDetector.OnGestureListener, View
         setContentView(R.layout.activity_main)
         levelView = findViewById(R.id.vMain)
         button2 = findViewById(R.id.button2)
-        gestureDetector = GestureDetector(this)
+        gestureDetector = GestureDetector(this, this)
         button2.setOnClickListener {
             levelView.newgamebutton()
         }
@@ -33,6 +39,39 @@ class MainActivity: AppCompatActivity(), GestureDetector.OnGestureListener, View
             startActivity(i)
 
         }
+        levelView.setOnTouchListener { _, event ->
+            gestureDetector.onTouchEvent(event)
+
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    dragStartX = event.x
+                    dragStartY = event.y
+                    levelView.startArrow(dragStartX, dragStartY)
+                }
+
+                MotionEvent.ACTION_MOVE -> {
+                    levelView.updateArrow(event.x, event.y)
+                }
+
+                MotionEvent.ACTION_UP -> {
+                    val dragEndX = event.x
+                    val dragEndY = event.y
+
+                    val distance = hypot((dragEndX - dragStartX).toDouble(), (dragEndY - dragStartY).toDouble())
+
+                    if (distance > 100) {
+                        val (vx, vy) = levelView.computeLaunchVector(dragStartX, dragStartY, dragEndX, dragEndY)
+                        levelView.shootbird(-vx.toDouble()*2.5, -vy.toDouble()*2.5)
+                    }
+
+                    levelView.hideArrow()
+                    levelView.performClick()
+                }
+            }
+
+            true
+        }
+
 
     }
 
@@ -47,13 +86,9 @@ class MainActivity: AppCompatActivity(), GestureDetector.OnGestureListener, View
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        return if (gestureDetector.onTouchEvent(event)) {
-            true
-        }
-        else {
-            super.onTouchEvent(event)
-        }
+        return gestureDetector.onTouchEvent(event) || super.onTouchEvent(event)
     }
+
 
     override fun onDown(p0: MotionEvent): Boolean {
         return false
@@ -79,7 +114,7 @@ class MainActivity: AppCompatActivity(), GestureDetector.OnGestureListener, View
         try {
             val diffY = (e2.y - e1.y).toDouble()
             val diffX = (e2.x - e1.x).toDouble()
-            levelView.shootbird(diffX, diffY)
+            //levelView.shootbird(diffX, diffY)
         }
         catch (exception: Exception) {
             exception.printStackTrace()

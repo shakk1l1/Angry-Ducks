@@ -22,6 +22,8 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
 import com.example.angryducks.Collision.Companion.birdcollisioner
 import com.example.angryducks.Collision.Companion.groundheight
+import kotlin.math.atan
+import kotlin.math.hypot
 
 
 class LevelView @JvmOverloads constructor
@@ -45,6 +47,13 @@ class LevelView @JvmOverloads constructor
     private var skycolor = Paint()
     val startpositionx = 120f
     val startpositiony = 120f
+
+    private var showArrow = false
+    private var startX = 0f
+    private var startY = 0f
+    private var endX = 0f
+    private var endY = 0f
+
 
     //sound
 
@@ -146,6 +155,40 @@ class LevelView @JvmOverloads constructor
     // Functions
     //----------------------------------------------------------------------------------------------
 
+
+    fun computeLaunchVector(startX: Float, startY: Float, endX: Float, endY: Float): Pair<Float, Float> {
+        val dx = startX - endX
+        val dy = startY - endY
+        val distance = hypot(dx.toDouble(), dy.toDouble())
+
+        val L = atan(distance / 1000) * 1000
+
+        val factor = ((L / 2.5) / distance).toFloat()
+
+        return Pair(dx * factor, dy * factor)
+    }
+    override fun performClick(): Boolean {
+        super.performClick()
+        return true
+    }
+
+    fun startArrow(x: Float, y: Float) {
+        startX = x
+        startY = y
+        endX = x
+        endY = y
+        showArrow = true
+    }
+
+    fun updateArrow(x: Float, y: Float) {
+        endX = x
+        endY = y
+    }
+
+    fun hideArrow() {
+        showArrow = false
+    }
+
     init {                          //Initialisation du niveau
         skycolor.color = Color.parseColor("#add8e6")
         textPaint.textSize = screenWidth / 10
@@ -245,8 +288,27 @@ class LevelView @JvmOverloads constructor
             for(pig in pigs) {
                 pig.draw(canvas)
             }
+            if (showArrow) {
+                val paint = Paint().apply {
+                    color = Color.BLACK
+                    strokeWidth = 8f
+                    style = Paint.Style.STROKE
+                    isAntiAlias = true
+                }
+                val (vx, vy) = computeLaunchVector(startX, startY, endX, endY)
+
+                canvas.drawLine(
+                    startpositionx,
+                    screenHeight - groundheight - startpositiony,
+                    startpositionx + vx,
+                    screenHeight - groundheight - startpositiony + vy,
+                    paint
+                )
+            }
             holder.unlockCanvasAndPost(canvas)
         }
+        // Dessiner la flèche si nécessaire
+
     }
 
     override fun run() {                                        //Entrées:None, Sorties:None
@@ -371,7 +433,7 @@ class LevelView @JvmOverloads constructor
         if (birdavailable > 0){                        //S'occuppe de déclencher le lancer des oiseaux après avoir vérifié si celui-ci était possible
             val bird = birds[birdavailable-1]
             if (waittime <= 0.0) {
-                bird.launch(diffx, diffy)
+                bird.launch(diffx*1.05, diffy*1.05)
                 mediaBirdLaunch.seekTo(0)
                 mediaBirdLaunch.start()
                 birdavailable --
