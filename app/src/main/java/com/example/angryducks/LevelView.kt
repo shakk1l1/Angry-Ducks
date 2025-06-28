@@ -104,6 +104,7 @@ class LevelView @JvmOverloads constructor
 //var
 
     private var birdavailable = 0
+    private var currentBirdIndex = 0
     private var birdsshot = 0
     var pigleft = 5
         set(value){
@@ -383,7 +384,9 @@ class LevelView @JvmOverloads constructor
 
 
     private fun newGame() { //Entrées:None, Sorties:None
-        birdavailable = 10              //Réinitialisation du niveau lorsque le bouton new game est pressé
+        currentBirdIndex = 0
+        birdavailable = birds.size
+        //Réinitialisation du niveau lorsque le bouton new game est pressé
         birdsshot = 0
         totalElapsedTime = 0.0
         secretachieved = false
@@ -406,26 +409,23 @@ class LevelView @JvmOverloads constructor
     }
 
     fun shootbird(diffx: Double, diffy: Double){       //Entrées:Différences de position lors du glissement du doigt sur l'écran, Sorties:None
-        if (birdavailable > 0){                        //S'occuppe de déclencher le lancer des oiseaux après avoir vérifié si celui-ci était possible
-            val bird = birds[birdavailable-1]
+        if (currentBirdIndex < birds.size) {
+            val bird = birds[currentBirdIndex]
             if (waittime <= 0.0) {
-                bird.launch(diffx*1.05, diffy*1.05)
+                bird.launch(diffx * 1.05, diffy * 1.05)
                 mediaBirdLaunch.seekTo(0)
                 mediaBirdLaunch.start()
-                birdavailable --
-                birdsshot ++
+                currentBirdIndex++
+                birdsshot++
                 waittime = fixwaitime
-
-            }
-            else{
+                birdavailable = birds.size - currentBirdIndex  // mettre à jour si tu veux encore afficher combien il en reste
+            } else {
                 val formatted = String.format("%.2f", waittime)
-
                 Handler(Looper.getMainLooper()).post {
                     Toast.makeText(context, "wait $formatted second", Toast.LENGTH_SHORT).show()
                 }
             }
-        }
-        else{
+        } else {
             Handler(Looper.getMainLooper()).post {
                 Toast.makeText(context, "no birds left", Toast.LENGTH_SHORT).show()
             }

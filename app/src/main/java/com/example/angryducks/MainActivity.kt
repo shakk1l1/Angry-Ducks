@@ -31,14 +31,14 @@ class MainActivity: AppCompatActivity(), GestureDetector.OnGestureListener, View
     }
 
     private fun setupLevel2() {
-        val config = LevelData.getLevel(levelView, 1)
+        val config = LevelData.getLevel(levelView, 2)
         levelView.setBirds(config.birds)
         levelView.setPigs(config.pigs)
         levelView.setBlocks(config.blocks)
     }
 
     private fun setupLevel3() {
-        val config = LevelData.getLevel(levelView, 1)
+        val config = LevelData.getLevel(levelView, 3)
         levelView.setBirds(config.birds)
         levelView.setPigs(config.pigs)
         levelView.setBlocks(config.blocks)
