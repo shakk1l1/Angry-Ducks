@@ -119,7 +119,7 @@ abstract class Objet(
         val newV2y = v2nAfter * uny + v2tAfter * uty
 
         // Résolution de l'interpénétration en pondérant par la masse
-        val penetration = (rayon1 + rayon2) - dist
+        val penetration = (rayon1 + rayon2) - dist + 2
         if (penetration > 0) {
             val totalMass = m1 + m2
             val correction1 = (m2 / totalMass) * penetration
@@ -148,8 +148,9 @@ abstract class Objet(
 
 
     protected open fun changeaftercoll(v2x:Double, v2y:Double) {      //Entrées:différence de vitesse x et y , Sorties:None
-        vitessex-=v2x                                       //Change la vitesse de l'objet collisioné avec le résultat calculé dans la fonction juste au dessus
+        vitessex-=v2x                                                 //Change la vitesse de l'objet collisioné avec le résultat calculé dans la fonction juste au dessus
         vitessey-=v2y
+
         collidingObjectCountDown=10
     }
 

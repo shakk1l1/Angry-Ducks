@@ -6,13 +6,33 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity2">
 
-    <Button
-        android:id="@+id/button"
+    <LinearLayout
+        android:id="@+id/levelButtons"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Start"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <Button
+            android:id="@+id/button_level1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Niveau 1" />
+
+        <Button
+            android:id="@+id/button_level2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Niveau 2" />
+
+        <Button
+            android:id="@+id/button_level3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Niveau 3" />
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

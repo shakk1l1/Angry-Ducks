@@ -23,12 +23,47 @@ class MainActivity: AppCompatActivity(), GestureDetector.OnGestureListener, View
     private lateinit var button3: Button
     private lateinit var gestureDetector: GestureDetector       //Cette classe sert d'intermédiaire avec l'utilisateur lorsque celui-ci est en jeu
 
+    private fun setupLevel1() {
+        val config = LevelData.getLevel(levelView, 1)
+        levelView.setBirds(config.birds)
+        levelView.setPigs(config.pigs)
+        levelView.setBlocks(config.blocks)
+    }
+
+    private fun setupLevel2() {
+        val config = LevelData.getLevel(levelView, 1)
+        levelView.setBirds(config.birds)
+        levelView.setPigs(config.pigs)
+        levelView.setBlocks(config.blocks)
+    }
+
+    private fun setupLevel3() {
+        val config = LevelData.getLevel(levelView, 1)
+        levelView.setBirds(config.birds)
+        levelView.setPigs(config.pigs)
+        levelView.setBlocks(config.blocks)
+    }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        levelView = findViewById(R.id.vMain)
+
+        levelView = findViewById(R.id.vMain) // ✅ initialise d'abord levelView
+
+        val level = intent.getIntExtra("LEVEL", 1)
+
+        when (level) {
+            1 -> setupLevel1()
+            2 -> setupLevel2()
+            3 -> setupLevel3()
+            else -> setupLevel1()
+        }
+
         button2 = findViewById(R.id.button2)
         gestureDetector = GestureDetector(this, this)
+
         button2.setOnClickListener {
             levelView.newgamebutton()
         }

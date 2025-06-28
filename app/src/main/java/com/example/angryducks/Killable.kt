@@ -20,7 +20,8 @@ interface Killable {
 
     fun deteriorationdetect(vx: Double, vy: Double,m:Double, hpinit: Int){   //Entrées:vitesse de collision x et y, masse de l'objet ,Sorties:None
         val v = sqrt(vx.pow(2)+vy.pow(2))                           //Détermine la quantité de dégats subit par le killable lors d'un choc
-        hp-=(m*v/750).toInt()
+        if (v>2){
+        hp-=(m*v/250).toInt()}
         if(hp <= 0){kill()}
         else if(hp<=hpinit/4){low()}
         else if(hp<=hpinit/2){mid()}
